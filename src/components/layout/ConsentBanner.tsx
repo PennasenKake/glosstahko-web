@@ -1,8 +1,10 @@
 import { setConsent, useConsent } from '../../utils/consent'
 
 /**
- * Pieni suostumuspalkki sivun alareunassa. Näkyy vain, kun valintaa ei ole tehty.
- * Valinta koskee ainoastaan Instagram-julkaisujen automaattista latausta.
+ * Pieni ilmoituspalkki sivun alareunassa. Näkyy vain, kun valintaa ei ole tehty.
+ * Kertoo, miksi Instagram-julkaisut ladataan Instagramista ja että se voi
+ * asettaa evästeitä. Kävijä voi kuitata tai kieltää sen.
+ * Valinta koskee ainoastaan Instagram-sisältöä.
  * Ulkoasu: styles/layout.css (.consent).
  */
 export default function ConsentBanner() {
@@ -12,15 +14,15 @@ export default function ConsentBanner() {
   return (
     <aside className="consent" aria-label="Evästeet ja Instagram-sisältö">
       <p className="consent__text">
-        Sivu voi näyttää Instagram-julkaisut suoraan. Silloin Instagram (Meta) lataa sisältöä
-        ja voi asettaa evästeitä. Ilman suostumustasi sivu ei käytä evästeitä.
+        Sivu näyttää Instagram-julkaisut suoraan Instagramista, jotta näet uusimmat kuvat heti.
+        Instagram (Meta) voi tallentaa selaimeesi evästeitä. Muuten sivu ei käytä evästeitä.
       </p>
       <div className="consent__actions">
         <button type="button" className="btn btn--light btn--small" onClick={() => setConsent('granted')}>
-          Hyväksy ja näytä
+          Selvä
         </button>
         <button type="button" className="btn btn--ghost btn--small" onClick={() => setConsent('denied')}>
-          Vain välttämättömät
+          Älä näytä julkaisuja
         </button>
       </div>
     </aside>

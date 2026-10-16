@@ -65,7 +65,7 @@ export default function Footer() {
         </p>
         <p>
           Hinnat sisältävät arvonlisäveron. Sivusto ei itse käytä evästeitä eikä tallenna tietojasi.
-          Instagram-julkaisut ladataan Instagramista vain suostumuksellasi.
+          Instagram-julkaisujen lataaminen voi asettaa Metan evästeitä, ja sen voi kieltää Evästeasetuksista.
         </p>
         <button type="button" className="site-footer__link" onClick={() => setConsent('unknown')}>
           Evästeasetukset

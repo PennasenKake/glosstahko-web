@@ -6,16 +6,17 @@ import leaf from '../../assets/images/leaf.webp'
 import { useConsent } from '../../utils/consent'
 
 /**
- * Yksi karusellin kortti. Jos kävijä on hyväksynyt Instagram-sisällön
- * (suostumuspalkki, utils/consent.ts), julkaisu latautuu heti suoraan
- * Instagramista omana upotuksenaan (iframe): kuva ja Instagramin
- * omat painikkeet (pitkä kuvateksti jätetään pois, koska se venyttäisi kortin) Muuten kortti on esikatselu (teksti ja kuva tai koriste),
+ * Yksi karusellin kortti. Julkaisu latautuu heti suoraan Instagramista omana
+ * upotuksenaan (iframe), ellei kävijä ole kieltänyt sitä (palkki, utils/consent.ts): kuva ja Instagramin
+ * omat painikkeet. Pitkä kuvateksti jätetään pois, koska se venyttäisi kortin.
+ * Jos kävijä kielsi Instagram-sisällön, kortti on esikatselu (teksti ja kuva tai koriste),
  * eikä Instagramiin tehdä yhtään pyyntöä ennen "Näytä julkaisu" -painiketta.
  */
 function PostCard({ post }: { post: InstagramPost }) {
   const [open, setOpen] = useState(false)
   const consent = useConsent()
-  const show = open || consent === 'granted'
+  // 'pending' = esirenderöity HTML: ei vielä pyyntöjä, upotus tulee heti hydraation jälkeen
+  const show = open || consent === 'unknown' || consent === 'granted'
   const postUrl = `${site.instagramUrl}p/${post.id}/`
 
   const frameRef = useRef<HTMLIFrameElement>(null)

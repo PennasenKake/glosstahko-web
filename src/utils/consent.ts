@@ -3,14 +3,15 @@ import { useSyncExternalStore } from 'react'
 /**
  * Suostumus Instagram-sisällön lataamiseen.
  *
- * Instagramin upotus (Meta) asettaa evästeitä, joten se ladataan automaattisesti
- * vain, jos kävijä on hyväksynyt sen. Muuten sivu ei tee yhtään pyyntöä Metalle.
+ * Instagramin upotus (Meta) voi asettaa evästeitä. Sivu näyttää julkaisut heti
+ * (kävijälle kerrotaan syy palkissa), ja kävijä voi kieltää sen: silloin Metalle
+ * ei tehdä pyyntöjä ja kortit ovat esikatseluja.
  * Valinta tallennetaan selaimen localStorageen (ei eväste, ja se kertoo vain
  * valinnan, ei mitään kävijästä). Se ei lähde palvelimelle.
  *
  *  - 'pending' = vielä tuntematon (esirenderöinti ja hetki ennen kuin selain on luettu)
- *  - 'unknown' = valintaa ei ole tehty, kysytään
- *  - 'granted' = hyväksytty, 'denied' = vain välttämättömät
+ *  - 'unknown' = valintaa ei ole tehty: julkaisut näytetään ja palkki kertoo asiasta
+ *  - 'granted' = kävijä on kuitannut, 'denied' = kävijä kielsi Instagram-sisällön
  */
 export type Consent = 'pending' | 'unknown' | 'granted' | 'denied'
 

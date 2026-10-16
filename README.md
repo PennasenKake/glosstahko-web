@@ -9,7 +9,7 @@ Yhden sivun verkkosivusto nilsiäläiselle kynsi- ja kampaamoyritykselle **Gloss
 - Näkyy Google-haussa (paikallinen SEO: Nilsiä, Tahko)
 - Ei backendia eikä tietojen tallennusta: ajanvaraus ja some ovat ulkoisia linkkejä
 - Ei evästeitä eikä kolmansien osapuolten pyyntöjä (fontit ovat omassa paketissa)
-  - Ainoa poikkeus: Instagram-julkaisut (Minusta) latautuvat suoraan Instagramista vasta, kun kävijä hyväksyy ne suostumuspalkissa (`utils/consent.ts`, valinta localStorageen). Footerin "Evästeasetukset" avaa valinnan uudelleen. Ilman suostumusta kortti on esikatselu ja nosto aukeaa napilla.
+  - Ainoa poikkeus: Instagram-julkaisut (Minusta) ladataan heti suoraan Instagramista, ja alapalkki kertoo, että Meta voi asettaa evästeitä (`utils/consent.ts`, valinta localStorageen). Kävijä voi kieltää sen, jolloin kortit ovat esikatseluja. Footerin "Evästeasetukset" avaa valinnan uudelleen.
 - Yhtenäinen **Boho**-tyyli (valittu lopulliseksi teemaksi)
 
 ## Teknologiat
