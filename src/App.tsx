@@ -13,9 +13,9 @@ export default function App() {
       <Header />
       <main>
         <Hero />
+        <About />
         <Services />
         <Tahko />
-        <About />
         <Faq />
         <Contact />
       </main>

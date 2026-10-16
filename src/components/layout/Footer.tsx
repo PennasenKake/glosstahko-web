@@ -1,4 +1,7 @@
 export default function Footer() {
-  return <footer>Footer</footer>
+  return (
+    <footer>
+      <p>© {new Date().getFullYear()} GlossTahko</p>
+    </footer>
+  )
 }
-
