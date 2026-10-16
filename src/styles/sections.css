@@ -1,0 +1,220 @@
+/* ==========================================================
+   sections.css – sivun osiot yksi kerrallaan
+
+   Järjestys on sama kuin sivulla (App.tsx):
+   Hero, Intro, Minusta, Palvelut, Tahko, UKK, Yhteys.
+   ========================================================== */
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative; /* kasvikoristeet asemoidaan tämän sisällä */
+  overflow: hidden; /* koristeet eivät aiheuta vaakavieritystä */
+  padding-block: clamp(4rem, 10vw, 7rem);
+  background: var(--color-brand);
+  color: var(--color-ink-deep);
+  text-align: center;
+}
+
+/* Terrakottapinnalla fokusrengas tummaksi, jotta se erottuu */
+.hero :focus-visible {
+  outline-color: var(--color-ink-deep);
+}
+
+.hero__eyebrow {
+  margin-bottom: 1rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+/* h1 koostuu kahdesta osasta: script-sana ja versaalisana */
+.hero__script {
+  display: block;
+  font-family: var(--font-script);
+  font-size: clamp(5rem, 19vw, 9.5rem);
+  line-height: 0.95;
+  padding-top: 0.15em;
+}
+
+.hero__caps {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1.3rem, 4.5vw, 2rem);
+  font-weight: 600;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  /* letter-spacing lisää tilaa myös viimeisen kirjaimen perään: keskitys korjataan tällä */
+  margin-right: -0.35em;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 2.25rem;
+}
+
+/* ---------- Intro (esittely heron alla) ---------- */
+
+.intro {
+  padding-block: clamp(3rem, 7vw, 5rem) 1rem;
+}
+
+.intro__text {
+  font-size: clamp(1.1rem, 2.4vw, 1.25rem);
+  margin-bottom: 1.5rem;
+}
+
+/* ---------- Minusta ---------- */
+
+.about__text {
+  margin-top: 1rem;
+}
+
+/* ---------- Palvelut ---------- */
+
+.services__intro {
+  max-width: 34rem;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+  color: var(--color-muted);
+}
+
+/* Iso kortti, jossa kaksi saraketta (Kynnet | Hiukset) */
+.price-card {
+  display: grid;
+  gap: 2.5rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+}
+
+@media (min-width: 48rem) {
+  .price-card {
+    grid-template-columns: 1fr 1fr;
+    gap: 3.5rem;
+  }
+}
+
+/* Sarakkeen otsikko: "KYNNET" / "HIUKSET" */
+.price-group__title {
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--color-line);
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-brand-dark);
+}
+
+/* Alaotsikko (esim. Leikkaukset), kun sarakkeessa on useita kategorioita */
+.price-category__title {
+  margin-top: 1.75rem;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.price-row {
+  padding-block: 0.85rem;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.price-row:last-child {
+  border-bottom: 0;
+}
+
+/* Nimi ........ hinta samalla rivillä */
+.price-row__main {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.price-row__name {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+/* Pisteviiva täyttää nimen ja hinnan väliin jäävän tilan (flex: 1) */
+.price-row__dots {
+  flex: 1;
+  min-width: 1rem;
+  border-bottom: 1px dotted var(--color-line-strong);
+  transform: translateY(-0.3em); /* nostaa viivan tekstin keskelle */
+}
+
+.price-row__price {
+  white-space: nowrap; /* hinta ei katkea kahdelle riville */
+  font-weight: 600;
+}
+
+.price-row__meta {
+  margin-top: 0.2rem;
+  font-size: 0.92rem;
+  color: var(--color-muted);
+  line-height: 1.5;
+}
+
+/* ---------- Tahko ---------- */
+
+.tahko__text {
+  margin: 1rem 0 1.5rem;
+}
+
+.tahko__list {
+  margin-bottom: 2rem;
+}
+
+/* ---------- UKK ---------- */
+
+.faq__list {
+  max-width: 44rem;
+  margin: 2rem auto 0;
+}
+
+.faq__item {
+  padding-block: 1.25rem;
+  border-bottom: 1px solid var(--color-line);
+}
+
+.faq__question {
+  margin-bottom: 0.4rem;
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.faq__answer {
+  color: var(--color-muted);
+}
+
+/* ---------- Yhteys ---------- */
+
+.contact__text {
+  margin-top: 1rem;
+}
+
+.contact__cta {
+  margin: 1.5rem 0 2rem;
+}
+
+.contact__list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.contact__list a {
+  text-underline-offset: 0.2em;
+}

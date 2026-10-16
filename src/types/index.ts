@@ -28,12 +28,20 @@ export type Service = {
 }
 
 /**
+ * Hinnaston pääryhmät eli kaksi saraketta. Unioni-tyyppi sallii vain
+ * nämä kaksi arvoa: kirjoitusvirhe (esim. 'hiuksed') ei käänny.
+ */
+export type ServiceGroup = 'kynnet' | 'hiukset'
+
+/**
  * Ryhmä palveluita (esim. "Kynnet"). Sivu piirtää jokaisesta
  * oman otsikon ja listan.
  */
 export type ServiceCategory = {
   id: string
   title: string
+  /** Kumpaan sarakkeeseen kategoria sijoitetaan hinnastossa. */
+  group: ServiceGroup
   /** Lyhyt selite otsikon alle, valinnainen. */
   description?: string
   services: Service[]

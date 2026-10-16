@@ -1,51 +1,85 @@
 import { serviceCategories } from '../../data/services'
+import type { ServiceGroup } from '../../types'
 import { formatDuration, formatPrice } from '../../utils/format'
-//import BookingButton from '../ui/BookingButton'
+import SectionHeading from '../ui/SectionHeading'
+
+/**
+ * Hinnaston kaksi saraketta. `id` täsmää kategorioiden `group`-kenttään
+ * (data/services.ts), `title` on sarakkeen otsikko sivulla.
+ */
+const groups: { id: ServiceGroup; title: string }[] = [
+  { id: 'kynnet', title: 'Kynnet' },
+  { id: 'hiukset', title: 'Hiukset' },
+]
 
 /**
  * Palvelut-osio: piirtää hinnaston data/services.ts-tiedostosta.
  * Komponentissa ei ole yhtään kovakoodattua palvelua, joten hintojen
  * muutos tehdään vain datatiedostossa.
+ *
+ * Rakenne: osio > kortti > sarake (group) > kategoria > rivit.
+ * Otsikkotasot: h2 osio, h3 sarake, h4 kategoria.
  */
 export default function Services() {
   return (
     // id="palvelut" on tab-linkin (#palvelut) kohde.
     // aria-labelledby nimeää osion otsikolla ruudunlukijalle.
-    <section id="palvelut" aria-labelledby="palvelut-otsikko">
-      <h2 id="palvelut-otsikko">Palvelut</h2>
-      <p>Hinnat sisältävät arvonlisäveron.</p>
+    <section id="palvelut" className="section" aria-labelledby="palvelut-otsikko">
+      <div className="container">
+        <SectionHeading
+          id="palvelut-otsikko"
+          eyebrow="Palvelut ja hinnat"
+          title="Palvelut"
+        />
+        <p className="services__intro">
+          Hinnat sisältävät arvonlisäveron. Lopullinen hinta riippuu työn
+          laajuudesta ja hiusten pituudesta.
+        </p>
 
-      {/* Ulompi map: yksi lohko per kategoria. key on pakollinen ja uniikki. */}
-      {serviceCategories.map((category) => (
-        <div key={category.id}>
-          <h3>{category.title}</h3>
+        <div className="price-card">
+          {/* Ulompi map: yksi sarake per ryhmä */}
+          {groups.map((group) => {
+            // filter jättää jäljelle vain tämän ryhmän kategoriat
+            const categories = serviceCategories.filter((c) => c.group === group.id)
 
-          {/* Näytetään vain, jos kategorialla on selite */}
-          {category.description && <p>{category.description}</p>}
+            return (
+              <div key={group.id}>
+                <h3 className="price-group__title">{group.title}</h3>
 
-          <ul>
-            {/* Sisempi map: yksi rivi per palvelu. Aaltosulut + return,
-                koska keston tarkistus tarvitsee logiikkaa ennen palautusta. */}
-            {category.services.map((service) => {
-              // null, jos palvelulla ei ole kestoa
-              const duration = formatDuration(service)
+                {categories.map((category) => (
+                  <div key={category.id}>
+                    {/* Alaotsikko vain, jos sarakkeessa on useita kategorioita */}
+                    {categories.length > 1 && (
+                      <h4 className="price-category__title">{category.title}</h4>
+                    )}
 
-              return (
-                <li key={service.id}>
-                  <span>{service.name}</span>{' '}
-                  {/* Kesto näytetään vain, jos se on olemassa */}
-                  {duration && <span>{duration} </span>}
-                  <span>{formatPrice(service)}</span>
-                  {/* Lisätieto (esim. paketin sisältö), jos annettu */}
-                  {service.note && <small> {service.note}</small>}
-                </li>
-              )
-            })}
-          </ul>
+                    <ul>
+                      {category.services.map((service) => {
+                        // null, jos palvelulla ei ole kestoa
+                        const duration = formatDuration(service)
+                        // Rivin alle kesto ja lisätieto, jos niitä on. filter(Boolean) poistaa tyhjät.
+                        const meta = [duration, service.note].filter(Boolean).join(' · ')
+
+                        return (
+                          <li className="price-row" key={service.id}>
+                            <div className="price-row__main">
+                              <span className="price-row__name">{service.name}</span>
+                              {/* Koriste: pisteviiva nimen ja hinnan välissä */}
+                              <span className="price-row__dots" aria-hidden="true" />
+                              <span className="price-row__price">{formatPrice(service)}</span>
+                            </div>
+                            {meta && <p className="price-row__meta">{meta}</p>}
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            )
+          })}
         </div>
-      ))}
-
-      {/* Ajanvarauslinkki tulee yhdestä paikasta (config/site.ts) */}
+      </div>
     </section>
   )
 }

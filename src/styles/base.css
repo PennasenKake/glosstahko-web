@@ -1,0 +1,120 @@
+/* ==========================================================
+   base.css – selaimen oletusten nollaus ja perustyylit
+
+   Tänne tulee vain asioita, jotka koskevat koko sivua tai
+   kaikkia tietyn tyyppisiä elementtejä (body, h2, a ...).
+   Yksittäisten komponenttien ulkoasu on muissa tiedostoissa.
+   ========================================================== */
+
+/* border-box: leveys sisältää reunuksen ja täytteen. Laskeminen helpottuu. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Estää iOS:ää suurentamasta tekstiä vaakatilassa */
+  -webkit-text-size-adjust: 100%;
+  /* Tabilinkit vierittävät pehmeästi (kytketään pois alempana, jos käyttäjä haluaa) */
+  scroll-behavior: smooth;
+  /* Ankkurin kohde jää sticky-palkin alle ilman tätä */
+  scroll-padding-top: var(--header-h);
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem; /* 17 px: hieman suurempi kuin oletus, helpompi lukea */
+  line-height: 1.7;
+}
+
+/* Otsikoissa ei oletusmarginaaleja: välit määritellään itse */
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Näppäimistön fokus näkyviin. Ilman tätä sivua ei voi käyttää Tab-näppäimellä. */
+:focus-visible {
+  outline: 2px solid var(--color-brand-dark);
+  outline-offset: 3px;
+}
+
+/* ---------- Apuluokat ---------- */
+
+/* Keskitetty sisältöalue: vähintään 1 rem reunaa joka puolella */
+.container {
+  width: min(100% - 2rem, var(--content-width));
+  margin-inline: auto;
+}
+
+/* Kapeampi sarake tekstille: rivi ei veny liian pitkäksi */
+.container--narrow {
+  width: min(100% - 2rem, 42rem);
+  text-align: center;
+}
+
+/* Osion pystysuuntainen väli. clamp(min, joustava, max) skaalautuu ruudun mukaan. */
+.section {
+  padding-block: clamp(3.5rem, 9vw, 6.5rem);
+}
+
+.section--alt {
+  background: var(--color-bg-alt);
+}
+
+/* "Siirry sisältöön" -linkki: näkyy vain Tab-näppäimellä */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  padding: 0.6rem 1rem;
+  background: var(--color-ink);
+  color: var(--color-bg);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* Käyttäjä on pyytänyt vähemmän liikettä (käyttöjärjestelmän asetus) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    transition: none !important;
+  }
+}

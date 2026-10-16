@@ -1,0 +1,134 @@
+/* ==========================================================
+   components.css – uudelleenkäytettävät pienet palaset
+
+   Painike, osion otsikko, "chip"-tagit ja kasvikoriste.
+   Tyylit on kytketty luokkiin (.btn, .chip ...), jotka
+   komponentit lisäävät className-propsilla.
+   ========================================================== */
+
+/* ---------- Painike (BookingButton ja tavalliset linkkipainikkeet) ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: 0.6rem 1.7rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+/* Täytetty, tumma terrakotta: oletuspainike vaalealla pohjalla */
+.btn--primary {
+  background: var(--color-brand-dark);
+  color: var(--color-surface);
+}
+
+.btn--primary:hover {
+  background: var(--color-ink);
+}
+
+/* Vaalea painike terrakottapinnalla (hero) */
+.btn--light {
+  background: var(--color-surface);
+  color: var(--color-ink-deep);
+}
+
+.btn--light:hover {
+  background: var(--color-bg-alt);
+}
+
+/* Pelkkä reunus: toissijainen toiminto */
+.btn--ghost {
+  border-color: var(--color-ink-deep);
+  color: var(--color-ink-deep);
+}
+
+.btn--ghost:hover {
+  background: var(--color-ink-deep);
+  color: var(--color-surface);
+}
+
+/* Pienempi versio headeriin */
+.btn--small {
+  min-height: 2.25rem;
+  padding: 0.4rem 1.1rem;
+  font-size: 0.72rem;
+}
+
+/* ---------- Osion otsikko: pieni ylärivi + käsinkirjoitettu otsikko ---------- */
+
+.section-heading {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.section-heading__eyebrow {
+  font-size: 0.78rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-brand-dark);
+}
+
+.section-heading__title {
+  font-family: var(--font-script);
+  font-size: clamp(3.5rem, 11vw, 5.5rem);
+  line-height: 1;
+  /* script-fontin korkeat kirjaimet tarvitsevat tilaa */
+  padding-top: 0.1em;
+}
+
+/* ---------- Chip: pieni pyöreäreunainen tagi ---------- */
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
+.chip {
+  padding: 0.3rem 1rem;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-pill);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  background: var(--color-surface);
+}
+
+/* ---------- Kasvikoriste (Sprig.tsx) ---------- */
+
+.sprig {
+  position: absolute;
+  bottom: 0;
+  width: clamp(4rem, 9vw, 6.5rem);
+  height: auto;
+  color: var(--color-surface); /* SVG käyttää currentColor-arvoa viivan värinä */
+  opacity: 0.75;
+  pointer-events: none; /* koriste ei estä napsautuksia */
+}
+
+.sprig--left {
+  left: 0;
+  transform: rotate(-4deg);
+}
+
+/* scaleX(-1) peilaa kuvan: sama SVG toimii oikeassa laidassa */
+.sprig--right {
+  right: 0;
+  transform: scaleX(-1) rotate(-4deg);
+}
+
+/* Pienellä näytöllä koristeet pienemmiksi ja haaleammiksi, ettei ne peitä painikkeita */
+@media (max-width: 40rem) {
+  .sprig {
+    width: 2.75rem;
+    opacity: 0.45;
+  }
+}

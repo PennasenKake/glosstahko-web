@@ -12,6 +12,7 @@ import type { ServiceCategory } from '../types'
 export const serviceCategories: ServiceCategory[] = [
   {
     id: 'kynnet',
+    group: 'kynnet',
     title: 'Kynnet',
     services: [
       { id: 'manikyyri', name: 'Manikyyri (ei lakkausta)', minutes: 45, price: 42 },
@@ -30,6 +31,7 @@ export const serviceCategories: ServiceCategory[] = [
   },
   {
     id: 'leikkaukset',
+    group: 'hiukset',
     title: 'Leikkaukset',
     services: [
       // priceMax = hintahaarukka (34–36 €)
@@ -45,6 +47,7 @@ export const serviceCategories: ServiceCategory[] = [
   },
   {
     id: 'varjaykset',
+    group: 'hiukset',
     title: 'Värjäykset, permanentit ja vaalennukset',
     description: 'Lopullinen hinta tarkentuu hiusten pituuden ja työn laajuuden mukaan.',
     services: [
@@ -60,6 +63,7 @@ export const serviceCategories: ServiceCategory[] = [
   },
   {
     id: 'kampaukset',
+    group: 'hiukset',
     title: 'Kampaukset',
     services: [
       { id: 'kampaukset', name: 'Kampaukset', price: 75, perHour: true },

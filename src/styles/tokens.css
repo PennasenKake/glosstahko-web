@@ -1,0 +1,42 @@
+/* ==========================================================
+   tokens.css – suunnittelun "muuttujat" (design tokens)
+
+   Kaikki värit, fontit ja mitat määritellään TÄSSÄ yhdessä
+   paikassa. Muissa tiedostoissa käytetään vain var(--nimi).
+   Kun tyyli vaihdetaan (Boho -> Minimal, vaihe 6), riittää
+   että vaihdetaan näiden arvot. Mitään muuta ei tarvitse
+   muokata.
+   ========================================================== */
+
+:root {
+  /* --- Värit (Boho) ------------------------------------- */
+  --color-brand: #b86b53; /* logon terrakotta: vain isoille pinnoille ja isolle tekstille */
+  --color-brand-dark: #8f4733; /* tummempi: napit ja otsikot vaalealla (kontrasti n. 6:1) */
+  --color-ink: #2b2b29; /* leipäteksti */
+  --color-ink-deep: #1e1b18; /* teksti terrakottapinnalla */
+  --color-muted: #675f55; /* toissijainen teksti */
+  --color-bg: #f6efe4; /* sivun pohja (kermanvalkoinen) */
+  --color-bg-alt: #efe5d6; /* vuorotteleva osion tausta */
+  --color-surface: #fbf5ec; /* kortit */
+  --color-line: #d9cdbb; /* ohuet viivat */
+  --color-line-strong: #b9a98f; /* pisteviivat hinnastossa */
+
+  /* --- Fontit ------------------------------------------- */
+  --font-script: 'Mrs Saint Delafield', cursive; /* käsinkirjoitettu pääotsikko */
+  --font-heading: 'Cormorant Garamond', Georgia, serif; /* pienet versaaliotsikot */
+  --font-body: 'Lora', Georgia, serif; /* leipäteksti */
+
+  /* --- Mitat -------------------------------------------- */
+  --radius-card: 2rem;
+  --radius-pill: 999px;
+  --content-width: 70rem; /* sivun leveys isolla näytöllä */
+  --header-h: 6.25rem; /* mobiili: logorivi 3.5rem + tabirivi 2.75rem */
+}
+
+/* Isolla näytöllä header on yksirivinen. scroll-padding (base.css)
+   käyttää samaa arvoa, joten ankkurilinkit eivät jää palkin alle. */
+@media (min-width: 56rem) {
+  :root {
+    --header-h: 4.5rem;
+  }
+}

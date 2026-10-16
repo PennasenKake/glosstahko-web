@@ -1,1 +1,21 @@
+/* ==========================================================
+   index.css – tyylien sisääntulopiste (main.tsx tuo tämän)
 
+   Tässä vain @import-rivit. Järjestyksellä on väliä:
+   ensin fontit ja muuttujat, sitten perustyylit, lopuksi
+   rakenne, palaset ja osiot (myöhemmät voittavat aiemmat).
+   ========================================================== */
+
+/* Fontit omasta paketista (npm), ei Googlelta: ei kolmannen osapuolen pyyntöjä */
+@import '@fontsource/lora/400.css';
+@import '@fontsource/lora/500.css';
+@import '@fontsource/lora/600.css';
+@import '@fontsource/cormorant-garamond/500.css';
+@import '@fontsource/cormorant-garamond/600.css';
+@import '@fontsource/mrs-saint-delafield/400.css';
+
+@import './styles/tokens.css';
+@import './styles/base.css';
+@import './styles/layout.css';
+@import './styles/components.css';
+@import './styles/sections.css';

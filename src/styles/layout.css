@@ -1,0 +1,124 @@
+/* ==========================================================
+   layout.css – sivun runko: sticky header, tabit ja footer
+
+   Mobile first: perustyylit koskevat pientä ruutua, ja
+   @media (min-width: ...) lisää muutokset isommille.
+   ========================================================== */
+
+/* ---------- Header ---------- */
+
+.site-header {
+  position: sticky; /* pysyy ruudun yläreunassa vieritettäessä */
+  top: 0;
+  z-index: 10;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-line);
+}
+
+/* Mobiili: kaksi riviä. Ylhäällä logo ja varauspainike, alla tabit. */
+.site-header__inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 3.5rem 2.75rem; /* yhteensä 6.25 rem = --header-h */
+  grid-template-areas:
+    'logo cta'
+    'nav  nav';
+  align-items: center;
+}
+
+.logo {
+  grid-area: logo;
+  justify-self: start;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.logo__main {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+}
+
+.logo__sub {
+  margin-top: 0.25rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.site-header__cta {
+  grid-area: cta;
+}
+
+/* Tabit: mobiilissa vaakavieritys, jos kaikki eivät mahdu */
+.tabs {
+  grid-area: nav;
+  overflow-x: auto;
+  scrollbar-width: none; /* piilottaa vierityspalkin (Firefox) */
+}
+
+.tabs::-webkit-scrollbar {
+  display: none; /* piilottaa vierityspalkin (Chrome, Safari) */
+}
+
+.tabs__list {
+  display: flex;
+  gap: 1.5rem;
+  white-space: nowrap; /* tabin teksti ei rivity kahdelle riville */
+}
+
+.tabs__link {
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem; /* riittävä kosketusalue (vähintään n. 44 px) */
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--color-ink);
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.tabs__link:hover,
+.tabs__link[aria-current='true'] {
+  color: var(--color-brand-dark);
+  border-bottom-color: var(--color-brand-dark);
+}
+
+/* Iso näyttö: yksi rivi, tabit keskellä */
+@media (min-width: 56rem) {
+  .site-header__inner {
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: var(--header-h);
+    grid-template-areas: 'logo nav cta';
+  }
+
+  .site-header__cta {
+    justify-self: end;
+  }
+
+  .tabs__list {
+    gap: 2rem;
+  }
+
+  .tabs__link {
+    min-height: var(--header-h);
+  }
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  padding-block: 2rem;
+  background: var(--color-ink);
+  color: var(--color-bg);
+  text-align: center;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
