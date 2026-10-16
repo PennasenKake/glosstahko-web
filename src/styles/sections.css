@@ -8,9 +8,11 @@
 /* ---------- Hero ---------- */
 
 .hero {
-  position: relative; /* kasvikoristeet asemoidaan tämän sisällä */
+  position: relative; /* koristeet asemoidaan tämän sisällä */
   overflow: hidden; /* koristeet eivät aiheuta vaakavieritystä */
-  padding-block: clamp(4rem, 10vw, 7rem);
+  /* Header leijuu heron päällä, joten sen korkeus lisätään yläväliin */
+  padding-top: calc(var(--header-h) + clamp(2rem, 6vw, 4rem));
+  /* ei alapaddingia: lehvä kasvaa heron alareunasta */
   background: var(--color-brand);
   color: var(--color-ink-deep);
   text-align: center;
@@ -19,6 +21,16 @@
 /* Terrakottapinnalla fokusrengas tummaksi, jotta se erottuu */
 .hero :focus-visible {
   outline-color: var(--color-ink-deep);
+}
+
+/* Mobiili: yksi sarake (teksti, sitten lehvä). Iso näyttö: kaksi saraketta. */
+.hero__grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.hero__text {
+  padding-bottom: 1rem;
 }
 
 .hero__eyebrow {
@@ -58,6 +70,79 @@
   margin-top: 2.25rem;
 }
 
+/* Logo-osa: GLOSS/TAHKO-sanamerkki ja lehvä. Koriste, joten ruudunlukija ohittaa. */
+.hero__logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.hero__brand {
+  display: none; /* mobiilissa headerin logo riittää */
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.hero__brand-main {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(3.5rem, 7.5vw, 5.5rem);
+  letter-spacing: 0.3em;
+  margin-right: -0.3em; /* sama keskityskorjaus kuin yllä */
+  text-transform: uppercase;
+}
+
+.hero__brand-sub {
+  margin-top: 1rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(1.5rem, 3.4vw, 2.4rem);
+  letter-spacing: 0.5em;
+  margin-right: -0.5em;
+  text-transform: uppercase;
+}
+
+.hero__leaf {
+  width: min(19rem, 72%);
+  height: auto;
+}
+
+@media (min-width: 56rem) {
+  .hero__grid {
+    grid-template-columns: 1.1fr 1fr;
+    gap: 3rem;
+    text-align: left;
+  }
+
+  .hero__text {
+    align-self: center;
+    padding-bottom: clamp(3rem, 6vw, 5rem);
+  }
+
+  .hero__caps {
+    margin-right: 0;
+  }
+
+  .hero__actions {
+    justify-content: flex-start;
+  }
+
+  .hero__brand {
+    display: flex;
+  }
+
+  .hero__logo {
+    gap: 2.5rem;
+  }
+
+  .hero__leaf {
+    width: min(27rem, 100%);
+  }
+}
+
 /* ---------- Intro (esittely heron alla) ---------- */
 
 .intro {
@@ -70,6 +155,8 @@
 }
 
 /* ---------- Minusta ---------- */
+
+/* Koriste tulee komponentissa (.flora). Tässä vain tekstin väli. */
 
 .about__text {
   margin-top: 1rem;
@@ -167,7 +254,47 @@
   line-height: 1.5;
 }
 
+/* ---------- Tuotteet (Palvelut-osion alla) ---------- */
+
+.products {
+  margin-top: 2.5rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border: 1px dashed var(--color-line-strong);
+  border-radius: var(--radius-card);
+  text-align: center;
+}
+
+.products__label {
+  font-size: 0.78rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-brand-dark);
+}
+
+.products__brand {
+  margin-top: 0.25rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 5vw, 2.4rem);
+  font-weight: 600;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.products__text {
+  max-width: 38rem;
+  margin: 0.5rem auto 1.25rem;
+  color: var(--color-muted);
+}
+
 /* ---------- Tahko ---------- */
+
+/* Salvianvihreä lehvä oikeassa alakulmassa (kasvaa osion reunasta) */
+.tahko__leaf {
+  right: -2rem;
+  bottom: 0;
+  width: clamp(14rem, 26vw, 24rem);
+  opacity: 0.85;
+}
 
 .tahko__text {
   margin: 1rem 0 1.5rem;
@@ -179,24 +306,86 @@
 
 /* ---------- UKK ---------- */
 
+/* "Hyvä tietää" -kortit: auto-fit tekee niin monta saraketta kuin mahtuu (min 14 rem) */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.info-card {
+  padding: 1.5rem 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 1.25rem;
+  text-align: center;
+}
+
+.info-card__title {
+  margin-bottom: 0.4rem;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-brand-dark);
+}
+
+.info-card__text {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--color-muted);
+}
+
+/* Haitari: <details>-elementti */
 .faq__list {
   max-width: 44rem;
-  margin: 2rem auto 0;
+  margin-inline: auto;
 }
 
 .faq__item {
-  padding-block: 1.25rem;
   border-bottom: 1px solid var(--color-line);
 }
 
+.faq__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.5rem; /* kosketusalue */
+  padding-block: 0.9rem;
+  cursor: pointer;
+  list-style: none; /* piilottaa selaimen oman kolmion */
+}
+
+.faq__summary::-webkit-details-marker {
+  display: none; /* sama Safarille */
+}
+
+/* Plus-merkki, joka kääntyy ristiksi avattaessa */
+.faq__summary::after {
+  content: '+';
+  flex: none;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: var(--color-brand-dark);
+  transition: transform 0.2s;
+}
+
+.faq__item[open] .faq__summary::after {
+  transform: rotate(45deg);
+}
+
 .faq__question {
-  margin-bottom: 0.4rem;
   font-family: var(--font-heading);
   font-size: 1.35rem;
   font-weight: 600;
+  line-height: 1.25;
 }
 
 .faq__answer {
+  padding-bottom: 1.25rem;
   color: var(--color-muted);
 }
 

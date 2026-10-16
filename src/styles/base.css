@@ -87,10 +87,28 @@ svg {
 /* Osion pystysuuntainen väli. clamp(min, joustava, max) skaalautuu ruudun mukaan. */
 .section {
   padding-block: clamp(3.5rem, 9vw, 6.5rem);
+  position: relative; /* koristeet (.flora, .leaf-deco) asemoidaan osion sisällä */
+  overflow: hidden; /* koristeet eivät aiheuta vaakavieritystä */
+}
+
+/* Sisältö koristeiden päälle */
+.section > .container {
+  position: relative;
 }
 
 .section--alt {
   background: var(--color-bg-alt);
+}
+
+/* Tumma terrakottaosio (Yhteys): vaalea teksti tummalla pohjalla */
+.section--brand {
+  background: var(--color-brand-dark);
+  color: var(--color-surface);
+  --ornament: var(--color-surface); /* osion otsikon koriste vaaleaksi */
+}
+
+.section--brand :focus-visible {
+  outline-color: var(--color-surface);
 }
 
 /* "Siirry sisältöön" -linkki: näkyy vain Tab-näppäimellä */

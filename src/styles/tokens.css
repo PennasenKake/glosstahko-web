@@ -18,6 +18,7 @@
   --color-bg: #f6efe4; /* sivun pohja (kermanvalkoinen) */
   --color-bg-alt: #efe5d6; /* vuorotteleva osion tausta */
   --color-surface: #fbf5ec; /* kortit */
+  --color-sage: #cdc8a6; /* logon lehden salviansävy */
   --color-line: #d9cdbb; /* ohuet viivat */
   --color-line-strong: #b9a98f; /* pisteviivat hinnastossa */
 
@@ -25,6 +26,7 @@
   --font-script: 'Mrs Saint Delafield', cursive; /* käsinkirjoitettu pääotsikko */
   --font-heading: 'Cormorant Garamond', Georgia, serif; /* pienet versaaliotsikot */
   --font-body: 'Lora', Georgia, serif; /* leipäteksti */
+  --font-sans: 'Jost', system-ui, sans-serif; /* logon TAHKO-sana */
 
   /* --- Mitat -------------------------------------------- */
   --radius-card: 2rem;

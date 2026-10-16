@@ -3,6 +3,7 @@ import SectionHeading from '../ui/SectionHeading'
 export default function About() {
   return (
     <section id="minusta" className="section" aria-labelledby="minusta-otsikko">
+      <span className="flora flora--right flora--edge-right flora--soft" aria-hidden="true" />
       <div className="container container--narrow">
         <SectionHeading id="minusta-otsikko" eyebrow="Tekijä" title="Minusta" />
 

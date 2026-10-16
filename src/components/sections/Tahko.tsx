@@ -1,10 +1,12 @@
 import BookingButton from '../ui/BookingButton'
+import leaf from '../../assets/images/leaf.webp'
 import SectionHeading from '../ui/SectionHeading'
 
 /** Liikkuva palvelu Tahkolla (sesonkeina). Tausta vaihtuu (section--alt). */
 export default function Tahko() {
   return (
     <section id="tahko" className="section section--alt" aria-labelledby="tahko-otsikko">
+      <img className="leaf-deco tahko__leaf" src={leaf} alt="" width={640} height={574} loading="lazy" />
       <div className="container container--narrow">
         <SectionHeading id="tahko-otsikko" eyebrow="Liikkuva palvelu" title="Tahkolla" />
 

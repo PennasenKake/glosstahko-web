@@ -84,6 +84,24 @@
   padding-top: 0.1em;
 }
 
+/* Boho-koriste otsikon alle: viiva, piste, viiva. Väri tulee muuttujasta --ornament. */
+.section-heading {
+  --ornament: var(--color-brand-dark);
+}
+
+.section-heading::after {
+  content: '';
+  display: block;
+  width: 8rem;
+  height: 0.6rem;
+  margin: 1.1rem auto 0;
+  background:
+    radial-gradient(circle, var(--ornament) 0 3px, transparent 4px) center / 0.6rem 0.6rem no-repeat,
+    linear-gradient(var(--ornament), var(--ornament)) left center / calc(50% - 0.7rem) 1px no-repeat,
+    linear-gradient(var(--ornament), var(--ornament)) right center / calc(50% - 0.7rem) 1px no-repeat;
+  opacity: 0.55;
+}
+
 /* ---------- Chip: pieni pyöreäreunainen tagi ---------- */
 
 .chip-list {
@@ -102,33 +120,77 @@
   background: var(--color-surface);
 }
 
-/* ---------- Kasvikoriste (Sprig.tsx) ---------- */
+/* ---------- Boho-koristeet ---------- */
 
-.sprig {
+/* Kukkaoksa viivapiirros. Kuva toimii MASKINA: näkyvä väri tulee
+   color-ominaisuudesta (currentColor), joten sama kuva käy vaalealle
+   ja tummalle pohjalle ja tyyli vaihtuu pelkällä CSS:llä. */
+.flora {
   position: absolute;
+  display: none; /* pienellä näytöllä piiloon, näytetään alempana */
+  background-color: currentColor;
+  pointer-events: none;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.flora--right {
+  aspect-ratio: 320 / 898;
+  -webkit-mask-image: url('../assets/images/flora-right.webp');
+  mask-image: url('../assets/images/flora-right.webp');
+}
+
+.flora--left {
+  aspect-ratio: 300 / 505;
+  -webkit-mask-image: url('../assets/images/flora-left.webp');
+  mask-image: url('../assets/images/flora-left.webp');
+}
+
+/* Reunakoristeet: oksa oikeassa tai vasemmassa laidassa, osittain ruudun ulkopuolella */
+.flora--edge-right {
+  right: -2.5rem;
+  top: 50%;
+  height: 85%;
+  transform: translateY(-50%);
+}
+
+.flora--edge-left {
+  left: -2.5rem;
   bottom: 0;
-  width: clamp(4rem, 9vw, 6.5rem);
+  height: 60%;
+}
+
+.flora--soft {
+  color: var(--color-brand);
+  opacity: 0.2;
+}
+
+.flora--cream {
+  color: var(--color-bg);
+  opacity: 0.45;
+}
+
+/* Isolla näytöllä koristeet näkyviin */
+@media (min-width: 64rem) {
+  .flora {
+    display: block;
+  }
+}
+
+/* Logon salvianvihreä lehvä kuvana (säilyttää omat värinsä) */
+.leaf-deco {
+  position: absolute;
+  display: none;
   height: auto;
-  color: var(--color-surface); /* SVG käyttää currentColor-arvoa viivan värinä */
-  opacity: 0.75;
-  pointer-events: none; /* koriste ei estä napsautuksia */
+  pointer-events: none;
 }
 
-.sprig--left {
-  left: 0;
-  transform: rotate(-4deg);
-}
-
-/* scaleX(-1) peilaa kuvan: sama SVG toimii oikeassa laidassa */
-.sprig--right {
-  right: 0;
-  transform: scaleX(-1) rotate(-4deg);
-}
-
-/* Pienellä näytöllä koristeet pienemmiksi ja haaleammiksi, ettei ne peitä painikkeita */
-@media (max-width: 40rem) {
-  .sprig {
-    width: 2.75rem;
-    opacity: 0.45;
+@media (min-width: 48rem) {
+  .leaf-deco {
+    display: block;
   }
 }

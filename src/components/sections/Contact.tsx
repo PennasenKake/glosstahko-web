@@ -5,7 +5,9 @@ import SectionHeading from '../ui/SectionHeading'
 /** Yhteystiedot: kaikki arvot tulevat config/site.ts-tiedostosta. */
 export default function Contact() {
   return (
-    <section id="yhteys" className="section section--alt" aria-labelledby="yhteys-otsikko">
+    <section id="yhteys" className="section section--brand" aria-labelledby="yhteys-otsikko">
+      <span className="flora flora--right flora--edge-right flora--cream" aria-hidden="true" />
+      <span className="flora flora--left flora--edge-left flora--cream" aria-hidden="true" />
       <div className="container container--narrow">
         <SectionHeading id="yhteys-otsikko" eyebrow="Ota yhteyttä" title="Yhteystiedot" />
 
@@ -14,7 +16,7 @@ export default function Contact() {
         </p>
 
         <div className="contact__cta">
-          <BookingButton label="Varaa aika Instagramissa" />
+          <BookingButton label="Varaa aika Instagramissa" variant="light" />
         </div>
 
         <ul className="contact__list">

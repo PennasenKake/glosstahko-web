@@ -1,3 +1,4 @@
+import { nailProducts } from '../../data/products'
 import { serviceCategories } from '../../data/services'
 import type { ServiceGroup } from '../../types'
 import { formatDuration, formatPrice } from '../../utils/format'
@@ -79,6 +80,22 @@ export default function Services() {
             )
           })}
         </div>
+
+        {/* Käytössä oleva kynsisarja (data/products.ts) */}
+        <aside className="products" aria-labelledby="products-otsikko">
+          <p className="products__label" id="products-otsikko">
+            {nailProducts.label}
+          </p>
+          <p className="products__brand">{nailProducts.brand}</p>
+          <p className="products__text">{nailProducts.description}</p>
+          <ul className="chip-list">
+            {nailProducts.items.map((item) => (
+              <li className="chip" key={item}>
+                {item}
+              </li>
+            ))}
+          </ul>
+        </aside>
       </div>
     </section>
   )

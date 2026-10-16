@@ -13,6 +13,7 @@
 @import '@fontsource/cormorant-garamond/500.css';
 @import '@fontsource/cormorant-garamond/600.css';
 @import '@fontsource/mrs-saint-delafield/400.css';
+@import '@fontsource/jost/600.css';
 
 @import './styles/tokens.css';
 @import './styles/base.css';

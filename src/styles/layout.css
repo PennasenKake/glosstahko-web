@@ -11,8 +11,45 @@
   position: sticky; /* pysyy ruudun yläreunassa vieritettäessä */
   top: 0;
   z-index: 10;
-  background: var(--color-bg);
+  /* Negatiivinen marginaali vetää heron headerin alle: palkki leijuu heron päällä */
+  margin-bottom: calc(var(--header-h) * -1);
+  /* Heron jälkeen: utuinen vaalea palkki. color-mix tekee värin osittain läpinäkyväksi. */
+  background: color-mix(in srgb, var(--color-bg) 85%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-line);
+  box-shadow: 0 6px 24px rgb(43 43 41 / 0.06);
+  transition: background-color 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* Heron päällä: täysin läpinäkyvä, tummat tekstit terrakotalla (data-over-hero asetetaan Header.tsx:ssä) */
+.site-header[data-over-hero='true'] {
+  background: transparent;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+
+.site-header[data-over-hero='true'] .logo,
+.site-header[data-over-hero='true'] .logo__sub,
+.site-header[data-over-hero='true'] .tabs__link {
+  color: var(--color-ink-deep);
+}
+
+.site-header[data-over-hero='true'] .tabs__link:hover,
+.site-header[data-over-hero='true'] .tabs__link[aria-current='true'] {
+  border-bottom-color: var(--color-ink-deep);
+}
+
+/* Vaalea nappi terrakotalla, tumma nappi vaalealla pohjalla */
+.site-header[data-over-hero='true'] .btn--primary {
+  background: var(--color-surface);
+  color: var(--color-ink-deep);
+}
+
+.site-header[data-over-hero='true'] :focus-visible {
+  outline-color: var(--color-ink-deep);
 }
 
 /* Mobiili: kaksi riviä. Ylhäällä logo ja varauspainike, alla tabit. */
@@ -115,10 +152,98 @@
 /* ---------- Footer ---------- */
 
 .site-footer {
-  padding-block: 2rem;
+  position: relative;
+  overflow: hidden; /* kukkakoriste ei aiheuta vaakavieritystä */
+  padding-top: clamp(3rem, 7vw, 4.5rem);
   background: var(--color-ink);
   color: var(--color-bg);
-  text-align: center;
+}
+
+.site-footer a {
+  text-underline-offset: 0.2em;
+}
+
+.site-footer :focus-visible {
+  outline-color: var(--color-bg);
+}
+
+/* Mobiili: sarakkeet allekkain. Iso näyttö: brändi leveämpi, kaksi kapeaa saraketta. */
+.site-footer__grid {
+  position: relative; /* sisältö koristeen päälle */
+  display: grid;
+  gap: 2.5rem;
+}
+
+@media (min-width: 48rem) {
+  .site-footer__grid {
+    grid-template-columns: 1.4fr 1fr 1.3fr;
+    gap: 3rem;
+  }
+}
+
+.site-footer__logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.site-footer__logo-main {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 2rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.site-footer__logo-sub {
+  margin-top: 0.5rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
   font-size: 0.85rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--color-line-strong);
+}
+
+.site-footer__tagline {
+  max-width: 20rem;
+  margin: 1.25rem 0 1.5rem;
+  color: var(--color-line);
+}
+
+.site-footer__title {
+  margin-bottom: 1rem;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-line-strong);
+}
+
+.site-footer__list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.site-footer__list a {
+  text-decoration: none;
+}
+
+.site-footer__list a:hover {
+  text-decoration: underline;
+}
+
+/* Alarivi: tekijänoikeus, huomautukset ja takaisin ylös */
+.site-footer__bottom {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem 2rem;
+  margin-top: 3rem;
+  padding-block: 1.5rem;
+  border-top: 1px solid rgb(246 239 228 / 0.18);
+  font-size: 0.85rem;
+  color: var(--color-line-strong);
 }
