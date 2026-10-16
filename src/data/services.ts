@@ -1,7 +1,14 @@
 import type { ServiceCategory } from '../types'
 
-// LUONNOS: hinnat ja kestot ovat suuntaa antavia, tarkistetaan ennen julkaisua.
-// Hinnat sisältävät alv:n 25,5 %.
+/**
+ * Sivun hinnasto. Tämä on ainoa paikka, jossa hintoja muutetaan:
+ * Services-komponentti piirtää kaiken tästä.
+ *
+ * LUONNOS: tarkistetaan ennen julkaisua.
+ * - Hinnat sisältävät alv:n 25,5 %.
+ * - Kynnet: Siirin oma luonnoshinnasto.
+ * - Hiukset: kampaamon hinnasto (käsinkirjoitetut luvut tarkistettava).
+ */
 export const serviceCategories: ServiceCategory[] = [
   {
     id: 'kynnet',
@@ -15,38 +22,63 @@ export const serviceCategories: ServiceCategory[] = [
       { id: 'rakennekynnet-uudet', name: 'Rakennekynnet, uudet', minutes: 120, price: 85 },
       { id: 'rakennekynnet-huolto', name: 'Rakennekynsien huolto', minutes: 105, price: 75 },
       { id: 'geelin-poisto', name: 'Geelin poisto + hoito', minutes: 30, price: 30 },
+      // Lisäpalvelut: addon-lippu näyttää ne muodossa "+15 min" ja "+10 €"
       { id: 'poisto-toinen-tekija', name: 'Poisto toisen tekijän geelistä', minutes: 15, price: 10, addon: true },
       { id: 'nail-art', name: 'Kynsikoristelu (nail art)', minutes: 10, minutesMax: 20, price: 5, priceFrom: true, addon: true },
       { id: 'ranskalainen', name: 'Ranskalainen / milky white', minutes: 15, price: 10, addon: true },
     ],
   },
   {
-    id: 'hiukset',
-    title: 'Hiukset',
-    description: 'Lopullinen hinta tarkentuu konsultaatiossa, koska hiusten pituus ja tuotemäärä vaihtelevat.',
+    id: 'leikkaukset',
+    title: 'Leikkaukset',
     services: [
-      { id: 'leikkaus-nainen', name: 'Naisten leikkaus', minutes: 45, price: 45 },
-      { id: 'leikkaus-mies', name: 'Miesten leikkaus', minutes: 30, price: 32 },
-      { id: 'leikkaus-lapsi', name: 'Lasten leikkaus (alle 12 v)', minutes: 30, price: 25 },
-      { id: 'juurikasvu', name: 'Juurikasvuvärjäys', minutes: 90, price: 95 },
-      { id: 'varjays-lyhyt', name: 'Värjäys + leikkaus, lyhyet hiukset', minutes: 120, price: 120, priceFrom: true },
-      { id: 'varjays-pitka', name: 'Värjäys + leikkaus, pitkät hiukset', minutes: 150, price: 150, priceFrom: true },
-      { id: 'raidat', name: 'Raidat / vaalennus / balayage', minutes: 150, minutesMax: 180, price: 160, priceFrom: true },
-      { id: 'tehohoito', name: 'Tehohoito (lisäpalveluna)', minutes: 20, price: 25, addon: true },
-      { id: 'erikoishoito', name: 'Rakenne- tai erikoishoito', minutes: 45, price: 55 },
-      { id: 'juhlakampaus', name: 'Juhlakampaus', minutes: 60, price: 110 },
-      { id: 'haakampaus', name: 'Hääkampaus (sis. koristeiden kiinnityksen)', minutes: 90, price: 140 },
-      { id: 'haakampaus-koe', name: 'Hääkampauksen koekerta', minutes: 60, price: 80 },
+      // priceMax = hintahaarukka (34–36 €)
+      { id: 'leikkaus-30', name: 'Hiustenleikkaus', minutes: 30, price: 34, priceMax: 36 },
+      { id: 'leikkaus-45', name: 'Hiustenleikkaus', minutes: 45, price: 48, priceMax: 52 },
+      { id: 'leikkaus-pesu', name: 'Hiustenleikkaus, sis. pesun', minutes: 60, price: 52, priceMax: 54 },
+      // Alla olevilla ei ole kestoa, joten minutes puuttuu ja kesto jää pois
+      { id: 'tasoitus', name: 'Pitkien hiusten tasoitus', price: 40 },
+      { id: 'leikkaus-lapset', name: 'Hiustenleikkaus, lapset', price: 30, priceMax: 35 },
+      { id: 'koneleikkaus', name: 'Koneleikkaus', price: 22, priceMax: 25 },
+      { id: 'otsa-niska', name: 'Otsa- ja niskahiusten leikkaus', price: 22, priceMax: 25 },
     ],
   },
   {
-    id: 'paketit',
-    title: 'Paketit',
-    description: 'Hiukset ja kynnet samalla käynnillä.',
+    id: 'varjaykset',
+    title: 'Värjäykset, permanentit ja vaalennukset',
+    description: 'Lopullinen hinta tarkentuu hiusten pituuden ja työn laajuuden mukaan.',
     services: [
-      { id: 'paketti-hemmottelu', name: 'Hemmottelu', minutes: 105, price: 95, note: 'Naisten leikkaus + geelilakkaus. Säästö 5 €' },
-      { id: 'paketti-juhlavalmis', name: 'Juhlavalmis', minutes: 120, price: 155, note: 'Juhlakampaus + geelilakkaus. Säästö 10 €' },
-      { id: 'paketti-morsius', name: 'Morsiuspaketti', minutes: 210, price: 260, note: 'Hääkampaus + koekerta + geelilakkaus. Säästö 15 €' },
+      { id: 'permanentti-lyhyt', name: 'Permanentti ja leikkaus, lyhyet', price: 125, priceMax: 135 },
+      { id: 'permanentti-pitka', name: 'Permanentti ja leikkaus, pitkät', price: 150, priceMax: 170 },
+      { id: 'osapermanentti', name: 'Osapermanentti ja leikkaus', price: 115 },
+      { id: 'tyvivari', name: 'Tyviväri (alle 1,5 cm), sis. leikkauksen', price: 125, priceMax: 135 },
+      { id: 'monivari-lyhyt', name: 'Monivärjäys, sis. leikkauksen, lyhyet', price: 140, priceMax: 150 },
+      { id: 'monivari-pitka', name: 'Monivärjäys, sis. leikkauksen, pitkät', price: 150, priceMax: 180 },
+      // perHour = tuntihinta (75 €/h)
+      { id: 'raidoitukset', name: 'Raidoitukset / vaalennukset / vaalennuspesut', price: 75, perHour: true },
     ],
   },
+  {
+    id: 'kampaukset',
+    title: 'Kampaukset',
+    services: [
+      { id: 'kampaukset', name: 'Kampaukset', price: 75, perHour: true },
+      // priceFrom = "alk." hinnan edessä
+      { id: 'haakampaus', name: 'Hääkampaus, sis. suunnittelun ja koekampauksen', price: 170, priceFrom: true },
+    ],
+  },
+//   // VAHVISTETTAVA: tarjoaako Siiri kulmien ja ripsien värjäystä?
+//   // Jos ei, poista koko lohko.
+//   {
+//     id: 'kulmat-ripset',
+//     title: 'Kulmat ja ripset',
+//     services: [
+//       { id: 'kulmat', name: 'Kulmien kestovärjäys ja muotoilu', price: 20 },
+//       { id: 'ripset', name: 'Ripsien kestovärjäys', price: 20 },
+//       { id: 'ripset-kulmat', name: 'Ripset ja kulmat yhdessä', price: 38 },
+//       { id: 'ripset-kulmat-lisa', name: 'Ripset ja kulmat muun työn yhteydessä', price: 30 },
+//     ],
+//   },
+  // Paketit (hiukset + kynnet samalla käynnillä) lisätään takaisin vasta,
+  // kun leikkaus- ja kampaushinnat on vahvistettu: ne laskettiin vanhoista hinnoista.
 ]
