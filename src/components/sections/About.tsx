@@ -1,3 +1,4 @@
+import InstagramFeed from '../ui/InstagramFeed'
 import SectionHeading from '../ui/SectionHeading'
 
 export default function About() {
@@ -19,6 +20,11 @@ export default function About() {
           hiusalan yrittäjän tiloissa, ja asiakkaan kanssa katsotaan aina
           yhdessä, mikä sopii juuri hänelle.
         </p>
+      </div>
+
+      {/* Leveämpi kuin tekstipalsta, siksi omassa container-elementissään */}
+      <div className="container about__feed">
+        <InstagramFeed />
       </div>
     </section>
   )

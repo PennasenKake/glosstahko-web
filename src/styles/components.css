@@ -194,3 +194,104 @@
     display: block;
   }
 }
+
+/* ---------- Instagram-syöte (InstagramFeed) ---------- */
+
+.insta {
+  text-align: center;
+}
+
+.insta__title {
+  margin-bottom: 1.25rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-brand-dark);
+}
+
+.insta__title a {
+  text-underline-offset: 0.25em;
+}
+
+/* Mobiili: sivusuuntainen vieritys, kortit "tarttuvat" paikalleen (scroll-snap) */
+.insta__list {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding: 0.25rem 1rem 0.75rem;
+  margin-inline: -1rem; /* vieritys ulottuu ruudun reunaan asti */
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.insta__list::-webkit-scrollbar {
+  display: none;
+}
+
+.insta__item {
+  flex: 0 0 78%;
+  scroll-snap-align: center;
+}
+
+.insta__card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  height: 100%;
+  overflow: hidden;
+  padding: 1.5rem 1.25rem 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 1.25rem;
+  text-align: left;
+  text-decoration: none;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.insta__card:hover {
+  transform: translateY(-3px);
+  border-color: var(--color-line-strong);
+}
+
+/* Teksti: Lora, 5 riviä näkyviin, loput leikataan (...) */
+.insta__text {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.insta__meta {
+  margin-top: auto;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}
+
+/* Kuvallinen kortti: kuva korttiin kiinni ylälaitaan */
+.insta__image {
+  width: calc(100% + 2.5rem);
+  max-width: none;
+  margin: -1.5rem -1.25rem 0;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+/* Iso ruutu: kolme korttia rinnakkain, ei vieritystä */
+@media (min-width: 48rem) {
+  .insta__list {
+    margin-inline: 0;
+    padding-inline: 0;
+    overflow: visible;
+  }
+
+  .insta__item {
+    flex: 1 1 0;
+  }
+}
