@@ -62,7 +62,7 @@ export default function Footer() {
         <p>
           © {year} {site.name} · Y-tunnus {site.businessId}
         </p>
-        <p>Hinnat sisältävät arvonlisäveron. Sivusto ei käytä evästeitä eikä tallenna tietojasi.</p>
+        <p>Hinnat sisältävät arvonlisäveron. Sivusto ei itse käytä evästeitä eikä tallenna tietojasi. Instagram-julkaisun avaaminen lataa sisällön Instagramista.</p>
         <a href="#etusivu">Takaisin ylös ↑</a>
       </div>
     </footer>

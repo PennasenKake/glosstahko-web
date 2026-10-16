@@ -9,6 +9,7 @@ Yhden sivun verkkosivusto nilsiäläiselle kynsi- ja kampaamoyritykselle **Gloss
 - Näkyy Google-haussa (paikallinen SEO: Nilsiä, Tahko)
 - Ei backendia eikä tietojen tallennusta: ajanvaraus ja some ovat ulkoisia linkkejä
 - Ei evästeitä eikä kolmansien osapuolten pyyntöjä (fontit ovat omassa paketissa)
+  - Ainoa poikkeus: Minusta-osion Instagram-nosto latautuu Instagramista vasta, kun kävijä napauttaa "Näytä julkaisu"
 - Yhtenäinen **Boho**-tyyli (valittu lopulliseksi teemaksi)
 
 ## Teknologiat

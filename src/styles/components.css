@@ -213,15 +213,17 @@
   text-underline-offset: 0.25em;
 }
 
-/* Mobiili: sivusuuntainen vieritys, kortit "tarttuvat" paikalleen (scroll-snap) */
+/* Karuselli: sivusuuntainen vieritys, kortit "tarttuvat" paikalleen (scroll-snap).
+   Raita toimii pyyhkäisyllä, nuolinäppäimillä (tarkennettuna) ja nuolipainikkeilla. */
 .insta__list {
   display: flex;
   gap: 1rem;
-  margin-bottom: 1.75rem;
-  padding: 0.25rem 1rem 0.75rem;
+  margin-bottom: 1.25rem;
+  padding: 0.5rem 1rem 0.75rem;
   margin-inline: -1rem; /* vieritys ulottuu ruudun reunaan asti */
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1rem;
   scrollbar-width: none;
 }
 
@@ -245,12 +247,10 @@
   border: 1px solid var(--color-line);
   border-radius: 1.25rem;
   text-align: left;
-  text-decoration: none;
-  transition: transform 0.2s, border-color 0.2s;
+  transition: border-color 0.2s;
 }
 
 .insta__card:hover {
-  transform: translateY(-3px);
   border-color: var(--color-line-strong);
 }
 
@@ -267,31 +267,125 @@
   line-height: 1.4;
 }
 
-.insta__meta {
+/* Alarivi: päiväys, linkki alkuperäiseen ja "Näytä julkaisu" -painike */
+.insta__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
   margin-top: auto;
+}
+
+.insta__meta {
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   color: var(--color-muted);
 }
 
-/* Kuvallinen kortti: kuva korttiin kiinni ylälaitaan */
+.insta__meta a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem; /* kosketusalue */
+  text-underline-offset: 0.2em;
+}
+
+/* Instagramin upotus (iframe). Korkeus = leveys + n. 192 px (Instagramin oma otsikko ja alapalkki).
+   Prosentti padding-bottomissa lasketaan sisältöleveydestä, joten lisätään kuvan tavoin
+   kortin sivupaddingit (2 x 1.25 rem). */
+.insta__embed {
+  position: relative;
+  width: calc(100% + 2.5rem);
+  margin: -1.5rem -1.25rem 0;
+  padding-bottom: calc(100% + 2.5rem + 192px);
+  background: var(--color-bg-alt);
+}
+
+.insta__embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Kuva kortin ylälaitaan, teksti sen alle. Kortin omat reunukset leikkaavat kuvan (overflow: hidden). */
 .insta__image {
   width: calc(100% + 2.5rem);
   max-width: none;
+  height: auto; /* width/height-attribuutit varaavat tilan, CSS hoitaa mitat */
   margin: -1.5rem -1.25rem 0;
   aspect-ratio: 1;
   object-fit: cover;
+  transition: transform 0.4s;
 }
 
-/* Iso ruutu: kolme korttia rinnakkain, ei vieritystä */
+.insta__card:hover .insta__image {
+  transform: scale(1.03);
+}
+
+/* Kun kuva on mukana, teksti lyhenee kolmeen riviin */
+.insta__image + .insta__text {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  font-size: 1.1rem;
+}
+
+/* Nuolet ja seurauspainike samalla rivillä kortien alla */
+.insta__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.insta__arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--color-ink-deep);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-ink-deep);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, opacity 0.2s;
+}
+
+.insta__arrow:hover:not(:disabled) {
+  background: var(--color-ink-deep);
+  color: var(--color-surface);
+}
+
+.insta__arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.insta__arrow[hidden] {
+  display: none;
+}
+
+/* Iso ruutu: kolme korttia näkyvissä, loput vierittyvät nuolilla */
 @media (min-width: 48rem) {
   .insta__list {
     margin-inline: 0;
     padding-inline: 0;
-    overflow: visible;
+    scroll-padding-inline: 0;
   }
 
   .insta__item {
-    flex: 1 1 0;
+    flex: 0 0 calc((100% - 2rem) / 3);
+    scroll-snap-align: start;
   }
+}
+
+/* Pieni huomautus upotuksesta */
+.insta__note {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--color-muted);
 }

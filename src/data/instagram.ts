@@ -1,32 +1,48 @@
 /**
  * Instagram-nostot (@glosstahko), jotka näytetään Minusta-osiossa.
  *
- * Miksi käsin poimittu lista eikä upotus (embed)?
- * - Instagramin upotus lataisi Metan skriptit ja evästeet, ja sivu lupaa,
- *   ettei se käytä evästeitä eikä kolmansien osapuolten pyyntöjä.
+ * Miksi käsin poimittu lista eikä automaattinen syöte?
  * - Virallinen rajapinta vaatisi palvelimen ja pääsyavaimen.
- * - Käsin poimittu lista on nopea, toimii ilman JavaScriptiä ja näyttää
- *   vain ne nostot, jotka Siiri haluaa esiin.
+ * - Käsin poimittu lista on nopea ja näyttää vain ne nostot, jotka Siiri haluaa esiin.
+ * - Kortti on aluksi pelkkä esikatselu. "Näytä julkaisu" lataa noston suoraan
+ *   Instagramista (iframe-upotus) vasta napautuksella, joten sivu ei lataa
+ *   Metan sisältöä eikä evästeitä ennen kävijän omaa valintaa.
  *
  * Uuden noston lisäys: kopioi osoite (instagram.com/glosstahko/p/TUNNISTE/),
  * lisää rivi tämän listan alkuun ja kirjoita siihen noston alku.
  *
- * `image` on valinnainen. Jos kuva puuttuu, kortti näyttää tekstin.
- * Kuva laitetaan kansioon src/assets/instagram/ ja tuodaan importilla.
+ * Esikatselukuva (valinnainen): tallenna noston kuva kansioon src/assets/instagram/ nimellä
+ * TUNNISTE.jpg (esim. DehljGiN8mO.jpg). Ne löytyvät automaattisesti
+ * (import.meta.glob), eikä koodiin tarvitse lisätä importteja. Jos kuvaa
+ * ei ole, kortti näyttää pelkän tekstin.
  */
-export type InstagramPost = {
+
+// Vite etsii kaikki kansion jpg-kuvat buildin aikana: { '../assets/instagram/ABC.jpg': 'osoite' }
+const imageFiles = import.meta.glob('../assets/instagram/*.jpg', {
+  eager: true,
+  import: 'default',
+}) as Record<string, string>
+
+// Tunniste -> kuvan osoite
+const imagesById = Object.fromEntries(
+  Object.entries(imageFiles).map(([path, url]) => [path.split('/').pop()!.replace('.jpg', ''), url]),
+)
+
+type PostInfo = {
   id: string // osoitteen lopussa oleva tunniste
   date: string // näytettävä päiväys
   text: string // noston alku (Siirin omin sanoin)
-  image?: string
-  imageAlt?: string
+  imageAlt?: string // kuvan kuvaus ruudunlukijalle (tyhjä = koriste, teksti kertoo jo asian)
 }
 
-export const instagramPosts: InstagramPost[] = [
+export type InstagramPost = PostInfo & { image?: string }
+
+const posts: PostInfo[] = [
   {
     id: 'DehljGiN8mO',
     date: '15.10.2026',
     text: 'Ensimmäinen geelilakkaus tälle ihanalle asiakkaalle! 🩷',
+    imageAlt: 'Lyhyet, luonnollisen vaaleanpunaiset geelilakatut kynnet',
   },
   {
     id: 'DeMdqkvtkCE',
@@ -39,3 +55,9 @@ export const instagramPosts: InstagramPost[] = [
     text: 'Mitä jos ottaisit hetken ihan vain itsellesi? ✨',
   },
 ]
+
+/** Nostot kuvineen. Kuva liitetään tunnisteen perusteella. */
+export const instagramPosts: InstagramPost[] = posts.map((post) => ({
+  ...post,
+  image: imagesById[post.id],
+}))
