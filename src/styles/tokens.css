@@ -3,9 +3,8 @@
 
    Kaikki värit, fontit ja mitat määritellään TÄSSÄ yhdessä
    paikassa. Muissa tiedostoissa käytetään vain var(--nimi).
-   Kun tyyli vaihdetaan (Boho -> Minimal, vaihe 6), riittää
-   että vaihdetaan näiden arvot. Mitään muuta ei tarvitse
-   muokata.
+   Käytössä on Boho-teema. Sävyjen tai fonttien säätö riittää
+   tekemään täällä, muita tiedostoja ei tarvitse muokata.
    ========================================================== */
 
 :root {

@@ -9,7 +9,7 @@ Yhden sivun verkkosivusto nilsiäläiselle kynsi- ja kampaamoyritykselle **Gloss
 - Näkyy Google-haussa (paikallinen SEO: Nilsiä, Tahko)
 - Ei backendia eikä tietojen tallennusta: ajanvaraus ja some ovat ulkoisia linkkejä
 - Ei evästeitä eikä kolmansien osapuolten pyyntöjä (fontit ovat omassa paketissa)
-- Kaksi vaihdettavaa tyyliä, **Boho** ja **Minimal**, joista toinen valitaan lopulliseen käyttöön
+- Yhtenäinen **Boho**-tyyli (valittu lopulliseksi teemaksi)
 
 ## Teknologiat
 
@@ -71,7 +71,7 @@ Sisältö (`data/`, `config/`) on erillään ulkoasusta, jotta hintojen, UKK:n j
 - **Boho** on toteutettu: terrakotta, kermanvalkoinen ja salvianvihreä, käsinkirjoitettu otsikkofontti, kukkaoksakoristeet ja pehmeät kortit.
 - Heron päällä yläpalkki on läpinäkyvä. Sen jälkeen se on utuinen vaalea palkki, ja aktiivinen tabi korostuu.
 - Kukkaoksat ovat CSS-maskeja, joten niiden väri vaihtuu pelkällä `color`-arvolla.
-- **Minimal** toteutetaan vaihtamalla `tokens.css`:n arvot ja karsimalla koristeet.
+- Teemaksi on valittu Boho, eikä Minimal-versiota tehdä. Värit, fontit ja mitat ovat silti `tokens.css`:ssä, joten sävyjä on helppo säätää.
 
 ## Eteneminen
 
@@ -82,7 +82,7 @@ Sisältö (`data/`, `config/`) on erillään ulkoasusta, jotta hintojen, UKK:n j
 - [x] CSS: mobile first, sticky tab-palkki, Boho-tyyli
 - [x] Interaktiivisuus: aktiivinen tab, läpinäkyvä yläpalkki, UKK-haitari
 - [ ] Oikeat valokuvat (kaarikehykset) ja mahdolliset scroll-animaatiot
-- [ ] Teema: Minimal ja valinta
+- [x] Teema valittu: Boho
 - [ ] SEO: meta-tagit, rakenteinen data (JSON-LD), sitemap, esirenderöinti
 - [ ] Julkaisu: domain, hosting ja Google Business Profile
 
