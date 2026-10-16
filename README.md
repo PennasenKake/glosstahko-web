@@ -16,7 +16,7 @@ Yhden sivun verkkosivusto nilsiäläiselle kynsi- ja kampaamoyritykselle **Gloss
 - [React](https://react.dev/) 19 + [TypeScript](https://www.typescriptlang.org/)
 - [Vite](https://vite.dev/) (kehityspalvelin ja build)
 - Pelkkä CSS: muuttujat (design tokens), mobile first, ei CSS-kirjastoja
-- Fontit [Fontsourcesta](https://fontsource.org/) (Lora, Cormorant Garamond, Mrs Saint Delafield, Jost)
+- Fontit [Fontsourcesta](https://fontsource.org/) (Lora, Cormorant Garamond, Great Vibes, Jost)
 - [Oxlint](https://oxc.rs/docs/guide/usage/linter) lintaukseen
 - Versionhallinta: Git + GitHub
 
