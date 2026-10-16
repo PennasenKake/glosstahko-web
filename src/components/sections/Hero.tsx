@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section id="etusivu" aria-labelby="hero-otsikko">
+    <section id="etusivu" aria-labelledby="hero-otsikko">
       <p>Kynnet ja hiukset · Nilsiä ja Tahko</p>
       <h1 id="hero-otsikko">Kauneutta kiireettömästi</h1>
       <p>
@@ -9,7 +9,6 @@ export default function Hero() {
         palvelu tulee myös mökille ja juhlapaikalle Tahkolla.
       </p>
       <a href="https://www.instagram.com/glosstahko/" target="_blank" rel="noopener noreferrer">Varaa aika</a>
-      <br />  
       <a href="#palvelut">Palvelut</a>
     </section>
   )

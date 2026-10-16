@@ -52,7 +52,8 @@ Sisältö (`data/`, `config/`) on erillään ulkoasusta, jotta hintojen ja yhtey
 
 - [x] Vite + React + TypeScript -pohja
 - [x] Hakemistorakenne ja osiot omiksi komponenteiksi
-- [ ] Sisältö: yrityksen tiedot, palvelut ja hinnat
+- [x] Osioiden perussisältö ja palveluhinnasto datana (`data/services.ts`)
+- [ ] Yrityksen tiedot yhteen paikkaan (`config/`) ja uudelleenkäytettävät komponentit (`BookingButton`)
 - [ ] CSS: mobile first, sticky tab-palkki
 - [ ] Interaktiivisuus: aktiivinen tab, UKK-haitari
 - [ ] Teemat: Boho ja Minimal
