@@ -1,6 +1,5 @@
 import { navItems } from '../../config/nav'
 import { site } from '../../config/site'
-import { setConsent } from '../../utils/consent'
 import BookingButton from '../ui/BookingButton'
 
 // Ulkopuolella: lasketaan kerran, ei joka renderöinnillä
@@ -63,13 +62,7 @@ export default function Footer() {
         <p>
           © {year} {site.name} · Y-tunnus {site.businessId}
         </p>
-        <p>
-          Hinnat sisältävät arvonlisäveron. Sivusto ei itse käytä evästeitä eikä tallenna tietojasi.
-          Instagram-julkaisujen lataaminen voi asettaa Metan evästeitä, ja sen voi kieltää Evästeasetuksista.
-        </p>
-        <button type="button" className="site-footer__link" onClick={() => setConsent('unknown')}>
-          Evästeasetukset
-        </button>
+        <p>Hinnat sisältävät arvonlisäveron. Sivusto ei itse käytä evästeitä eikä tallenna tietojasi. Instagram-julkaisun avaaminen lataa sisällön Instagramista.</p>
         <a href="#etusivu">Takaisin ylös ↑</a>
       </div>
     </footer>

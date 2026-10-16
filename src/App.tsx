@@ -1,6 +1,5 @@
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
-import ConsentBanner from './components/layout/ConsentBanner'
 import Hero from './components/sections/Hero'
 import Intro from './components/sections/Intro'
 import About from './components/sections/About'
@@ -28,7 +27,6 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
-      <ConsentBanner />
     </>
   )
 }

@@ -4,45 +4,27 @@
  * Miksi käsin poimittu lista eikä automaattinen syöte?
  * - Virallinen rajapinta vaatisi palvelimen ja pääsyavaimen.
  * - Käsin poimittu lista on nopea ja näyttää vain ne nostot, jotka Siiri haluaa esiin.
- * - Julkaisu latautuu heti Instagramista (iframe-upotus), ja alapalkki kertoo
- *   kävijälle syyn (Meta voi asettaa evästeitä). Jos kävijä kieltää sen, kortti on
- *   esikatselu, eikä Metalle tehdä pyyntöjä. "Näytä julkaisu" avaa yksittäisen.
+ *
+ * Miten julkaisu näytetään?
+ * - Kortissa on heti näkyvissä noston päiväys ja teksti (teaser) sekä logon lehvä
+ *   kuvapaikalla. Instagramiin (Meta) ei tehdä yhtään pyyntöä, ennen kuin kävijä
+ *   painaa "Näytä julkaisu". Silloin kortti vaihtuu Instagramin omaksi upotukseksi.
+ *   Näin sivu pysyy evästeettömänä, eikä suostumuspalkkia tarvita.
  *
  * Uuden noston lisäys: kopioi osoite (instagram.com/glosstahko/p/TUNNISTE/),
  * lisää rivi tämän listan alkuun ja kirjoita siihen noston alku.
- *
- * Esikatselukuva (valinnainen): tallenna noston kuva kansioon src/assets/instagram/ nimellä
- * TUNNISTE.jpg (esim. DehljGiN8mO.jpg). Ne löytyvät automaattisesti
- * (import.meta.glob), eikä koodiin tarvitse lisätä importteja. Jos kuvaa
- * ei ole, kortti näyttää pelkän tekstin.
  */
-
-// Vite etsii kaikki kansion jpg-kuvat buildin aikana: { '../assets/instagram/ABC.jpg': 'osoite' }
-const imageFiles = import.meta.glob('../assets/instagram/*.jpg', {
-  eager: true,
-  import: 'default',
-}) as Record<string, string>
-
-// Tunniste -> kuvan osoite
-const imagesById = Object.fromEntries(
-  Object.entries(imageFiles).map(([path, url]) => [path.split('/').pop()!.replace('.jpg', ''), url]),
-)
-
-type PostInfo = {
+export type InstagramPost = {
   id: string // osoitteen lopussa oleva tunniste
   date: string // näytettävä päiväys
   text: string // noston alku (Siirin omin sanoin)
-  imageAlt?: string // kuvan kuvaus ruudunlukijalle (tyhjä = koriste, teksti kertoo jo asian)
 }
 
-export type InstagramPost = PostInfo & { image?: string }
-
-const posts: PostInfo[] = [
+export const instagramPosts: InstagramPost[] = [
   {
     id: 'DehljGiN8mO',
     date: '15.10.2026',
     text: 'Ensimmäinen geelilakkaus tälle ihanalle asiakkaalle! 🩷',
-    imageAlt: 'Lyhyet, luonnollisen vaaleanpunaiset geelilakatut kynnet',
   },
   {
     id: 'DeMdqkvtkCE',
@@ -55,9 +37,3 @@ const posts: PostInfo[] = [
     text: 'Mitä jos ottaisit hetken ihan vain itsellesi? ✨',
   },
 ]
-
-/** Nostot kuvineen. Kuva liitetään tunnisteen perusteella. */
-export const instagramPosts: InstagramPost[] = posts.map((post) => ({
-  ...post,
-  image: imagesById[post.id],
-}))

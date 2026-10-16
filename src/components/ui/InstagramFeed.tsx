@@ -3,20 +3,15 @@ import { site } from '../../config/site'
 import { instagramPosts } from '../../data/instagram'
 import type { InstagramPost } from '../../data/instagram'
 import leaf from '../../assets/images/leaf.webp'
-import { useConsent } from '../../utils/consent'
 
 /**
- * Yksi karusellin kortti. Julkaisu latautuu heti suoraan Instagramista omana
- * upotuksenaan (iframe), ellei kävijä ole kieltänyt sitä (palkki, utils/consent.ts): kuva ja Instagramin
- * omat painikkeet. Pitkä kuvateksti jätetään pois, koska se venyttäisi kortin.
- * Jos kävijä kielsi Instagram-sisällön, kortti on esikatselu (teksti ja kuva tai koriste),
- * eikä Instagramiin tehdä yhtään pyyntöä ennen "Näytä julkaisu" -painiketta.
+ * Yksi karusellin kortti. Aluksi näkyy teaser: lehvä kuvapaikalla sekä noston
+ * päiväys ja teksti. Instagramiin ei tehdä yhtään pyyntöä ennen kuin kävijä
+ * painaa "Näytä julkaisu": silloin kortti vaihtuu Instagramin omaksi upotukseksi
+ * (iframe). Upotuksen alta sen saa takaisin piiloon.
  */
 function PostCard({ post }: { post: InstagramPost }) {
   const [open, setOpen] = useState(false)
-  const consent = useConsent()
-  // 'pending' = esirenderöity HTML: ei vielä pyyntöjä, upotus tulee heti hydraation jälkeen
-  const show = open || consent === 'unknown' || consent === 'granted'
   const postUrl = `${site.instagramUrl}p/${post.id}/`
 
   const frameRef = useRef<HTMLIFrameElement>(null)
@@ -24,7 +19,7 @@ function PostCard({ post }: { post: InstagramPost }) {
   const [height, setHeight] = useState(640)
 
   useEffect(() => {
-    if (!show) return
+    if (!open) return
     const onMessage = (event: MessageEvent) => {
       if (event.origin !== 'https://www.instagram.com') return
       if (event.source !== frameRef.current?.contentWindow) return
@@ -38,9 +33,9 @@ function PostCard({ post }: { post: InstagramPost }) {
     }
     window.addEventListener('message', onMessage)
     return () => window.removeEventListener('message', onMessage)
-  }, [show])
+  }, [open])
 
-  if (show) {
+  if (open) {
     return (
       <li className="insta__item">
         <div className="insta__embed">
@@ -48,11 +43,13 @@ function PostCard({ post }: { post: InstagramPost }) {
             ref={frameRef}
             src={`https://www.instagram.com/p/${post.id}/embed/`}
             title={`Instagram-julkaisu ${post.date}`}
-            loading="lazy"
             style={{ height }}
             sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
           />
         </div>
+        <button type="button" className="insta__hide" onClick={() => setOpen(false)}>
+          Piilota julkaisu
+        </button>
       </li>
     )
   }
@@ -60,33 +57,21 @@ function PostCard({ post }: { post: InstagramPost }) {
   return (
     <li className="insta__item insta__item--preview">
       <div className="insta__card">
-        {post.image ? (
-          <img
-            className="insta__image"
-            src={post.image}
-            alt={post.imageAlt ?? ''}
-            width={600}
-            height={600}
-            loading="lazy"
-          />
-        ) : (
-          // Ei omaa kuvaa: koristeruutu, jotta kaikki kortit näyttävät samalta
-          <span className="insta__placeholder" aria-hidden="true">
-            <img src={leaf} alt="" width={640} height={574} loading="lazy" />
-          </span>
-        )}
-        <span className="insta__text">{post.text}</span>
+        {/* Koriste: sama lehvä jokaisen julkaisun kuvapaikalla */}
+        <span className="insta__placeholder" aria-hidden="true">
+          <img src={leaf} alt="" width={640} height={574} loading="lazy" />
+        </span>
+
+        <p className="insta__date">{post.date}</p>
+        <p className="insta__text">{post.text}</p>
 
         <div className="insta__footer">
-          <span className="insta__meta">
-            {post.date} <span aria-hidden="true">·</span>{' '}
-            <a href={postUrl} target="_blank" rel="noopener noreferrer">
-              Avaa Instagramissa<span className="sr-only"> (uusi välilehti)</span>
-            </a>
-          </span>
           <button type="button" className="btn btn--ghost btn--small" onClick={() => setOpen(true)}>
             Näytä julkaisu
           </button>
+          <a className="insta__link" href={postUrl} target="_blank" rel="noopener noreferrer">
+            Avaa Instagramissa<span className="sr-only"> (uusi välilehti)</span>
+          </a>
         </div>
       </div>
     </li>
@@ -94,7 +79,7 @@ function PostCard({ post }: { post: InstagramPost }) {
 }
 
 /**
- * Instagram-karuselli: uusimmat nostot korteissa. Sisältö: data/instagram.ts.
+ * Instagram-karuselli: uusimmat nostot korteissa (teaser + "Näytä julkaisu"). Sisältö: data/instagram.ts.
  *
  * Karuselli on tavallinen vieritettävä lista (CSS scroll-snap). Nuolipainikkeet
  * vierittävät yhden kortin kerrallaan ja näkyvät vain, kun kortit eivät mahdu
@@ -187,7 +172,8 @@ export default function InstagramFeed() {
       </div>
 
       <p className="insta__note">
-        Julkaisut ladataan suoraan Instagramista (Meta), joka voi asettaa evästeitä.
+        Julkaisu ladataan Instagramista (Meta) vasta, kun painat Näytä julkaisu. Silloin Meta voi
+        asettaa evästeitä.
       </p>
     </div>
   )
