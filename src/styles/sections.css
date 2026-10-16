@@ -45,18 +45,20 @@
 .hero__script {
   display: block;
   font-family: var(--font-script);
-  font-size: clamp(5rem, 19vw, 9.5rem);
+  /* Alaraja 3 rem (ei 5): kun käyttäjä suurentaa tekstiä, sana mahtuu silti ruutuun */
+  font-size: clamp(3rem, 19vw, 9.5rem);
   line-height: 0.95;
-  padding-top: 0.15em;
+  padding: 0.15em 0.1em 0; /* script-kirjainten ylitys ei leikkaudu reunasta */
 }
 
 .hero__caps {
   display: block;
   margin-top: 0.5rem;
   font-family: var(--font-heading);
-  font-size: clamp(1.3rem, 4.5vw, 2rem);
+  font-size: clamp(1rem, 4.5vw, 2rem);
   font-weight: 600;
   letter-spacing: 0.35em;
+  overflow-wrap: anywhere; /* varalta: erittäin iso tekstikoko ei leikkaudu */
   text-transform: uppercase;
   /* letter-spacing lisää tilaa myös viimeisen kirjaimen perään: keskitys korjataan tällä */
   margin-right: -0.35em;

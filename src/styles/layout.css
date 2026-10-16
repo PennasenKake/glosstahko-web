@@ -68,6 +68,8 @@
   justify-self: start;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  min-height: 2.75rem; /* kosketusalue */
   text-decoration: none;
   line-height: 1;
 }
@@ -82,7 +84,7 @@
 
 .logo__sub {
   margin-top: 0.25rem;
-  font-size: 0.6rem;
+  font-size: 0.7rem; /* ei pienempää: alle 11 px on huonosti luettavaa */
   letter-spacing: 0.4em;
   text-transform: uppercase;
   color: var(--color-muted);
@@ -113,6 +115,7 @@
   display: flex;
   align-items: center;
   min-height: 2.75rem; /* riittävä kosketusalue (vähintään n. 44 px) */
+  padding-inline: 0.25rem;
   font-size: 0.8rem;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -227,6 +230,8 @@
 }
 
 .site-footer__list a {
+  display: inline-block;
+  padding-block: 0.5rem; /* isompi napautusalue */
   text-decoration: none;
 }
 
@@ -246,4 +251,11 @@
   border-top: 1px solid rgb(246 239 228 / 0.18);
   font-size: 0.85rem;
   color: var(--color-line-strong);
+}
+
+/* "Takaisin ylös" -linkille riittävä kosketusalue */
+.site-footer__bottom a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
 }
