@@ -9,6 +9,10 @@
  */
 export const site = {
   name: 'GlossTahko',
+  // Osoite tulee .env-tiedostosta (VITE_SITE_URL), ei lopussa kauttaviivaa
+  url: String(import.meta.env.VITE_SITE_URL).replace(/\/$/, ''),
+  description:
+    'Kynsi- ja hiuspalvelut Nilsiässä ja liikkuva palvelu Tahkolla: geelilakkaus, rakennekynnet, leikkaukset, värjäykset ja juhlakampaukset.',
 
   // Yhteystiedot
   phone: '044 513 2714', // näytettävä muoto

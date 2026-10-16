@@ -56,15 +56,27 @@ src/
 │   ├── layout.css      header, tabit, footer
 │   ├── components.css  painikkeet, otsikot, chipit, boho-koristeet
 │   └── sections.css    osiokohtaiset tyylit
+├── seo/             structuredData.ts: JSON-LD (yritys + palvelut) Googlelle
 ├── types/           yhteiset TypeScript-tyypit
 ├── utils/           hinnan ja keston muotoilu
 ├── assets/images/   lehvä ja kukkaoksat (läpinäkyvät webp-kuvat)
 ├── App.tsx          kokoaa sivun osiot
+├── entry-server.tsx esirenderöinti (ajetaan vain buildissa)
 ├── index.css        tuo fontit ja tyylitiedostot
-└── main.tsx         sovelluksen käynnistys
+└── main.tsx         sovelluksen käynnistys (hydrateRoot / createRoot)
+
+scripts/prerender.mjs   buildin jälkivaihe: HTML sisään, JSON-LD, sitemap.xml, robots.txt
+public/                 favicon.svg, og-image.jpg (linkin esikatselukuva)
+.env                    VITE_SITE_URL = sivuston osoite
 ```
 
 Sisältö (`data/`, `config/`) on erillään ulkoasusta, jotta hintojen, UKK:n ja yhteystietojen päivitys ei vaadi komponenttien muokkaamista.
+
+## SEO
+
+`npm run build` tekee kolme asiaa: selainversio (`dist/`), palvelinversio (`dist-ssr/`) ja `scripts/prerender.mjs`, joka ajaa palvelinversion ja kirjoittaa valmiin HTML:n `dist/index.html`:ään. Google näkee sisällön ilman JavaScriptiä, ja selain "herättää" sivun eloon `hydrateRoot`illa. Skripti lisää myös JSON-LD:n sekä `sitemap.xml`:n ja `robots.txt`:n.
+
+Sivuston osoite on yhdessä paikassa: `.env` (`VITE_SITE_URL`).
 
 ## Tyyli
 
@@ -83,11 +95,13 @@ Sisältö (`data/`, `config/`) on erillään ulkoasusta, jotta hintojen, UKK:n j
 - [x] Interaktiivisuus: aktiivinen tab, läpinäkyvä yläpalkki, UKK-haitari
 - [ ] Oikeat valokuvat (kaarikehykset) ja mahdolliset scroll-animaatiot
 - [x] Teema valittu: Boho
-- [ ] SEO: meta-tagit, rakenteinen data (JSON-LD), sitemap, esirenderöinti
+- [x] SEO: meta-tagit, JSON-LD, sitemap, robots.txt, esirenderöinti (`npm run build`)
 - [ ] Julkaisu: domain, hosting ja Google Business Profile
 
 ## Ennen julkaisua
 
+- Vaihda `.env`:n `VITE_SITE_URL` oikeaan domainiin ja aja `npm run build` uudelleen (canonical, sitemap, JSON-LD ja og-kuvan osoite päivittyvät)
+- Päivitä `public/og-image.jpg`, kun oikeat kuvat ovat mukana. Lisää sivu Google Search Consoleen ja lähetä sitemap
 - Vaihda `bookingUrl` (`config/site.ts`) ajanvarausjärjestelmän linkkiin, kun se on käytössä, ja päivitä UKK:n vastaus "Miten varaan ajan?"
 - Tarkista hinnat (`data/services.ts`), UKK (`data/faq.ts`) ja tuotetiedot (`data/products.ts`) yrittäjän kanssa
 - Päätä, mitä osoitetta sivulla näytetään, ja lisää maksutavat vasta, kun ne ovat käytössä

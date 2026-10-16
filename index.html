@@ -3,9 +3,33 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#b86b53" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Haku: otsikko ja kuvaus näkyvät Googlen hakutuloksessa -->
     <title>GlossTahko – kynnet ja hiukset Nilsiässä ja Tahkolla</title>
-    <meta name="description" content="GlossTahko Nilsiässä: geelilakkaus, kynnet, hiusten värjäys ja juhlakampaukset. Liikkuva palvelu Tahkolla." />
+    <meta
+      name="description"
+      content="GlossTahko Nilsiässä: geelilakkaus, rakennekynnet, hiustenleikkaus, värjäys ja juhlakampaukset. Liikkuva palvelu Tahkolla."
+    />
+    <!-- %VITE_SITE_URL% korvataan buildissa .env-tiedoston arvolla -->
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
+
+    <!-- Open Graph ja Twitter: linkin esikatselu WhatsAppissa, Facebookissa, Instagramissa jne. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="fi_FI" />
+    <meta property="og:site_name" content="GlossTahko" />
+    <meta property="og:title" content="GlossTahko – kynnet ja hiukset Nilsiässä ja Tahkolla" />
+    <meta
+      property="og:description"
+      content="Kynsi- ja hiuspalvelut kiireettömästi Nilsiässä. Liikkuva palvelu Tahkolla."
+    />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+    <meta property="og:image" content="%VITE_SITE_URL%/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="GlossTahko – kynnet ja hiukset" />
+    <meta name="twitter:card" content="summary_large_image" />
   </head>
   <body>
     <div id="root"></div>
