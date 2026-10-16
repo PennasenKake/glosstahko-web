@@ -259,3 +259,78 @@
   align-items: center;
   min-height: 2.75rem;
 }
+
+/* Footerin tekstipainike (Evästeasetukset) näyttää linkiltä */
+.site-footer__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+/* ---------- Suostumuspalkki ---------- */
+
+.consent {
+  position: fixed;
+  inset-inline: 0.75rem;
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  z-index: 20; /* headerin (10) yläpuolella */
+  display: grid;
+  gap: 0.9rem;
+  max-width: 44rem;
+  margin-inline: auto;
+  padding: 1rem 1.25rem;
+  background: var(--color-ink-deep);
+  color: var(--color-bg);
+  border-radius: 1.25rem;
+  box-shadow: 0 10px 40px rgb(0 0 0 / 0.35);
+}
+
+.consent__text {
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.consent__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.consent .btn--small {
+  min-height: 2.75rem; /* kosketusalue */
+  flex: 1 1 auto;
+}
+
+.consent .btn--ghost {
+  border-color: var(--color-bg);
+  color: var(--color-bg);
+}
+
+.consent .btn--ghost:hover {
+  background: var(--color-bg);
+  color: var(--color-ink-deep);
+}
+
+.consent :focus-visible {
+  outline-color: var(--color-bg);
+}
+
+@media (min-width: 48rem) {
+  .consent {
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .consent .btn--small {
+    flex: 0 0 auto;
+  }
+}

@@ -2,25 +2,30 @@ import { useEffect, useRef, useState } from 'react'
 import { site } from '../../config/site'
 import { instagramPosts } from '../../data/instagram'
 import type { InstagramPost } from '../../data/instagram'
+import { useConsent } from '../../utils/consent'
 
 /**
- * Yksi karusellin kortti. Aluksi kortti on pelkkä esikatselu (teksti ja
- * mahdollinen oma kuva), eikä Instagramiin tehdä yhtään pyyntöä. Vasta
- * "Näytä julkaisu" -painikkeen napautus lataa julkaisun suoraan Instagramista
- * (iframe). Näin sivu pysyy evästeettömänä, ellei kävijä itse halua nostoa esiin.
+ * Yksi karusellin kortti. Jos kävijä on hyväksynyt Instagram-sisällön
+ * (suostumuspalkki, utils/consent.ts), julkaisu latautuu heti suoraan
+ * Instagramista (iframe). Muuten kortti on esikatselu (teksti ja mahdollinen
+ * oma kuva), eikä Instagramiin tehdä yhtään pyyntöä ennen "Näytä julkaisu"
+ * -painikkeen napautusta.
  */
 function PostCard({ post }: { post: InstagramPost }) {
   const [open, setOpen] = useState(false)
+  const consent = useConsent()
+  const show = open || consent === 'granted'
   const postUrl = `${site.instagramUrl}p/${post.id}/`
 
   return (
     <li className="insta__item">
       <div className="insta__card">
-        {open ? (
+        {show ? (
           <div className="insta__embed">
             <iframe
               src={`https://www.instagram.com/p/${post.id}/embed/`}
               title={`Instagram-julkaisu ${post.date}`}
+              loading="lazy"
               sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
             />
           </div>
@@ -47,7 +52,7 @@ function PostCard({ post }: { post: InstagramPost }) {
               Avaa Instagramissa<span className="sr-only"> (uusi välilehti)</span>
             </a>
           </span>
-          {!open && (
+          {!show && (
             <button type="button" className="btn btn--ghost btn--small" onClick={() => setOpen(true)}>
               Näytä julkaisu
             </button>
@@ -114,16 +119,10 @@ export default function InstagramFeed() {
         </a>
       </p>
 
-      <ul className="insta__list" ref={trackRef}>
-        {instagramPosts.map((post) => (
-          <PostCard post={post} key={post.id} />
-        ))}
-      </ul>
-
-      <div className="insta__controls">
+      <div className="insta__viewport">
         <button
           type="button"
-          className="insta__arrow"
+          className="insta__arrow insta__arrow--prev"
           aria-label="Edelliset julkaisut"
           disabled={!canPrev}
           hidden={!scrollable}
@@ -131,12 +130,17 @@ export default function InstagramFeed() {
         >
           <span aria-hidden="true">←</span>
         </button>
-        <a className="btn btn--ghost" href={site.instagramUrl} target="_blank" rel="noopener noreferrer">
-          Seuraa Instagramissa
-        </a>
+
+        {/* tabIndex: lista on tarkennettavissa, jolloin nuolinäppäimet vierittävät sitä */}
+        <ul className="insta__list" ref={trackRef} tabIndex={0} aria-label="Instagram-julkaisut, vieritä sivuttain">
+          {instagramPosts.map((post) => (
+            <PostCard post={post} key={post.id} />
+          ))}
+        </ul>
+
         <button
           type="button"
-          className="insta__arrow"
+          className="insta__arrow insta__arrow--next"
           aria-label="Seuraavat julkaisut"
           disabled={!canNext}
           hidden={!scrollable}
@@ -146,8 +150,14 @@ export default function InstagramFeed() {
         </button>
       </div>
 
+      <div className="insta__controls">
+        <a className="btn btn--ghost" href={site.instagramUrl} target="_blank" rel="noopener noreferrer">
+          Seuraa Instagramissa
+        </a>
+      </div>
+
       <p className="insta__note">
-        "Näytä julkaisu" lataa noston suoraan Instagramista (Meta), joka voi asettaa evästeitä.
+        Julkaisut ladataan suoraan Instagramista (Meta), joka voi asettaa evästeitä.
       </p>
     </div>
   )

@@ -232,8 +232,8 @@
 }
 
 .insta__item {
-  flex: 0 0 78%;
-  scroll-snap-align: center;
+  flex: 0 0 82%; /* seuraava kortti pilkistää: kertoo, että voi vierittää */
+  scroll-snap-align: start;
 }
 
 .insta__card {
@@ -331,28 +331,54 @@
   font-size: 1.1rem;
 }
 
-/* Nuolet ja seurauspainike samalla rivillä kortien alla */
-.insta__controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
+/* Pieni huomautus upotuksesta */
+.insta__note {
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+}
+
+/* ---------- Karusellin nuolet ja leveydet ---------- */
+
+/* Viewport: nuolet asemoidaan tämän sisään, kortit vierivät listassa */
+.insta__viewport {
+  position: relative;
+}
+
+.insta__list:focus-visible {
+  outline: 2px solid var(--color-brand-dark);
+  outline-offset: 2px;
+  border-radius: 1.25rem;
 }
 
 .insta__arrow {
+  position: absolute;
+  top: 38%; /* kuvan kohdalle, ei koko kortin keskelle */
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 2.75rem;
   height: 2.75rem;
-  border: 1px solid var(--color-ink-deep);
+  padding: 0;
+  border: 1px solid var(--color-line-strong);
   border-radius: 50%;
-  background: transparent;
+  background: var(--color-surface);
+  box-shadow: 0 4px 14px rgb(43 43 41 / 0.18);
   color: var(--color-ink-deep);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   line-height: 1;
   cursor: pointer;
+  transform: translateY(-50%);
   transition: background-color 0.2s, color 0.2s, opacity 0.2s;
+}
+
+.insta__arrow--prev {
+  left: 0.5rem;
+}
+
+.insta__arrow--next {
+  right: 0.5rem;
 }
 
 .insta__arrow:hover:not(:disabled) {
@@ -360,32 +386,56 @@
   color: var(--color-surface);
 }
 
+/* Päässä ei voi enää vierittää: himmeä ja klikkaamaton */
 .insta__arrow:disabled {
-  opacity: 0.3;
-  cursor: default;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .insta__arrow[hidden] {
   display: none;
 }
 
-/* Iso ruutu: kolme korttia näkyvissä, loput vierittyvät nuolilla */
+.insta__controls {
+  display: flex;
+  justify-content: center;
+}
+
+/* Tabletti: yksi kortti ja pilkahdus seuraavasta */
+@media (min-width: 40rem) {
+  .insta__item {
+    flex-basis: 52%;
+  }
+}
+
+/* Iso ruutu: kaksi korttia ja puolikas kolmatta. Reunoilla ei tarvita negatiivisia marginaaleja. */
 @media (min-width: 48rem) {
   .insta__list {
     margin-inline: 0;
     padding-inline: 0;
     scroll-padding-inline: 0;
   }
+}
 
+@media (min-width: 64rem) {
   .insta__item {
-    flex: 0 0 calc((100% - 2rem) / 3);
-    scroll-snap-align: start;
+    flex-basis: calc((100% - 2rem) / 2.5);
   }
 }
 
-/* Pieni huomautus upotuksesta */
-.insta__note {
-  margin-top: 1rem;
-  font-size: 0.8rem;
-  color: var(--color-muted);
+/* Vasta leveällä ruudulla nuolet voivat olla kortin reunan päällä ilman, että ne leikkautuvat */
+@media (min-width: 80rem) {
+  .insta__arrow--prev {
+    left: -1.375rem; /* puoliksi kortin reunan päällä */
+  }
+
+  .insta__arrow--next {
+    right: -1.375rem;
+  }
+}
+
+/* Alaosan alla pieni linkki evästeasetuksiin ja suostumuspalkki */
+.insta__note a,
+.insta__note button {
+  text-decoration: underline;
 }

@@ -4,9 +4,9 @@
  * Miksi käsin poimittu lista eikä automaattinen syöte?
  * - Virallinen rajapinta vaatisi palvelimen ja pääsyavaimen.
  * - Käsin poimittu lista on nopea ja näyttää vain ne nostot, jotka Siiri haluaa esiin.
- * - Kortti on aluksi pelkkä esikatselu. "Näytä julkaisu" lataa noston suoraan
- *   Instagramista (iframe-upotus) vasta napautuksella, joten sivu ei lataa
- *   Metan sisältöä eikä evästeitä ennen kävijän omaa valintaa.
+ * - Julkaisu latautuu Instagramista (iframe-upotus) vasta, kun kävijä on
+ *   hyväksynyt sen suostumuspalkissa tai napauttanut "Näytä julkaisu". Muuten
+ *   kortti on esikatselu, eikä Metalle tehdä pyyntöjä eikä evästeitä synny.
  *
  * Uuden noston lisäys: kopioi osoite (instagram.com/glosstahko/p/TUNNISTE/),
  * lisää rivi tämän listan alkuun ja kirjoita siihen noston alku.
