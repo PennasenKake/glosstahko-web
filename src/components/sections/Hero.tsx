@@ -1,3 +1,9 @@
+import BookingButton from '../ui/BookingButton'
+
+/**
+ * Etusivun avaus. Sivun ainoa <h1>: Google ja ruudunlukijat
+ * käyttävät sitä sivun pääotsikkona.
+ */
 export default function Hero() {
   return (
     <section id="etusivu" aria-labelledby="hero-otsikko">
@@ -8,9 +14,9 @@ export default function Hero() {
         juhlakampaukset saman katon alla Nilsiässä. Sesonkien aikana
         palvelu tulee myös mökille ja juhlapaikalle Tahkolla.
       </p>
-      <a href="https://www.instagram.com/glosstahko/" target="_blank" rel="noopener noreferrer">Varaa aika</a>
+
+      <BookingButton />
       <a href="#palvelut">Palvelut</a>
     </section>
   )
 }
-

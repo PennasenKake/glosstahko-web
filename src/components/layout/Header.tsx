@@ -1,8 +1,17 @@
+import BookingButton from '../ui/BookingButton'
+
+/**
+ * Sivun yläpalkki: logo, tabit ja ajanvarauspainike.
+ * Tabit ovat tavallisia ankkurilinkkejä (#id), jotka vievät sivun
+ * osioon, jonka id täsmää. Järjestys vastaa sivun järjestystä (App.tsx).
+ */
 export default function Header() {
-  return(
+  return (
     <header>
+      {/* Logo vie sivun alkuun */}
       <a href="#etusivu">GlossTahko</a>
 
+      {/* aria-label nimeää navigaation ruudunlukijalle */}
       <nav aria-label="Sivuston osiot">
         <ul>
           <li><a href="#etusivu">Etusivu</a></li>
@@ -13,9 +22,8 @@ export default function Header() {
           <li><a href="#yhteys">Yhteys</a></li>
         </ul>
       </nav>
-      
+
+      <BookingButton />
     </header>
   )
 }
-
-

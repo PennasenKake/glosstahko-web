@@ -1,3 +1,6 @@
+import BookingButton from '../ui/BookingButton'
+
+/** Liikkuva palvelu Tahkolla (sesonkeina). */
 export default function Tahko() {
   return (
     <section id="tahko" aria-labelledby="tahko-otsikko">
@@ -13,9 +16,9 @@ export default function Tahko() {
         <li>Juhla- ja hääkampaukset</li>
         <li>Ryhmille sopimuksen mukaan</li>
       </ul>
-      <a href="https://www.instagram.com/glosstahko/" target="_blank" rel="noopener noreferrer">
-        Kysy liikkuvasta palvelusta
-      </a>
+
+      {/* label-propsilla painikkeen teksti vaihtuu oletuksesta */}
+      <BookingButton label="Kysy liikkuvasta palvelusta" />
     </section>
   )
 }

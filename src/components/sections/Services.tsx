@@ -1,6 +1,6 @@
 import { serviceCategories } from '../../data/services'
 import { formatDuration, formatPrice } from '../../utils/format'
-import BookingButton from '../ui/BookingButton'
+//import BookingButton from '../ui/BookingButton'
 
 /**
  * Palvelut-osio: piirtää hinnaston data/services.ts-tiedostosta.
@@ -46,7 +46,6 @@ export default function Services() {
       ))}
 
       {/* Ajanvarauslinkki tulee yhdestä paikasta (config/site.ts) */}
-      <BookingButton />
     </section>
   )
 }
