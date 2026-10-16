@@ -2,14 +2,15 @@ import { useEffect, useRef, useState } from 'react'
 import { site } from '../../config/site'
 import { instagramPosts } from '../../data/instagram'
 import type { InstagramPost } from '../../data/instagram'
+import leaf from '../../assets/images/leaf.webp'
 import { useConsent } from '../../utils/consent'
 
 /**
  * Yksi karusellin kortti. Jos kävijä on hyväksynyt Instagram-sisällön
  * (suostumuspalkki, utils/consent.ts), julkaisu latautuu heti suoraan
- * Instagramista (iframe). Muuten kortti on esikatselu (teksti ja mahdollinen
- * oma kuva), eikä Instagramiin tehdä yhtään pyyntöä ennen "Näytä julkaisu"
- * -painikkeen napautusta.
+ * Instagramista omana upotuksenaan (iframe): kuva ja Instagramin
+ * omat painikkeet (pitkä kuvateksti jätetään pois, koska se venyttäisi kortin) Muuten kortti on esikatselu (teksti ja kuva tai koriste),
+ * eikä Instagramiin tehdä yhtään pyyntöä ennen "Näytä julkaisu" -painiketta.
  */
 function PostCard({ post }: { post: InstagramPost }) {
   const [open, setOpen] = useState(false)
@@ -17,33 +18,63 @@ function PostCard({ post }: { post: InstagramPost }) {
   const show = open || consent === 'granted'
   const postUrl = `${site.instagramUrl}p/${post.id}/`
 
+  const frameRef = useRef<HTMLIFrameElement>(null)
+  // Upotuksen korkeus riippuu kuvatekstin pituudesta. Instagram kertoo sen viestillä.
+  const [height, setHeight] = useState(640)
+
+  useEffect(() => {
+    if (!show) return
+    const onMessage = (event: MessageEvent) => {
+      if (event.origin !== 'https://www.instagram.com') return
+      if (event.source !== frameRef.current?.contentWindow) return
+      try {
+        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data
+        const next = data?.type === 'MEASURE' ? data.details?.height : undefined
+        if (typeof next === 'number' && next > 100) setHeight(Math.ceil(next))
+      } catch {
+        // viesti ei ollut JSON-muotoinen: ohitetaan
+      }
+    }
+    window.addEventListener('message', onMessage)
+    return () => window.removeEventListener('message', onMessage)
+  }, [show])
+
+  if (show) {
+    return (
+      <li className="insta__item">
+        <div className="insta__embed">
+          <iframe
+            ref={frameRef}
+            src={`https://www.instagram.com/p/${post.id}/embed/`}
+            title={`Instagram-julkaisu ${post.date}`}
+            loading="lazy"
+            style={{ height }}
+            sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+          />
+        </div>
+      </li>
+    )
+  }
+
   return (
-    <li className="insta__item">
+    <li className="insta__item insta__item--preview">
       <div className="insta__card">
-        {show ? (
-          <div className="insta__embed">
-            <iframe
-              src={`https://www.instagram.com/p/${post.id}/embed/`}
-              title={`Instagram-julkaisu ${post.date}`}
-              loading="lazy"
-              sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-            />
-          </div>
+        {post.image ? (
+          <img
+            className="insta__image"
+            src={post.image}
+            alt={post.imageAlt ?? ''}
+            width={600}
+            height={600}
+            loading="lazy"
+          />
         ) : (
-          <>
-            {post.image && (
-              <img
-                className="insta__image"
-                src={post.image}
-                alt={post.imageAlt ?? ''}
-                width={600}
-                height={600}
-                loading="lazy"
-              />
-            )}
-            <span className="insta__text">{post.text}</span>
-          </>
+          // Ei omaa kuvaa: koristeruutu, jotta kaikki kortit näyttävät samalta
+          <span className="insta__placeholder" aria-hidden="true">
+            <img src={leaf} alt="" width={640} height={574} loading="lazy" />
+          </span>
         )}
+        <span className="insta__text">{post.text}</span>
 
         <div className="insta__footer">
           <span className="insta__meta">
@@ -52,11 +83,9 @@ function PostCard({ post }: { post: InstagramPost }) {
               Avaa Instagramissa<span className="sr-only"> (uusi välilehti)</span>
             </a>
           </span>
-          {!show && (
-            <button type="button" className="btn btn--ghost btn--small" onClick={() => setOpen(true)}>
-              Näytä julkaisu
-            </button>
-          )}
+          <button type="button" className="btn btn--ghost btn--small" onClick={() => setOpen(true)}>
+            Näytä julkaisu
+          </button>
         </div>
       </div>
     </li>

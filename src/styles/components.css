@@ -10,6 +10,9 @@
 
 .btn {
   display: inline-flex;
+  background: transparent; /* <button> saisi muuten selaimen harmaan taustan */
+  font-family: inherit;
+  cursor: pointer;
   align-items: center;
   justify-content: center;
   min-height: 2.75rem;
@@ -221,6 +224,7 @@
   margin-bottom: 1.25rem;
   padding: 0.5rem 1rem 0.75rem;
   margin-inline: -1rem; /* vieritys ulottuu ruudun reunaan asti */
+  align-items: flex-start; /* upotusten korkeudet vaihtelevat kuvatekstin mukaan */
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: 1rem;
@@ -290,23 +294,34 @@
   text-underline-offset: 0.2em;
 }
 
-/* Instagramin upotus (iframe). Korkeus = leveys + n. 192 px (Instagramin oma otsikko ja alapalkki).
-   Prosentti padding-bottomissa lasketaan sisältöleveydestä, joten lisätään kuvan tavoin
-   kortin sivupaddingit (2 x 1.25 rem). */
+/* Instagramin upotus (iframe): Instagramin oma kortti sellaisenaan, korkeus tulee
+   komponentilta (Instagram mittaa sen kuvatekstin mukaan). */
 .insta__embed {
-  position: relative;
-  width: calc(100% + 2.5rem);
-  margin: -1.5rem -1.25rem 0;
-  padding-bottom: calc(100% + 2.5rem + 192px);
-  background: var(--color-bg-alt);
+  overflow: hidden;
+  border-radius: 1.25rem;
+  background: #fff;
+  box-shadow: 0 0 0 1px var(--color-line);
 }
 
 .insta__embed iframe {
-  position: absolute;
-  inset: 0;
+  display: block;
   width: 100%;
-  height: 100%;
   border: 0;
+}
+
+/* Koristeruutu esikatselukortissa, kun omaa kuvaa ei ole */
+.insta__placeholder {
+  display: grid;
+  place-items: center;
+  width: calc(100% + 2.5rem);
+  margin: -1.5rem -1.25rem 0;
+  aspect-ratio: 1;
+  background: var(--color-brand);
+}
+
+.insta__placeholder img {
+  width: 62%;
+  height: auto;
 }
 
 /* Kuva kortin ylälaitaan, teksti sen alle. Kortin omat reunukset leikkaavat kuvan (overflow: hidden). */
@@ -438,4 +453,9 @@
 .insta__note a,
 .insta__note button {
   text-decoration: underline;
+}
+
+/* Esikatselukortit venyvät samaan korkeuteen (upotukset saavat oman korkeutensa) */
+.insta__item--preview {
+  align-self: stretch;
 }
