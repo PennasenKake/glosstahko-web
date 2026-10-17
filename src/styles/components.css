@@ -79,6 +79,11 @@
   color: var(--color-brand-dark);
 }
 
+/* Tumman terrakottaosion (Yhteys) ylärivi vaaleaksi: oletusväri olisi sama kuin tausta */
+.section--brand .section-heading__eyebrow {
+  color: var(--color-bg);
+}
+
 .section-heading__title {
   font-family: var(--font-script);
   font-size: clamp(3.5rem, 11vw, 5.5rem);

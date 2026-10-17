@@ -6,7 +6,7 @@
 // 3. Tämä skripti ajaa palvelinversion, saa valmiin HTML:n ja kirjoittaa sen
 //    dist/index.html:ään. Samalla lisätään JSON-LD sekä sitemap ja robots.txt.
 
-import { readFile, rm, writeFile } from 'node:fs/promises'
+import { readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
 
@@ -25,6 +25,19 @@ html = html.replace(placeholder, `<div id="root">${render()}</div>`)
 // --- 2. JSON-LD <head>:iin. "<" koodataan, ettei data voi sulkea script-tagia. ---
 const json = JSON.stringify(structuredData).replace(/</g, '\\u003c')
 html = html.replace('</head>', `    <script type="application/ld+json">${json}</script>\n  </head>`)
+
+// --- 2b. Tärkeimmät fontit esiladataan: muuten selain löytää ne vasta CSS:n luettuaan
+// ja otsikko vaihtaa fonttia kesken latauksen (hidastaa LCP:tä). Tiedostonimissä on
+// tiiviste, joten nimet haetaan buildin tuloksesta. crossorigin on fonteille pakollinen.
+const base = process.env.VITE_BASE ?? '/'
+const assets = await readdir('dist/assets')
+const preloads = ['great-vibes-latin-400-normal', 'lora-latin-400-normal', 'cormorant-garamond-latin-600-normal']
+  .map((name) => assets.find((file) => file.startsWith(name) && file.endsWith('.woff2')))
+  .filter(Boolean)
+  .map((file) => `    <link rel="preload" href="${base}assets/${file}" as="font" type="font/woff2" crossorigin />\n`)
+  .join('')
+html = html.replace('</head>', `${preloads}  </head>`)
+
 await writeFile('dist/index.html', html)
 
 // --- 3. Sitemap ja robots.txt ---

@@ -15,7 +15,7 @@ export const site = {
     'Kynsi- ja hiuspalvelut Nilsiässä ja liikkuva palvelu Tahkolla: geelilakkaus, rakennekynnet, leikkaukset, värjäykset ja juhlakampaukset.',
 
   // Yhteystiedot
-  phone: '044 513 2714', // näytettävä muoto
+  phone: '044\u00A0513\u00A02714', // näytettävä muoto (\u00A0 = ei-katkeava väli: numero ei rivity kahdelle riville)
   phoneHref: 'tel:+358445132714', // puhelimessa avaa soittosovelluksen
   email: 'siiri.launonen@hotmail.com', // vaihdetaan myöhemmin oman domainin osoitteeseen
   city: 'Nilsiä',

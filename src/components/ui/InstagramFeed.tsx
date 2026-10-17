@@ -126,7 +126,7 @@ export default function InstagramFeed() {
   const scrollable = canPrev || canNext
 
   return (
-    <div className="insta" role="region" aria-label="Instagram-julkaisut">
+    <section className="insta" aria-label="Instagram-julkaisut">
       <p className="insta__title">
         Instagramissa{' '}
         <a href={site.instagramUrl} target="_blank" rel="noopener noreferrer">
@@ -175,6 +175,6 @@ export default function InstagramFeed() {
         Julkaisu ladataan Instagramista (Meta) vasta, kun painat Näytä julkaisu. Silloin Meta voi
         asettaa evästeitä.
       </p>
-    </div>
+    </section>
   )
 }

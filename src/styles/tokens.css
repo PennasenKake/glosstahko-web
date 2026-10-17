@@ -12,7 +12,7 @@
   --color-brand: #b86b53; /* logon terrakotta: vain isoille pinnoille ja isolle tekstille */
   --color-brand-dark: #8f4733; /* tummempi: napit ja otsikot vaalealla (kontrasti n. 6:1) */
   --color-ink: #2b2b29; /* leipäteksti */
-  --color-ink-deep: #1e1b18; /* teksti terrakottapinnalla */
+  --color-ink-deep: #120f0d; /* teksti terrakottapinnalla */
   --color-muted: #675f55; /* toissijainen teksti */
   --color-bg: #f6efe4; /* sivun pohja (kermanvalkoinen) */
   --color-bg-alt: #efe5d6; /* vuorotteleva osion tausta */

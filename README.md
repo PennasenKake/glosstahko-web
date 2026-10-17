@@ -30,6 +30,7 @@ npm install
 npm run dev      # kehityspalvelin, http://localhost:5173
 npm run build    # tyyppitarkistus + tuotantobuild kansioon dist/
 npm run lint     # Oxlint
+npm test         # Vitest: kaavat, sisältödata ja sivun rakenne
 npm run preview  # esikatsele tuotantobuild
 ```
 
@@ -40,7 +41,7 @@ src/
 ├── components/
 │   ├── layout/      Header (tabit), Footer
 │   ├── sections/    Hero, Intro, About, Services, Tahko, Faq, Contact
-│   └── ui/          BookingButton, SectionHeading (+ Sprig, ei käytössä)
+│   └── ui/          BookingButton, SectionHeading 
 ├── config/
 │   ├── site.ts      yrityksen tiedot: yhteystiedot, some, ajanvaraus
 │   └── nav.ts       tabit ja osioiden id:t (Header ja Footer lukevat tästä)
@@ -79,6 +80,12 @@ Sisältö (`data/`, `config/`) on erillään ulkoasusta, jotta hintojen, UKK:n j
 
 Sivuston osoite on yhdessä paikassa: `.env` (`VITE_SITE_URL`).
 
+## Julkaisu (GitHub Pages, testi)
+
+Workflow ajaa joka `main`-pushilla lintin, testit ja buildin ja julkaisee `dist/`-kansion. Kerran tehtävä asetus: GitHub > Settings > Pages > Source: **GitHub Actions** (ei "Deploy from a branch", koska se tarjoaisi lähdekoodin, ei buildia).
+
+Testiosoite on alikansiossa, siksi workflow asettaa `VITE_BASE=/glosstahko-web/`. Oman domainin kanssa `VITE_BASE` jätetään pois ja `VITE_SITE_URL` vaihdetaan domainiin.
+
 ## Tyyli
 
 - **Boho** on toteutettu: terrakotta, kermanvalkoinen ja salvianvihreä, käsinkirjoitettu otsikkofontti, kukkaoksakoristeet ja pehmeät kortit.
@@ -97,6 +104,7 @@ Sivuston osoite on yhdessä paikassa: `.env` (`VITE_SITE_URL`).
 - [ ] Oikeat valokuvat (kaarikehykset) ja mahdolliset scroll-animaatiot
 - [x] Teema valittu: Boho
 - [x] SEO: meta-tagit, JSON-LD, sitemap, robots.txt, esirenderöinti (`npm run build`)
+- [x] Testijulkaisu GitHub Pagesiin (`.github/workflows/pages.yml`)
 - [ ] Julkaisu: domain, hosting ja Google Business Profile
 
 ## Ennen julkaisua
