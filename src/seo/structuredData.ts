@@ -8,8 +8,8 @@ import { serviceCategories } from '../data/services'
  * Tiedot tulevat samoista lähteistä kuin näkyvä sivu (config/site.ts ja
  * data/services.ts), joten ne eivät pääse eriytymään.
  *
- * Huom: katuosoitetta ei ole tarkoituksella. Palvelu on liikkuvaa ja
- * kotiosoite ei kuulu verkkoon, joten kerrotaan vain paikkakunta ja alue.
+ * Huom: osoite on toimitilan osoite (config/site.ts), ei kotiosoite. Kotiosoite ei
+ * kuulu verkkoon, ja testi (App.test.tsx) varmistaa, ettei se päädy tähän dataan.
  *
  * Schema.org: https://schema.org/HairSalon ja https://schema.org/NailSalon
  */
@@ -31,9 +31,13 @@ export function buildStructuredData() {
     email: site.email,
     address: {
       '@type': 'PostalAddress',
+      streetAddress: site.address,
+      postalCode: site.postalCode,
       addressLocality: site.city,
       addressCountry: 'FI',
     },
+    geo: { '@type': 'GeoCoordinates', latitude: site.lat, longitude: site.lng },
+    hasMap: site.mapUrl,
     areaServed: [
       { '@type': 'City', name: 'Nilsiä' },
       { '@type': 'Place', name: 'Tahko' },

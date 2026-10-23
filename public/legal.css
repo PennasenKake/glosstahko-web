@@ -1,0 +1,96 @@
+/* Lakisivujen (käyttöehdot, tietosuoja) yhteinen ulkoasu.
+   Värit ovat samat kuin sivun tokens.css:ssä. Sivun omat fontit on paketoitu
+   buildin sisään tiivisteellä, joten näillä staattisilla sivuilla käytetään
+   vastaavia järjestelmäfontteja. */
+:root {
+  --brand: #b86b53;
+  --brand-dark: #8f4733;
+  --ink: #2b2b29;
+  --ink-deep: #120f0d;
+  --muted: #675f55;
+  --bg: #f6efe4;
+  --surface: #fbf5ec;
+  --line: #d9cdbb;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Lora', Georgia, 'Times New Roman', serif;
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+a { color: var(--brand-dark); text-underline-offset: 0.2em; }
+a:focus-visible { outline: 3px solid var(--brand-dark); outline-offset: 3px; }
+
+.legal-top {
+  background: var(--brand);
+  color: var(--ink-deep);
+  padding: 1.1rem 1.25rem;
+}
+.legal-top__inner { max-width: 44rem; margin: 0 auto; }
+.legal-logo {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1;
+  color: inherit;
+  text-decoration: none;
+}
+.legal-logo__main {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+.legal-logo__sub {
+  margin-top: 0.35rem;
+  font-family: 'Jost', system-ui, sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+}
+
+main { max-width: 44rem; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+.legal-eyebrow {
+  margin: 0 0 0.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--brand-dark);
+}
+h1 {
+  margin: 0 0 0.25rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 6vw, 2.75rem);
+  line-height: 1.1;
+  color: var(--brand-dark);
+}
+.legal-date { margin: 0 0 1.5rem; color: var(--muted); font-size: 0.95rem; }
+.legal-rule {
+  width: 6rem; height: 1px; margin: 0 0 1rem;
+  background: var(--brand-dark); opacity: 0.55; border: 0;
+}
+h2 {
+  margin: 2.25rem 0 0.5rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+}
+p { margin: 0 0 1rem; }
+ul { margin: 0 0 1rem; padding-left: 1.25rem; }
+li { margin-bottom: 0.35rem; }
+
+.legal-foot {
+  margin-top: 3rem; padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.95rem; color: var(--muted);
+}
+.legal-foot a { margin-right: 1rem; }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }

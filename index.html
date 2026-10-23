@@ -6,6 +6,19 @@
     <meta name="theme-color" content="#b86b53" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <!-- Paljastusanimaatiot: JS merkitään käyttöön ennen ensimmäistä piirtoa, jotta sisältö
+         ei välähdä näkyviin ennen animaatiota. Jos animaatio-JS ei käynnisty 4 sekunnissa,
+         kaikki näytetään (rv-off). Ilman JavaScriptiä sisältö näkyy aina. -->
+    <script>
+      (function (d) {
+        var r = d.documentElement
+        r.classList.add('has-js')
+        setTimeout(function () {
+          if (!r.classList.contains('rv-ready')) r.classList.add('rv-off')
+        }, 4000)
+      })(document)
+    </script>
+
     <!-- Haku: otsikko ja kuvaus näkyvät Googlen hakutuloksessa -->
     <title>GlossTahko – kynnet ja hiukset Nilsiässä ja Tahkolla</title>
     <meta

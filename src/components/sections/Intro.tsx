@@ -13,17 +13,15 @@ const highlights = [
 
 export default function Intro() {
   return (
-    // Ei omaa otsikkoa, joten nimetään osio aria-labelilla
     <section className="intro" aria-label="Lyhyt esittely">
       <div className="container container--narrow">
-        <p className="intro__text">
+        <p className="intro__text" data-reveal>
           GlossTahko tarjoaa geelilakkaukset, kynnet, hiusten värjäykset ja
-          juhlakampaukset saman katon alla Nilsiässä. Sesonkien aikana
-          palvelu tulee myös mökille, majoitukseen tai juhlapaikalle
-          Tahkolla.
+          juhlakampaukset saman katon alla Nilsiässä. Sesonkien aikana palvelu
+          tulee myös mökille, majoitukseen tai juhlapaikalle Tahkolla.
         </p>
 
-        <ul className="chip-list">
+        <ul className="chip-list" data-reveal>
           {highlights.map((text) => (
             <li className="chip" key={text}>
               {text}

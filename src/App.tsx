@@ -7,8 +7,12 @@ import Services from './components/sections/Services'
 import Tahko from './components/sections/Tahko'
 import Faq from './components/sections/Faq'
 import Contact from './components/sections/Contact'
+import { useRevealOnScroll } from './hooks/useRevealOnScroll'
 
 export default function App() {
+  // Paljastusanimaatio: elementit, joilla on data-reveal, liukuvat näkyviin vieritettäessä
+  useRevealOnScroll()
+
   return (
     <>
       {/* Ensimmäinen Tab-painallus paljastaa tämän: ohittaa navigaation */}

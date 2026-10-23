@@ -20,7 +20,8 @@
   --color-sage: #cdc8a6; /* logon lehden salviansävy */
   --color-line: #d9cdbb; /* ohuet viivat */
   --color-line-strong: #b9a98f; /* pisteviivat hinnastossa */
-
+  --color-gold: #c4a35a;
+  --color-gold-soft: #d4bc7a;
   /* --- Fontit ------------------------------------------- */
   --font-script: 'Great Vibes', cursive; /* käsinkirjoitettu pääotsikko */
   --font-heading: 'Cormorant Garamond', Georgia, serif; /* pienet versaaliotsikot */

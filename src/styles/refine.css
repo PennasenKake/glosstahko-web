@@ -1,0 +1,230 @@
+/* ==========================================================================
+   refine.css: paljastusanimaatio, otsikkokoriste, toimitilakortti ja korjaukset
+   Tuodaan index.css:ssä viimeisenä, jotta nämä voittavat aiemmat samanarvoiset säännöt.
+
+   Liike on tarkoituksella kiireetön ("Kauneutta kiireettömästi"): pitkät, pehmeät
+   siirtymät, pieni siirtymä ja ei pomppua. Logiikka: hooks/useRevealOnScroll.ts.
+   ========================================================================== */
+
+:root {
+  --rv-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --rv-ease-write: cubic-bezier(0.55, 0.08, 0.25, 1);
+  --rv-shift: 1.25rem;
+}
+
+/* ---------- Paljastus ----------
+   Käytetään yksittäisiä `translate` ja `scale` -ominaisuuksia, jotta ne eivät mene
+   ristiin elementtien omien transform-arvojen kanssa (esim. terälehdet).
+   Piilotus vaatii html.has-js (index.html), joten ilman JS:ää kaikki näkyy. */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Alkutila: piilossa ja hieman alempana */
+  html.has-js:not(.rv-off) [data-reveal]:not([data-rv]) {
+    opacity: 0;
+    translate: 0 var(--rv-shift);
+  }
+
+  /* fade: pelkkä häivytys (alatunniste, sanamerkki) */
+  html.has-js:not(.rv-off) [data-reveal='fade']:not([data-rv]) {
+    translate: none;
+  }
+
+  /* write: käsinkirjoitettu sana paljastuu vasemmalta oikealle kuin kirjoitettuna.
+     Negatiiviset reunat estävät script-kirjainten ylitysten leikkautumisen. */
+  html.has-js:not(.rv-off) [data-reveal='write']:not([data-rv]) {
+    opacity: 1;
+    translate: none;
+    clip-path: inset(-0.45em 100% -0.45em -0.45em);
+  }
+
+  /* grow: lehvä kasvaa alhaalta ylös */
+  html.has-js:not(.rv-off) [data-reveal='grow']:not([data-rv]) {
+    translate: 0 2.5rem;
+    scale: 0.96;
+    transform-origin: 50% 100%;
+  }
+
+  /* Paljastus: siirtymä on vain tässä tilassa. Hook poistaa attribuutit animaation
+     jälkeen, jolloin elementin omat hover-siirtymät palaavat voimaan. */
+  html.has-js:not(.rv-off) [data-reveal][data-rv='in'] {
+    transition:
+      opacity 1.1s var(--rv-ease) var(--rv-delay, 0ms),
+      translate 1.3s var(--rv-ease) var(--rv-delay, 0ms),
+      scale 1.3s var(--rv-ease) var(--rv-delay, 0ms),
+      clip-path 1.6s var(--rv-ease-write) var(--rv-delay, 0ms);
+  }
+  html.has-js:not(.rv-off) [data-reveal='fade'][data-rv='in'] {
+    transition-duration: 1.6s;
+  }
+  html.has-js:not(.rv-off) [data-reveal='grow'][data-rv='in'] {
+    transition-duration: 1.4s, 1.9s, 1.9s, 1.6s;
+  }
+
+  /* Otsikon koriste (viiva, piste, viiva) piirtyy keskeltä ulos otsikon jälkeen */
+  html.has-js:not(.rv-off) .section-heading[data-reveal]:not([data-rv])::after {
+    scale: 0 1;
+  }
+  html.has-js:not(.rv-off) .section-heading[data-reveal][data-rv='in']::after {
+    transition: scale 1.4s var(--rv-ease) calc(var(--rv-delay, 0ms) + 600ms);
+  }
+}
+
+@media print {
+  [data-reveal] {
+    opacity: 1 !important;
+    translate: none !important;
+    scale: none !important;
+    clip-path: none !important;
+  }
+}
+
+/* ---------- Toimitilakortti (Yhteys) ---------- */
+
+.venue {
+  display: grid;
+  gap: 1.75rem;
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  text-align: left;
+  box-shadow: 0 22px 44px -28px rgb(18 15 13 / 0.6);
+}
+
+/* Osion oletuksena vaalea fokusrengas häviäisi vaalealla kortilla */
+.venue :focus-visible {
+  outline-color: var(--color-brand-dark);
+}
+
+.venue__title {
+  margin-bottom: 0.6rem;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-brand-dark);
+}
+
+.venue__address {
+  display: grid;
+  gap: 0.1rem;
+  font-style: normal;
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.venue__note {
+  margin: 0.9rem 0 1.4rem;
+  max-width: 32ch;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+.venue__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Kaarikehys: sama Boho-kieli kuin muualla sivulla */
+.venue__frame {
+  position: relative;
+  aspect-ratio: 4 / 4.4;
+  overflow: hidden;
+  border-radius: 999px 999px 1.25rem 1.25rem;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-line);
+}
+
+.venue__iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.venue__load {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 2rem 1.5rem 1.5rem;
+  border: 0;
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgb(255 255 255 / 0.55), transparent 60%),
+    var(--color-bg-alt);
+  color: var(--color-ink);
+  font: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.venue__load:hover .venue__pin {
+  translate: 0 -0.25rem;
+}
+
+.venue__pin {
+  width: 2.6rem;
+  height: auto;
+  margin-bottom: 0.4rem;
+  fill: var(--color-brand-dark);
+  transition: translate 0.3s var(--rv-ease);
+}
+.venue__pin circle {
+  fill: var(--color-surface);
+}
+
+.venue__load-text {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.venue__load-sub {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.venue__privacy {
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+@media (min-width: 48rem) {
+  .venue {
+    grid-template-columns: 1fr minmax(0, 19rem);
+    align-items: center;
+    gap: 2.5rem;
+    padding: 2rem 2.5rem;
+  }
+}
+
+/* ---------- Instagram-kortit ----------
+   2 saraketta tabletilla, 3 vasta leveällä näytöllä: Instagram-upotus tarvitsee noin
+   326 px, ja 3 saraketta mahtuu sen yli vasta kun sisältö on yli 70 rem leveä. */
+
+@media (min-width: 48rem) {
+  .insta__item {
+    flex-basis: calc((100% - 1rem) / 2);
+  }
+}
+@media (min-width: 64rem) {
+  .insta__item {
+    flex-basis: calc((100% - 1rem) / 2);
+  }
+}
+@media (min-width: 70rem) {
+  .insta__item {
+    flex-basis: calc((100% - 2rem) / 3);
+  }
+}

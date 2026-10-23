@@ -458,3 +458,147 @@
 .insta__item--preview {
   align-self: stretch;
 }
+
+
+/* ---------- Scroll reveal ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(1.25rem);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ---------- Kultaiset terälehdet ---------- */
+
+.section-heading--petals {
+  position: relative;
+  isolation: isolate;
+}
+
+.section-heading--petals .section-heading__eyebrow,
+.section-heading--petals .section-heading__title {
+  position: relative;
+  z-index: 1;
+}
+
+.petals {
+  position: absolute;
+  inset: -1.5rem -2rem -0.5rem;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+
+.petal {
+  position: absolute;
+  width: 0.85rem;
+  height: 1.35rem;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: linear-gradient(
+    145deg,
+    var(--color-gold-soft) 0%,
+    var(--color-gold) 55%,
+    #a8883f 100%
+  );
+  opacity: 0.55;
+  box-shadow: 0 0 0 1px rgb(196 163 90 / 0.15);
+}
+
+/* Sijoittelu reunoille – ei keskelle tekstiä */
+.petal--1 { left: 4%;  top: 12%; transform: rotate(-25deg); }
+.petal--2 { left: 10%; bottom: 8%; transform: rotate(18deg); }
+.petal--3 { right: 6%; top: 8%; transform: rotate(32deg); }
+.petal--4 { right: 12%; bottom: 14%; transform: rotate(-12deg); }
+.petal--5 { left: 18%; top: 0; transform: rotate(8deg); opacity: 0.35; }
+.petal--6 { right: 20%; top: 22%; transform: rotate(-40deg); opacity: 0.4; }
+
+@keyframes petal-drift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -0.45rem; }
+}
+
+.petal--1 { animation: petal-drift 5.5s ease-in-out infinite; }
+.petal--2 { animation: petal-drift 6.2s ease-in-out 0.4s infinite; }
+.petal--3 { animation: petal-drift 4.8s ease-in-out 0.8s infinite; }
+.petal--4 { animation: petal-drift 5.9s ease-in-out 0.2s infinite; }
+.petal--5 { animation: petal-drift 7s ease-in-out 1s infinite; }
+.petal--6 { animation: petal-drift 5.2s ease-in-out 0.6s infinite; }
+
+@media (max-width: 39.99rem) {
+  .petals {
+    inset: -0.75rem -0.5rem 0;
+  }
+  .petal {
+    width: 0.65rem;
+    height: 1.05rem;
+    opacity: 0.4;
+  }
+  /* Pidä reunoilla myös mobiilissa */
+  .petal--5,
+  .petal--6 {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petal {
+    animation: none;
+  }
+}
+
+
+/* Mobiili: yksi + pilkahdus */
+.insta__item {
+  flex: 0 0 82%;
+  scroll-snap-align: start;
+}
+
+@media (min-width: 40rem) {
+  .insta__item {
+    flex-basis: 52%;
+  }
+}
+
+/* Tabletti: kaksi */
+@media (min-width: 48rem) {
+  .insta__list {
+    margin-inline: 0;
+    padding-inline: 0;
+    scroll-padding-inline: 0;
+  }
+
+  .insta__item {
+    flex-basis: calc((100% - 1rem) / 2);
+  }
+}
+
+/* Iso näyttö: kolme korttia vierekkäin */
+@media (min-width: 64rem) {
+  .insta__item {
+    flex-basis: calc((100% - 2rem) / 3);
+  }
+}
+
+@media (min-width: 80rem) {
+  .insta__arrow--prev {
+    left: -1.375rem;
+  }
+  .insta__arrow--next {
+    right: -1.375rem;
+  }
+}

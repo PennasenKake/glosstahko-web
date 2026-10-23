@@ -415,3 +415,30 @@
 .contact__list a {
   text-underline-offset: 0.2em;
 }
+
+.contact__venue {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgb(251 245 236 / 0.25);
+  text-align: center;
+}
+
+.contact__venue-title {
+  margin-bottom: 0.5rem;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.contact__venue-address {
+  font-weight: 600;
+}
+
+.contact__venue-note {
+  margin: 0.5rem auto 1.25rem;
+  max-width: 28rem;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}

@@ -1,3 +1,5 @@
+import { site } from '../config/site'
+
 /**
  * Usein kysytyt kysymykset. Uuden kysymyksen lisäys on yksi rivi tähän.
  * Faq-komponentti piirtää ne haitarina.
@@ -49,7 +51,7 @@ export const faq: FaqItem[] = [
   },
   {
     q: 'Missä palvelu on?',
-    a: 'Nilsiän keskustassa, ja sesonkien aikana liikkuvana Tahkon alueella. Kysy tarkka osoite ajanvarauksen yhteydessä.',
+    a: `Toimitila on osoitteessa ${site.addressLine}. Sesonkien aikana palvelu tulee liikkuvana myös Tahkon alueelle.`,
   },
   {
     q: 'Mitä jos en pääse paikalle?',
