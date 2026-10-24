@@ -195,3 +195,11 @@ describe('Instagram-karuselli', () => {
     expect(html.match(/class="insta__arrow[^"]*"[^>]*hidden/g) ?? []).toHaveLength(2)
   })
 })
+
+describe('metatiedot', () => {
+  it('rakenteinen data sisältää varaustoiminnon Booksaloniin', () => {
+    const data = buildStructuredData()
+    expect(data.potentialAction['@type']).toBe('ReserveAction')
+    expect(data.potentialAction.target.urlTemplate).toBe(site.bookingUrl)
+  })
+})

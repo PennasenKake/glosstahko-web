@@ -55,6 +55,20 @@ export function buildStructuredData() {
       { '@type': 'Place', name: 'Tahko' },
     ],
     sameAs: [site.instagramUrl],
+    // Verkkoajanvaraus (Booksalon): Google voi näyttää varauslinkin hakutuloksessa
+    potentialAction: {
+      '@type': 'ReserveAction',
+      name: 'Varaa aika',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: site.bookingUrl,
+        inLanguage: 'fi',
+        actionPlatform: [
+          'https://schema.org/DesktopWebPlatform',
+          'https://schema.org/MobileWebPlatform',
+        ],
+      },
+    },
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Palvelut',

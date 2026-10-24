@@ -44,18 +44,33 @@ html = html.replace('</head>', `${preloads}  </head>`)
 const noindex = process.env.VITE_NOINDEX === '1'
 const robotsMeta = '    <meta name="robots" content="noindex, nofollow" />\n'
 if (noindex) {
+  // Korvaa indeksointia sallivan oletusmerkinnän (index.html), jottei sivulla ole kahta ristiriitaista
+  html = html.replace(/ *<meta name="robots"[^>]*>\n/, '')
   html = html.replace('</head>', `${robotsMeta}  </head>`)
 }
 
 await writeFile('dist/index.html', html)
 
-// Lakisivut ovat public/-kansion staattisia sivuja: demossa ne saavat saman merkinnän
-if (noindex) {
-  for (const page of ['kayttoehdot.html', 'tietosuoja.html', 'kotihoito.html']) {
-    const path = `dist/${page}`
-    const content = await readFile(path, 'utf-8')
-    await writeFile(path, content.replace('</head>', `${robotsMeta}  </head>`))
-  }
+// Lakisivut ja kotihoito-ohjeet ovat public/-kansion staattisia sivuja. Jokainen saa canonicalin
+// ja linkin esikatselun (Open Graph) sivuston osoitteen mukaan. Demossa lisätään myös noindex.
+for (const page of ['kayttoehdot.html', 'tietosuoja.html', 'kotihoito.html']) {
+  const path = `dist/${page}`
+  let content = await readFile(path, 'utf-8')
+  const title = content.match(/<title>([^<]*)<\/title>/)?.[1] ?? 'GlossTahko'
+  const description = content.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? ''
+  const url = `${siteUrl}/${page}`
+  const head =
+    `    <link rel="canonical" href="${url}" />\n` +
+    `    <meta property="og:type" content="website" />\n` +
+    `    <meta property="og:locale" content="fi_FI" />\n` +
+    `    <meta property="og:site_name" content="GlossTahko" />\n` +
+    `    <meta property="og:title" content="${title}" />\n` +
+    `    <meta property="og:description" content="${description}" />\n` +
+    `    <meta property="og:url" content="${url}" />\n` +
+    `    <meta property="og:image" content="${siteUrl}/og-image.jpg" />\n` +
+    (noindex ? robotsMeta : '')
+  content = content.replace('</head>', `${head}  </head>`)
+  await writeFile(path, content)
 }
 
 // --- 3. Sitemap ja robots.txt ---
