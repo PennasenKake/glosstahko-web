@@ -48,6 +48,7 @@ export default function VenueCard() {
             {site.postalCode} {site.city}
           </span>
         </address>
+        <p className="venue__note">{site.addressNote}</p>
         <p className="venue__note">
           Sesonkien aikana palvelu tulee myös mökille, majoitukseen tai juhlapaikalle Tahkolla.
         </p>

@@ -1,3 +1,4 @@
+import { site } from '../../config/site'
 import BookingButton from '../ui/BookingButton'
 import leaf from '../../assets/images/leaf.webp'
 import SectionHeading from '../ui/SectionHeading'
@@ -31,7 +32,7 @@ export default function Tahko() {
         </ul>
 
         <div data-reveal>
-          <BookingButton label="Kysy liikkuvasta palvelusta" />
+          <BookingButton label="Kysy liikkuvasta palvelusta" href={site.instagramUrl} />
         </div>
       </div>
     </section>

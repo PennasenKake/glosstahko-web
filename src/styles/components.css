@@ -511,9 +511,7 @@
 }
 
 .petal {
-  --p-fill: var(--color-sage);
-  --p-edge: color-mix(in srgb, var(--color-sage) 50%, #4f5232);
-  --op: 0.85;
+  --op: 0.95;
   position: absolute;
   display: block;
   opacity: var(--op);
@@ -527,33 +525,56 @@
   animation-play-state: running;
 }
 
-.petal--gold {
-  --p-fill: var(--color-gold-soft);
-  --p-edge: color-mix(in srgb, var(--color-gold) 60%, #5a4318);
-}
-
-.petal--blush {
-  --p-fill: #ecc9b9;
-  --p-edge: color-mix(in srgb, var(--color-brand) 70%, #5a2a1c);
-  --op: 0.8;
-}
-
 .petal svg {
   display: block;
   width: 100%;
   height: 100%;
   overflow: visible;
-  fill: var(--p-fill);
-  stroke: var(--p-edge);
-  stroke-width: 0.9;
+  /* Hento varjo antaa metallille syvyyttä myös vaalealla pohjalla */
+  filter: drop-shadow(0 1px 1px rgb(120 84 24 / 0.35));
+}
+
+.petal__body {
+  stroke: #8d6a25;
+  stroke-width: 0.7;
   stroke-linejoin: round;
+}
+
+.petal__stem {
+  fill: none;
+  stroke: #8d6a25;
+  stroke-width: 1.1;
+  stroke-linecap: round;
 }
 
 .petal__vein {
   fill: none;
+  stroke: #fff6d6;
+  stroke-width: 0.55;
   stroke-linecap: round;
-  stroke-width: 0.8;
-  opacity: 0.55;
+  opacity: 0.6;
+}
+
+/* Kiiltoläikkä välähtää hitaasti (vain opacity) */
+.petal__shine {
+  fill: #fffbe9;
+  opacity: 0.35;
+  animation: petal-glint 4.2s ease-in-out var(--glint-delay, 0s) infinite;
+  animation-play-state: paused;
+}
+
+.petals--live .petal__shine {
+  animation-play-state: running;
+}
+
+@keyframes petal-glint {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  45% {
+    opacity: 0.8;
+  }
 }
 
 /* Putoaminen: häivyn sisään, laskeutuu hitaasti ja keinahtaa sivulle, häipyy pois */
@@ -602,6 +623,10 @@
   .petal {
     animation: none;
     will-change: auto;
+  }
+  .petal__shine {
+    animation: none;
+    opacity: 0.45;
   }
 }
 

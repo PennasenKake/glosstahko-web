@@ -10,6 +10,8 @@ type BookingButtonProps = {
   variant?: 'primary' | 'light' | 'ghost'
   /** Pienempi koko, esim. headeriin. */
   small?: boolean
+  /** Oletus on ajanvaraus (site.bookingUrl). Muuhun kohteeseen, esim. Instagram-viestiin, annetaan oma osoite. */
+  href?: string
 }
 
 /**
@@ -25,6 +27,7 @@ export default function BookingButton({
   label = 'Varaa aika',
   variant = 'primary',
   small = false,
+  href = site.bookingUrl,
 }: BookingButtonProps) {
   // Rakennetaan CSS-luokat: esim. "btn btn--primary btn--small".
   // `small && 'btn--small'` on false, kun small ei ole päällä.
@@ -36,7 +39,7 @@ export default function BookingButton({
   return (
     // target="_blank" avaa uuteen välilehteen. rel="noopener noreferrer"
     // estää uutta sivua pääsemästä käsiksi tähän sivuun (tietoturva).
-    <a className={className} href={site.bookingUrl} target="_blank" rel="noopener noreferrer">
+    <a className={className} href={href} target="_blank" rel="noopener noreferrer">
       {label}
     </a>
   )

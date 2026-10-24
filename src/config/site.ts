@@ -24,6 +24,8 @@ export const site = {
   address: 'Pisantie 3',
   postalCode: '73300',
   /** Näytettävä riviosoite */
+  // Löytäminen perillä: kerros ja naapuri
+  addressNote: '2. kerros, kampaamo Tuulikutrin yhteydessä',
   addressLine: 'Pisantie 3, 73300 Nilsiä',
   /**
    * Toimitilan koordinaatit (valinnainen). Kun ne annetaan, "Näytä kartta" lataa
@@ -44,6 +46,6 @@ export const site = {
   instagramUrl: 'https://www.instagram.com/glosstahko/',
   instagramHandle: '@glosstahko',
 
-  // Kaikki "Varaa aika" -painikkeet ohjautuvat tänne.
-  bookingUrl: 'https://www.instagram.com/glosstahko/',
+  // Kaikki "Varaa aika" -painikkeet ohjautuvat tänne (Booksalon verkkoajanvaraus).
+  bookingUrl: 'https://booksalon.fi/glosstahko',
 } as const

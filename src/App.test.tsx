@@ -124,3 +124,29 @@ describe('otsikoiden terälehdet', () => {
     expect(html).not.toContain('petals--live')
   })
 })
+
+describe('ajanvaraus (Booksalon)', () => {
+  const html = renderToString(<App />)
+
+  it('bookingUrl on Booksalonin sivu', () => {
+    expect(site.bookingUrl).toBe('https://booksalon.fi/glosstahko')
+  })
+
+  it('kaikki Varaa aika -painikkeet vievät Booksaloniin (header, hero, yhteys, footer)', () => {
+    const count = html.split(`href="${site.bookingUrl}"`).length - 1
+    expect(count).toBeGreaterThanOrEqual(4)
+  })
+
+  it('liikkuvan palvelun kysely ohjaa Instagram-viestiin, ei ajanvaraukseen', () => {
+    expect(html).toMatch(/href="https:\/\/www\.instagram\.com\/glosstahko\/"[^>]*>Kysy liikkuvasta palvelusta/)
+  })
+
+  it('UKK ei enää väitä ajanvarauksen olevan vain Instagramissa', () => {
+    expect(html).not.toContain('toistaiseksi Instagramissa')
+    expect(html).toContain('Booksalonin verkkoajanvarauksessa')
+  })
+
+  it('toimitilan lisätieto (kerros ja kampaamo) näkyy', () => {
+    expect(html).toContain(site.addressNote)
+  })
+})

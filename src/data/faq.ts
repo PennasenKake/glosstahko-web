@@ -6,6 +6,8 @@ import { site } from '../config/site'
  *
  * Maksutapoja ei mainita tarkoituksella: korttimaksu tulee käyttöön
  * vasta, kun maksupääte on hankittu.
+ * Tekstit perustuvat Siirin omiin sanamuotoihin (24.10.2026). Peruutusehdot ja takuu:
+ * public/kayttoehdot.html.
  */
 export type FaqItem = {
   q: string
@@ -15,27 +17,27 @@ export type FaqItem = {
 export const faq: FaqItem[] = [
   {
     q: 'Miten varaan ajan?',
-    a: 'Ajanvaraus hoidetaan toistaiseksi Instagramissa tai puhelimitse. Paina Varaa aika -painiketta tai soita.',
+    a: 'Ajan voi varata Booksalonin verkkoajanvarauksessa (Varaa aika -painike) tai Instagram-viestillä. Jos jokin ajanvarauksessa mietityttää, esimerkiksi palveluiden tai lisäpalveluiden osalta, laita viestiä, niin palaan asiaan.',
   },
   {
-    q: 'Voinko tehdä kynnet ja hiukset samalla käynnillä?',
-    a: 'Kyllä. Kynsi- ja hiuspalvelut saa saman katon alta, joten useamman palvelun kokonaisuus onnistuu yhdellä käynnillä. Mainitse varatessa, mitä haluat.',
+    q: 'Voinko yhdistää palveluita samalle käynnille?',
+    a: 'Kyllä. Kynsi- ja hiuspalvelut onnistuvat samalla käynnillä, mutta kampaamon puolelle on tarjolla rajallinen määrä aikoja. Niiden ajanvaraus tehdään Instagram-viestillä tai puhelimitse. Huom! Palvelu on kiireetön: en vastaa puheluihin asiakastyön aikana, joten laita viesti, niin soitan pian takaisin.',
   },
   {
     q: 'Kuinka kauan geelilakkaus kestää?',
-    a: 'Tyypillisesti 3–4 viikkoa. Uusintaväliksi suosittelen noin kolmea viikkoa. Jos lakkaus nousee heti, kerro 7 vuorokauden sisällä, niin korjaan sen.',
+    a: 'Huoltosuositus on noin 3 viikkoa. Mitä pidempi kynsi, sitä lyhyempi huoltoväli. Kesto on kuitenkin yksilöllinen, enkä suosittele kolmea tai neljää viikkoa pidempää väliä. Kynsillä on aina 7 vuorokauden takuu, joten tutustuthan takuuehtoihin käyttöehdoissa.',
   },
   {
-    q: 'Mitä eroa on geelilakkauksella ja vahvistuksella?',
-    a: 'Geelilakkaus on värigeeli omille kynsille. Vahvistuksessa kynnen päälle tehdään rakenne builder-geelillä (BIAB), ja värigeeli tulee sen päälle. Vahvistus sopii heikoille tai helposti halkeileville kynsille.',
+    q: 'Mikä ero on geelilakkauksella ja vahvistuksella?',
+    a: 'Palvelu suunnitellaan aina yksilöllisesti sinun tarpeidesi ja toiveidesi pohjalta. Luonnonkynttä voidaan vahvistaa geelillä: joustavalla geelillä kynnelle rakennetaan muoto ja stressipiste. Tuote kiinnittyy luonnonkynteen kestävästi ja elää sen mukana, mikä tuo lisävahvuutta. Sen avulla saadaan kasvatettua omia kynsiä, ja se voi auttaa pääsemään eroon esimerkiksi kynsien puremisesta tai repimisestä. Suositeltu huoltoväli on 3–4 viikkoa.',
   },
   {
     q: 'Mitä tuotteita käytät?',
-    a: 'Kynsissä käytän Inveray-ammattilaissarjaa ja LED-kovetusta. Tuotteet ovat EU:n kosmetiikka-asetuksen mukaisia. Hiuksissa käytetään ammattilaistuotteita, ja tarvittaessa kerron värjäyksen tuotteista tarkemmin.',
+    a: 'Käytän vain ammattikäyttöön sopivia, EU-standardien mukaisia tuotteita ja laitteita. Kynsissä käytän Inveray-ammattilaissarjaa ja LED-kovetusta. Kerron mielelläni tuotteista lisää!',
   },
   {
     q: 'Miten hygienia hoidetaan?',
-    a: 'Työvälineet puhdistetaan ja desinfioidaan jokaisen asiakkaan jälkeen ja steriloidaan kuumailmasterilaattorissa. Kynsipöly imuroidaan suodattimella työpöydältä.',
+    a: 'Desinfioin työpisteen päivän aluksi, jokaisen asiakkaan välillä ja päivän päätteeksi. Välineet puhdistetaan, desinfioidaan ja steriloidaan kuumailmasterilisaattorissa jokaisen asiakkaan välissä. Tarkemmat tiedot löytyvät omavalvontasuunnitelmasta.',
   },
   {
     q: 'Tarvitseeko hiusten värjäykseen ihotesti?',
@@ -51,18 +53,18 @@ export const faq: FaqItem[] = [
   },
   {
     q: 'Missä palvelu on?',
-    a: `Toimitila on osoitteessa ${site.addressLine}. Sesonkien aikana palvelu tulee liikkuvana myös Tahkon alueelle.`,
+    a: `Toimitila on osoitteessa ${site.addressLine} (${site.addressNote}). Sesonkien aikana palvelu tulee liikkuvana myös Tahkon alueelle.`,
   },
   {
-    q: 'Mitä jos en pääse paikalle?',
-    a: 'Peruutus viimeistään 24 tuntia ennen aikaa, jotta aika vapautuu toiselle.',
+    q: 'Entä jos en pääse paikalle?',
+    a: 'Peruutus tehdään viimeistään 24 tuntia ennen varattua aikaa. Sairastapauksissa ota yhteyttä, niin sovitaan korvaava aika. Tutustuthan peruutusehtoihin käyttöehdoissa ennen ajanvarausta: myöhään peruttu tai käyttämättä jäänyt aika veloitetaan.',
   },
 ]
 
 /** "Hyvä tietää" -kortit UKK:n yläpuolella: lyhyet lupaukset ilman kysymystä. */
 export const goodToKnow = [
   { title: 'Kiireetön', text: 'Aikaa on varattu niin, ettei kiireen tunnetta tule. Suunnitellaan yhdessä, mikä sopii sinulle.' },
-  { title: 'Turvalliset tuotteet', text: 'Ammattilaissarjat, LED-kovetus ja huolellinen hygienia joka kerta.' },
-  { title: 'Yhdellä käynnillä', text: 'Kynnet ja hiukset saman katon alta, Nilsiässä tai liikkuvana Tahkolla.' },
+  { title: 'Turvallisuus', text: 'Ammattilaissarjat, ammattitaito ja huolellinen hygienia joka kerta.' },
+  { title: 'Yhdellä käynnillä', text: 'Palvelut voi yhdistää samalle käynnille joustavasti toimipisteellä Nilsiässä tai tarvittaessa liikkuvana palveluna.' },
   { title: 'Peruutus 24 h', text: 'Kerro peruutuksesta viimeistään vuorokautta ennen, niin aika vapautuu toiselle.' },
 ] as const

@@ -17,11 +17,11 @@ export default function Contact() {
         <SectionHeading id="yhteys-otsikko" eyebrow="Ota yhteyttä" title="Yhteystiedot" />
 
         <p className="contact__text" data-reveal>
-          Avaamme pian Nilsiässä. Seuraa Instagramia, niin kuulet ensimmäisenä.
+          Avaamme pian Nilsiässä. Varaa aika verkossa tai laita viestiä Instagramissa, niin palaan asiaan.
         </p>
 
         <div className="contact__cta" data-reveal>
-          <BookingButton label="Varaa aika Instagramissa" variant="light" />
+          <BookingButton label="Varaa aika verkossa" variant="light" />
         </div>
 
         <ul className="contact__list" data-reveal>
