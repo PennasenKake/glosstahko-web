@@ -1,6 +1,7 @@
 import { navItems } from '../../config/nav'
 import { site } from '../../config/site'
 import BookingButton from '../ui/BookingButton'
+import ConsentSettings from '../ui/ConsentSettings'
 
 const year = new Date().getFullYear()
 
@@ -62,14 +63,16 @@ export default function Footer() {
           © {year} {site.name} · Y-tunnus {site.businessId}
         </p>
         <p>
-          Hinnat sisältävät arvonlisäveron. Sivusto ei itse käytä evästeitä eikä
-          tallenna tietojasi. Instagram-julkaisun tai kartan avaaminen lataa
-          sisällön kolmannelta osapuolelta.{' '}
+          Hinnat sisältävät arvonlisäveron. Sivusto ei itse aseta evästeitä eikä
+          tallenna tietojasi palvelimelle. Selaimeesi tallennetaan vain Instagram-valintasi.
+          Instagram-julkaisut ja kartta ladataan kolmannelta osapuolelta vasta suostumuksellasi.{' '}
           <a href={`${base}kayttoehdot.html`}>Käyttöehdot</a>
           {' · '}
           <a href={`${base}kotihoito.html`}>Kotihoito-ohjeet</a>
           {' · '}
           <a href={`${base}tietosuoja.html`}>Tietosuoja</a>
+          {' · '}
+          <ConsentSettings />
         </p>
         <a href="#etusivu">Takaisin ylös ↑</a>
       </div>

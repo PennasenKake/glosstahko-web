@@ -96,7 +96,7 @@ Jos lisäät sivulle uuden ulkoisen palvelun (analytiikka, kartta, fontti, lomak
 - [ ] Sivun lähdekoodissa **ei** ole `noindex`-merkintää (`<meta name="robots">`)
 - [ ] `https://glosstahko.fi/jokin-vaara-osoite` näyttää oman 404-sivun
 - [ ] Varaa aika -painike avaa https://booksalon.fi/glosstahko
-- [ ] Instagram-kortin "Näytä julkaisu" ja kartan avaus toimivat (CSP ei estä)
+- [ ] Instagram: paina "Salli ja näytä julkaisut", kaikki julkaisut latautuvat karusellissa. Evästeasetukset (footer) nollaa valinnan. Kartan avaus toimii (CSP ei estä)
 - [ ] Lighthouse (Chrome DevTools) mobiilissa: Performance > 90, muut 100
 - [ ] Rich Results Test (search.google.com/test/rich-results): LocalBusiness ja FAQPage ilman virheitä
 - [ ] **Google Search Console**: lisää domain-ominaisuus `glosstahko.fi` (vahvistus DNS-TXT:llä, lisää tietue Cloudflaressa), lähetä `sitemap.xml`, pyydä etusivun indeksointia

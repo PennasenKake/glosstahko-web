@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs",
     "lint": "oxlint",
     "test": "vitest run",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "ig:add": "node scripts/add-instagram-post.mjs"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
