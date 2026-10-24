@@ -60,7 +60,7 @@
 
 /* Pienempi versio headeriin */
 .btn--small {
-  min-height: 2.5rem;
+  min-height: 2.75rem; /* kosketusalue vähintään 44 px */
   padding: 0.4rem 1.1rem;
   font-size: 0.72rem;
 }
@@ -483,11 +483,18 @@
   }
 }
 
-/* ---------- Kultaiset terälehdet ---------- */
+/* ---------- Terälehdet otsikon reunoilla ----------
+   Komponentti: components/ui/PetalDrift.tsx. Lehdet ovat SVG-muotoja, jotka leijuvat
+   hitaasti alas, keinuvat ja häipyvät. Liike käyttää vain translate/rotate/opacity. */
 
+/* Otsikon laatikko kutistetaan tekstin levyiseksi, jotta lehdet ovat tekstin vieressä
+   eikä leveän sisältöalueen reunoilla. */
 .section-heading--petals {
   position: relative;
   isolation: isolate;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
 }
 
 .section-heading--petals .section-heading__eyebrow,
@@ -498,66 +505,103 @@
 
 .petals {
   position: absolute;
-  inset: -1.5rem -2rem -0.5rem;
-  pointer-events: none;
+  inset: 0;
   z-index: 0;
-  overflow: visible;
+  pointer-events: none;
 }
 
 .petal {
+  --p-fill: var(--color-sage);
+  --p-edge: color-mix(in srgb, var(--color-sage) 50%, #4f5232);
+  --op: 0.85;
   position: absolute;
-  width: 0.85rem;
-  height: 1.35rem;
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  background: linear-gradient(
-    145deg,
-    var(--color-gold-soft) 0%,
-    var(--color-gold) 55%,
-    #a8883f 100%
-  );
+  display: block;
+  opacity: var(--op);
+  rotate: var(--rot);
+  will-change: translate, rotate, opacity;
+  animation: petal-fall var(--dur) ease-in-out var(--delay) infinite;
+  animation-play-state: paused; /* käynnistyy vasta, kun otsikko on näkyvissä */
+}
+
+.petals--live .petal {
+  animation-play-state: running;
+}
+
+.petal--gold {
+  --p-fill: var(--color-gold-soft);
+  --p-edge: color-mix(in srgb, var(--color-gold) 60%, #5a4318);
+}
+
+.petal--blush {
+  --p-fill: #ecc9b9;
+  --p-edge: color-mix(in srgb, var(--color-brand) 70%, #5a2a1c);
+  --op: 0.8;
+}
+
+.petal svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  fill: var(--p-fill);
+  stroke: var(--p-edge);
+  stroke-width: 0.9;
+  stroke-linejoin: round;
+}
+
+.petal__vein {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 0.8;
   opacity: 0.55;
-  box-shadow: 0 0 0 1px rgb(196 163 90 / 0.15);
 }
 
-/* Sijoittelu reunoille – ei keskelle tekstiä */
-.petal--1 { left: 4%;  top: 12%; transform: rotate(-25deg); }
-.petal--2 { left: 10%; bottom: 8%; transform: rotate(18deg); }
-.petal--3 { right: 6%; top: 8%; transform: rotate(32deg); }
-.petal--4 { right: 12%; bottom: 14%; transform: rotate(-12deg); }
-.petal--5 { left: 18%; top: 0; transform: rotate(8deg); opacity: 0.35; }
-.petal--6 { right: 20%; top: 22%; transform: rotate(-40deg); opacity: 0.4; }
-
-@keyframes petal-drift {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -0.45rem; }
+/* Putoaminen: häivyn sisään, laskeutuu hitaasti ja keinahtaa sivulle, häipyy pois */
+@keyframes petal-fall {
+  0% {
+    opacity: 0;
+    translate: 0 -0.6rem;
+    rotate: var(--rot);
+  }
+  14% {
+    opacity: var(--op);
+  }
+  52% {
+    translate: var(--sway) 1.1rem;
+    rotate: calc(var(--rot) + var(--spin));
+  }
+  86% {
+    opacity: var(--op);
+  }
+  100% {
+    opacity: 0;
+    translate: calc(var(--sway) * -0.5) 2.2rem;
+    rotate: calc(var(--rot) + var(--spin) * 1.7);
+  }
 }
 
-.petal--1 { animation: petal-drift 5.5s ease-in-out infinite; }
-.petal--2 { animation: petal-drift 6.2s ease-in-out 0.4s infinite; }
-.petal--3 { animation: petal-drift 4.8s ease-in-out 0.8s infinite; }
-.petal--4 { animation: petal-drift 5.9s ease-in-out 0.2s infinite; }
-.petal--5 { animation: petal-drift 7s ease-in-out 1s infinite; }
-.petal--6 { animation: petal-drift 5.2s ease-in-out 0.6s infinite; }
-
+/* Kapea näyttö: pienemmät ja vähemmän lehtiä, lähemmäs tekstiä */
 @media (max-width: 39.99rem) {
-  .petals {
-    inset: -0.75rem -0.5rem 0;
-  }
   .petal {
-    width: 0.65rem;
-    height: 1.05rem;
-    opacity: 0.4;
+    scale: 0.8;
   }
-  /* Pidä reunoilla myös mobiilissa */
-  .petal--5,
-  .petal--6 {
+  .petal:nth-child(2),
+  .petal:nth-child(5) {
     display: none;
   }
+  .petal:nth-child(1) {
+    left: -1.4rem !important;
+  }
+  .petal:nth-child(4) {
+    right: -1.4rem !important;
+  }
 }
 
+/* Vähennetty liike: lehdet ovat paikallaan */
 @media (prefers-reduced-motion: reduce) {
   .petal {
     animation: none;
+    will-change: auto;
   }
 }
 

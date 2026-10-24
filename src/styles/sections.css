@@ -107,6 +107,16 @@
   text-transform: uppercase;
 }
 
+/* Kapea tabletti/vaaka (900–1000 px): kaksi saraketta mahtuu vain pienemmällä sanamerkillä */
+@media (min-width: 56rem) and (max-width: 66rem) {
+  .hero__brand-main {
+    font-size: 3.25rem;
+  }
+  .hero__brand-sub {
+    font-size: 1.5rem;
+  }
+}
+
 .hero__leaf {
   width: min(19rem, 72%);
   height: auto;

@@ -34,6 +34,8 @@ jobs:
           # Testiosoite on alikansiossa, joten polut tarvitsevat etuliitteen
           VITE_BASE: /glosstahko-web/
           VITE_SITE_URL: https://pennasenkake.github.io/glosstahko-web
+          # Demo ei saa kilpailla glosstahko.fi:n kanssa Google-haussa
+          VITE_NOINDEX: '1'
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist

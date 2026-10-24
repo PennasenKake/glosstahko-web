@@ -71,18 +71,6 @@ export const serviceCategories: ServiceCategory[] = [
       { id: 'haakampaus', name: 'Hääkampaus, sis. suunnittelun ja koekampauksen', price: 170, priceFrom: true },
     ],
   },
-//   // VAHVISTETTAVA: tarjoaako Siiri kulmien ja ripsien värjäystä?
-//   // Jos ei, poista koko lohko.
-//   {
-//     id: 'kulmat-ripset',
-//     title: 'Kulmat ja ripset',
-//     services: [
-//       { id: 'kulmat', name: 'Kulmien kestovärjäys ja muotoilu', price: 20 },
-//       { id: 'ripset', name: 'Ripsien kestovärjäys', price: 20 },
-//       { id: 'ripset-kulmat', name: 'Ripset ja kulmat yhdessä', price: 38 },
-//       { id: 'ripset-kulmat-lisa', name: 'Ripset ja kulmat muun työn yhteydessä', price: 30 },
-//     ],
-//   },
   // Paketit (hiukset + kynnet samalla käynnillä) lisätään takaisin vasta,
   // kun leikkaus- ja kampaushinnat on vahvistettu: ne laskettiin vanhoista hinnoista.
 ]

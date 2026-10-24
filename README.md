@@ -9,7 +9,7 @@ Yhden sivun verkkosivusto nilsiäläiselle kynsi- ja kampaamoyritykselle **Gloss
 - Näkyy Google-haussa (paikallinen SEO: Nilsiä, Tahko)
 - Ei backendia eikä tietojen tallennusta: ajanvaraus ja some ovat ulkoisia linkkejä
 - Ei evästeitä eikä kolmansien osapuolten pyyntöjä (fontit ovat omassa paketissa)
-  - Ainoa poikkeus: Instagram-julkaisut (Minusta) ladataan heti suoraan Instagramista, ja alapalkki kertoo, että Meta voi asettaa evästeitä (`utils/consent.ts`, valinta localStorageen). Kävijä voi kieltää sen, jolloin kortit ovat esikatseluja. Footerin "Evästeasetukset" avaa valinnan uudelleen.
+  - Poikkeukset ovat kävijän omasta painalluksesta alkavia: Instagram-julkaisut (Minusta) ja OpenStreetMap-kartta ladataan vasta, kun kävijä painaa "Näytä julkaisu" / "Näytä kartta". Ennen sitä ei lähde pyyntöjä Metalle tai OSM:lle, eikä sivu tarvitse evästebanneria.
 - Yhtenäinen **Boho**-tyyli (valittu lopulliseksi teemaksi)
 
 ## Teknologiat
@@ -41,7 +41,8 @@ src/
 ├── components/
 │   ├── layout/      Header (tabit), Footer
 │   ├── sections/    Hero, Intro, About, Services, Tahko, Faq, Contact
-│   └── ui/          BookingButton, SectionHeading 
+│   └── ui/          BookingButton, SectionHeading, PetalDrift (otsikon terälehdet),
+│                    InstagramFeed (click-to-load), VenueCard (kartta)
 ├── config/
 │   ├── site.ts      yrityksen tiedot: yhteystiedot, some, ajanvaraus
 │   └── nav.ts       tabit ja osioiden id:t (Header ja Footer lukevat tästä)
@@ -56,9 +57,10 @@ src/
 │   ├── tokens.css      värit, fontit, mitat (teeman vaihto tapahtuu täällä)
 │   ├── base.css        nollaus, perustyylit, apuluokat
 │   ├── layout.css      header, tabit, footer
-│   ├── components.css  painikkeet, otsikot, chipit, boho-koristeet
-│   └── sections.css    osiokohtaiset tyylit
-├── seo/             structuredData.ts: JSON-LD (yritys + palvelut) Googlelle
+│   ├── components.css  painikkeet, otsikot, chipit, boho-koristeet, terälehdet
+│   ├── sections.css    osiokohtaiset tyylit
+│   └── refine.css      hienosäätö: reveal-animaatiot, kartta- ja korttityylit
+├── seo/             structuredData.ts: JSON-LD (yritys, palvelut ja UKK/FAQPage) Googlelle
 ├── types/           yhteiset TypeScript-tyypit
 ├── utils/           hinnan ja keston muotoilu
 ├── assets/images/   lehvä ja kukkaoksat (läpinäkyvät webp-kuvat)
@@ -68,7 +70,8 @@ src/
 └── main.tsx         sovelluksen käynnistys (hydrateRoot / createRoot)
 
 scripts/prerender.mjs   buildin jälkivaihe: HTML sisään, JSON-LD, sitemap.xml, robots.txt
-public/                 favicon.svg, og-image.jpg (linkin esikatselukuva)
+public/                 favicon.svg, og-image.jpg, tietosuoja.html, kayttoehdot.html,
+                        404.html (staattisia, noindex 404:ssä), legal.css
 .env                    VITE_SITE_URL = sivuston osoite
 ```
 
@@ -80,7 +83,17 @@ Sisältö (`data/`, `config/`) on erillään ulkoasusta, jotta hintojen, UKK:n j
 
 Sivuston osoite on yhdessä paikassa: `.env` (`VITE_SITE_URL`).
 
-## Julkaisu (GitHub Pages, testi)
+## Osoite ja kartta
+
+Osoite on `config/site.ts`:ssä (`Pisantie 3, 73300 Nilsiä`). Kartan koordinaatit (`coords`) ovat tyhjät: silloin kortti näyttää "Avaa kartta" -linkin OpenStreetMapiin osoitehaulla. Kun haluat upotetun kartan, hae oikea paikka openstreetmap.org:sta (oikea hiiren painike > Näytä osoite / Keskitä kartta tähän) ja täytä `coords: { lat, lng }`. Kortti vaihtuu silloin "Näytä kartta" -painikkeeksi (iframe ladataan vasta painalluksesta). Älä arvaa koordinaatteja, väärä nasta on huonompi kuin ei nastaa.
+
+## Julkaisu
+
+**Demo (GitHub Pages):** workflow ajaa joka `main`-pushilla lintin, testit ja buildin ja julkaisee `dist/`-kansion. Kerran tehtävä asetus: GitHub > Settings > Pages > Source: **GitHub Actions**. Demo on alikansiossa (`VITE_BASE=/glosstahko-web/`) ja `VITE_NOINDEX=1` lisää sivuille `noindex` ja tekee `robots.txt`:stä `Disallow: /`, jotta demo ei kilpaile oikean domainin kanssa.
+
+**Tuotanto (suunnitelma):** Cloudflare Pages (ilmainen, kaupallinen käyttö sallittu), domain glosstahko.fi Zonerilta. Build-komento `npm run build`, output `dist`, ympäristömuuttuja `VITE_SITE_URL=https://glosstahko.fi`, ei `VITE_BASE`- eikä `VITE_NOINDEX`-arvoa. Apex-domain vaatii DNS:n Cloudflareen (poista DNSSEC Zonerilla ensin) tai vaihtoehtoisesti www-osoite canonicalina. Turvaotsikot ja CSP kuuluvat Cloudflaren `_headers`-tiedostoon.
+
+## Julkaisu (GitHub Pages, vanha ohje)
 
 Workflow ajaa joka `main`-pushilla lintin, testit ja buildin ja julkaisee `dist/`-kansion. Kerran tehtävä asetus: GitHub > Settings > Pages > Source: **GitHub Actions** (ei "Deploy from a branch", koska se tarjoaisi lähdekoodin, ei buildia).
 
@@ -105,7 +118,8 @@ Testiosoite on alikansiossa, siksi workflow asettaa `VITE_BASE=/glosstahko-web/`
 - [x] Teema valittu: Boho
 - [x] SEO: meta-tagit, JSON-LD, sitemap, robots.txt, esirenderöinti (`npm run build`)
 - [x] Testijulkaisu GitHub Pagesiin (`.github/workflows/pages.yml`)
-- [ ] Julkaisu: domain, hosting ja Google Business Profile
+- [x] Lakisivut (tietosuoja, käyttöehdot) ja 404-sivu
+- [ ] Julkaisu: Cloudflare Pages + glosstahko.fi, Search Console ja Google Business Profile
 
 ## Ennen julkaisua
 
@@ -113,10 +127,11 @@ Testiosoite on alikansiossa, siksi workflow asettaa `VITE_BASE=/glosstahko-web/`
 - Päivitä `public/og-image.jpg`, kun oikeat kuvat ovat mukana. Lisää sivu Google Search Consoleen ja lähetä sitemap
 - Vaihda `bookingUrl` (`config/site.ts`) ajanvarausjärjestelmän linkkiin, kun se on käytössä, ja päivitä UKK:n vastaus "Miten varaan ajan?"
 - Tarkista hinnat (`data/services.ts`), UKK (`data/faq.ts`) ja tuotetiedot (`data/products.ts`) yrittäjän kanssa
-- Päätä, mitä osoitetta sivulla näytetään, ja lisää maksutavat vasta, kun ne ovat käytössä
+- Täytä tarvittaessa `coords` (kartta) ja lisää maksutavat sekä Booksalon verkkoajanvaraus vasta, kun ne ovat käytössä. Päivitä silloin myös `public/tietosuoja.html` ja `public/kayttoehdot.html` (TODO-kommentit)
+- Vahvista hinnat Siirin kanssa (`data/services.ts` on merkitty luonnokseksi)
 - Lisää oikeat kuvat ja alt-tekstit; koristekuvissa `alt=""`
-- Käy läpi tietoturvatarkistuslista: sivulla ei ole salaisuuksia, lomakkeita eikä analytiikkaa. Jos lisäät jonkin niistä, päivitä alatunnisteen tietosuojateksti.
-- Jos ajanvaraus tai analytiikka lisätään, tarkista kolmansien osapuolten skriptit ja evästeilmoitus
+- Käy läpi tietoturvatarkistuslista: sivulla ei ole salaisuuksia, lomakkeita eikä analytiikkaa. Jos lisäät jonkin niistä, päivitä tietosuojaseloste.
+- Jos ajanvaraus tai analytiikka lisätään, tarkista kolmansien osapuolten skriptit ja tarve evästeilmoitukselle
 
 ## Lisenssi ja sisältö
 

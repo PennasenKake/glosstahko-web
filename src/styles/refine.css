@@ -162,6 +162,7 @@
   color: var(--color-ink);
   font: inherit;
   text-align: center;
+  text-decoration: none; /* myös linkkinä (ei koordinaatteja) */
   cursor: pointer;
   transition: background-color 0.25s ease;
 }

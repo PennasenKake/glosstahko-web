@@ -20,19 +20,24 @@ export const site = {
   email: 'siiri.launonen@hotmail.com',
   city: 'Nilsiä',
 
-  // Toimitila (sama kiinteistöalue kuin Alko Nilsiä)
-  address: 'Laitilantie 27',
+  // Toimitila
+  address: 'Pisantie 3',
   postalCode: '73300',
   /** Näytettävä riviosoite */
-  addressLine: 'Laitilantie 27, 73300 Nilsiä',
-  /** Sijainti kartan merkkiä ja rakenteista dataa varten */
-  lat: 63.201,
-  lng: 28.0902,
-  /** Avaa OpenStreetMapin kartan merkki toimitilan kohdalla (ei upotusta) */
-  mapUrl: 'https://www.openstreetmap.org/?mlat=63.201&mlon=28.0902#map=17/63.201/28.0902',
+  addressLine: 'Pisantie 3, 73300 Nilsiä',
+  /**
+   * Toimitilan koordinaatit (valinnainen). Kun ne annetaan, "Näytä kartta" lataa
+   * OpenStreetMap-kartan merkillä ja rakenteiseen dataan tulee sijainti.
+   * Niin kauan kuin arvo on null, kortti avaa kartan osoitehaulla uuteen välilehteen.
+   * Koordinaatit saat OpenStreetMapista: hae osoite, napsauta merkkiä hiiren oikealla
+   * ja valitse "Näytä osoite" tai kopioi leveys- ja pituusaste.
+   */
+  coords: null as { lat: number; lng: number } | null,
+  /** Avaa OpenStreetMapin osoitehaun (ei upotusta) */
+  mapUrl: 'https://www.openstreetmap.org/search?query=Pisantie%203%2C%2073300%20Nilsi%C3%A4',
   /** Reittiohjeet nykyisestä sijainnista (puhelimessa avautuu karttasovellus) */
   directionsUrl:
-    'https://www.google.com/maps/dir/?api=1&destination=Laitilantie%2027%2C%2073300%20Nilsi%C3%A4',
+    'https://www.google.com/maps/dir/?api=1&destination=Pisantie%203%2C%2073300%20Nilsi%C3%A4',
   businessId: '3658530-3',
 
   // Some

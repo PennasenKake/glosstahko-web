@@ -2,7 +2,7 @@ import { StrictMode } from 'react'
 import { renderToString } from 'react-dom/server'
 import App from './App.tsx'
 import { site } from './config/site'
-import { buildStructuredData } from './seo/structuredData'
+import { buildFaqData, buildStructuredData } from './seo/structuredData'
 
 /**
  * Palvelinpuolen sisääntulo. Sitä ajetaan vain buildin aikana
@@ -20,5 +20,6 @@ export function render(): string {
   )
 }
 
-export const structuredData = buildStructuredData()
+// Taulukko: yritys + UKK. JSON-LD sallii useita solmuja yhdessä script-tagissa.
+export const structuredData = [buildStructuredData(), buildFaqData()]
 export const siteUrl = site.url

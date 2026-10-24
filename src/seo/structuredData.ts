@@ -1,4 +1,5 @@
 import { site } from '../config/site'
+import { faq } from '../data/faq'
 import { serviceCategories } from '../data/services'
 
 /**
@@ -19,6 +20,13 @@ export function buildStructuredData() {
     ...new Set(serviceCategories.flatMap((category) => category.services.map((s) => s.name))),
   ]
 
+  // Hintahaarukka hinnastosta, esim. "22–180 €". Lisäpalveluita ei lasketa mukaan.
+  const prices = serviceCategories
+    .flatMap((category) => category.services)
+    .filter((service) => !service.addon)
+    .flatMap((service) => [service.price, service.priceMax ?? service.price])
+  const priceRange = `${Math.min(...prices)}–${Math.max(...prices)} €`
+
   return {
     '@context': 'https://schema.org',
     '@type': ['HairSalon', 'NailSalon'],
@@ -36,8 +44,12 @@ export function buildStructuredData() {
       addressLocality: site.city,
       addressCountry: 'FI',
     },
-    geo: { '@type': 'GeoCoordinates', latitude: site.lat, longitude: site.lng },
+    // Sijainti vain, jos koordinaatit tunnetaan (config/site.ts). Väärä sijainti on huonompi kuin ei sijaintia.
+    ...(site.coords && {
+      geo: { '@type': 'GeoCoordinates', latitude: site.coords.lat, longitude: site.coords.lng },
+    }),
     hasMap: site.mapUrl,
+    priceRange,
     areaServed: [
       { '@type': 'City', name: 'Nilsiä' },
       { '@type': 'Place', name: 'Tahko' },
@@ -51,5 +63,22 @@ export function buildStructuredData() {
         itemOffered: { '@type': 'Service', name },
       })),
     },
+  }
+}
+
+/**
+ * UKK-sivun rakenteinen data (FAQPage): sama sisältö kuin näkyvä UKK, joten sitä
+ * ei voi ylläpitää erikseen. Googlen UKK-rich result -näkymä on rajattu, mutta
+ * haku- ja tekoälyvastaukset hyötyvät kysymys-vastaus-parista.
+ */
+export function buildFaqData() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
   }
 }

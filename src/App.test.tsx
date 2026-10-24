@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import App from './App'
 import { navItems } from './config/nav'
 import { site } from './config/site'
-import { buildStructuredData } from './seo/structuredData'
+import { buildFaqData, buildStructuredData } from './seo/structuredData'
 
 /**
  * Savutesti: koko sivu renderöityy palvelinpuolella (kuten esirenderöinnissä)
@@ -42,21 +42,39 @@ describe('rakenteinen data (JSON-LD)', () => {
   })
 
   it('osoite on toimitilan osoite configista, ei kotiosoite', () => {
-    // Kotikadun nimi ei saa päätyä verkkoon. Toimitilan osoite on tarkoituksella mukana.
-    expect(json).not.toMatch(/Jenunraitti/i)
+    // Rakenteisen datan katuosoite on aina configin toimitila. Kotiosoitetta ei lueta mistään.
     expect(data.address.streetAddress).toBe(site.address)
     expect(data.address.postalCode).toBe(site.postalCode)
     expect(data.address.addressLocality).toBe('Nilsiä')
   })
 
-  it('sisältää sijainnin ja karttalinkin', () => {
-    expect(data.geo.latitude).toBeCloseTo(63.2, 1)
-    expect(data.geo.longitude).toBeCloseTo(28.09, 1)
+  it('sisältää karttalinkin ja sijainnin vain, jos koordinaatit tunnetaan', () => {
     expect(data.hasMap).toMatch(/^https:\/\//)
+    if (site.coords) {
+      expect(data.geo?.latitude).toBe(site.coords.lat)
+      expect(data.geo?.longitude).toBe(site.coords.lng)
+    } else {
+      expect(json).not.toContain('GeoCoordinates')
+    }
+  })
+
+  it('sisältää hintahaarukan hinnastosta', () => {
+    expect(data.priceRange).toMatch(/^\d+–\d+ €$/)
   })
 
   it('sisältää palveluita hinnastosta', () => {
     expect(data.hasOfferCatalog.itemListElement.length).toBeGreaterThan(5)
+  })
+})
+
+describe('UKK-rakenne (FAQPage)', () => {
+  const faqData = buildFaqData()
+
+  it('sisältää saman määrän kysymyksiä kuin näkyvä UKK', () => {
+    const html = renderToString(<App />)
+    const visible = html.match(/class="faq__question"/g)?.length ?? 0
+    expect(faqData['@type']).toBe('FAQPage')
+    expect(faqData.mainEntity).toHaveLength(visible)
   })
 })
 
@@ -73,17 +91,36 @@ describe('paljastusanimaatiot ja toimitila', () => {
     expect(html).toContain('data-reveal="grow" data-delay="900"')
   })
 
-  it('toimitila näkyy osoitteena ja kartta ladataan vasta painalluksesta', () => {
+  it('toimitila näkyy osoitteena ja karttaa ei ladata itsestään', () => {
     expect(html).toContain(site.address)
     expect(html).toContain(site.postalCode)
     // HTML koodaa &-merkin attribuutissa muotoon &amp;
     expect(html).toContain(`href="${site.directionsUrl.replaceAll('&', '&amp;')}"`)
     expect(html).toContain(`href="${site.mapUrl.replaceAll('&', '&amp;')}"`)
-    expect(html).toContain('Näytä kartta')
+    expect(html).toContain(site.coords ? 'Näytä kartta' : 'Avaa kartta')
     expect(html).not.toContain('<iframe') // ei kolmansien osapuolten pyyntöjä itsestään
+  })
+
+  it('toimitilan osoite on Pisantie 3 ja se näkyy sivulla kerran riviosoitteena', () => {
+    expect(site.addressLine).toBe('Pisantie 3, 73300 Nilsiä')
+    expect(html).toContain(site.addressLine)
   })
 
   it('kokonaisia osioita ei enää piiloteta .reveal-luokalla', () => {
     expect(html).not.toMatch(/class="[^"]*\breveal\b/)
+  })
+})
+
+describe('otsikoiden terälehdet', () => {
+  const html = renderToString(<App />)
+  const blocks = html.match(/<div class="petals[^"]*" aria-hidden="true">/g) ?? []
+
+  it('on koristetta (aria-hidden) kolmen osion otsikoissa', () => {
+    expect(blocks).toHaveLength(3)
+  })
+
+  it('jokaisessa otsikossa on kuusi SVG-lehteä, eikä animaatio ole päällä esirenderöinnissä', () => {
+    expect(html.match(/<span class="petal petal--/g)).toHaveLength(18)
+    expect(html).not.toContain('petals--live')
   })
 })
