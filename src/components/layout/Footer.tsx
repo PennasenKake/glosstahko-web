@@ -67,6 +67,8 @@ export default function Footer() {
           sisällön kolmannelta osapuolelta.{' '}
           <a href={`${base}kayttoehdot.html`}>Käyttöehdot</a>
           {' · '}
+          <a href={`${base}kotihoito.html`}>Kotihoito-ohjeet</a>
+          {' · '}
           <a href={`${base}tietosuoja.html`}>Tietosuoja</a>
         </p>
         <a href="#etusivu">Takaisin ylös ↑</a>

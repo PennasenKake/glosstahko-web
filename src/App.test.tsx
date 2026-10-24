@@ -150,3 +150,22 @@ describe('ajanvaraus (Booksalon)', () => {
     expect(html).toContain(site.addressNote)
   })
 })
+
+describe('kotihoito-ohjeet ja ehtosivut', () => {
+  const html = renderToString(<App />)
+
+  it('footer ja UKK linkittävät kotihoito-ohjeisiin ja käyttöehtoihin', () => {
+    expect(html.match(/href="[^"]*kotihoito\.html"/g)?.length).toBeGreaterThanOrEqual(2)
+    expect(html).toMatch(/href="[^"]*kayttoehdot\.html"/)
+  })
+
+  it('staattiset sivut ovat olemassa ja takuu viittaa kotihoito-ohjeisiin', () => {
+    const pages = import.meta.glob('../public/*.html', { query: '?raw', import: 'default', eager: true }) as Record<string, string>
+    const terms = pages['../public/kayttoehdot.html']
+    const care = pages['../public/kotihoito.html']
+    expect(terms).toContain('id="takuu"')
+    expect(terms).toContain('href="kotihoito.html"')
+    expect(care).toContain('<h1>Kotihoito-ohjeet</h1>')
+    expect((care.match(/<h2>/g) ?? []).length).toBe(6)
+  })
+})

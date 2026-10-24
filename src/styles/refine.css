@@ -229,3 +229,10 @@
     flex-basis: calc((100% - 2rem) / 3);
   }
 }
+
+/* UKK:n alla: linkit kotihoito-ohjeisiin ja ehtoihin */
+.faq__more {
+  margin: 2rem 0 0;
+  text-align: center;
+  color: var(--color-muted, inherit);
+}

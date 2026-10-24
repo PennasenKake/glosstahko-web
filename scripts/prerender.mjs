@@ -50,7 +50,7 @@ await writeFile('dist/index.html', html)
 
 // Lakisivut ovat public/-kansion staattisia sivuja: demossa ne saavat saman merkinnän
 if (noindex) {
-  for (const page of ['kayttoehdot.html', 'tietosuoja.html']) {
+  for (const page of ['kayttoehdot.html', 'tietosuoja.html', 'kotihoito.html']) {
     const path = `dist/${page}`
     const content = await readFile(path, 'utf-8')
     await writeFile(path, content.replace('</head>', `${robotsMeta}  </head>`))
@@ -60,7 +60,7 @@ if (noindex) {
 // --- 3. Sitemap ja robots.txt ---
 // lastmod jätetään pois tarkoituksella: build-päivä ei kerro sisällön muutoksesta, ja
 // Google ohittaa virheellisen lastmodin. Sivukartta kertoo vain, mitä sivuja on.
-const pages = ['', 'tietosuoja.html', 'kayttoehdot.html']
+const pages = ['', 'tietosuoja.html', 'kayttoehdot.html', 'kotihoito.html']
 await writeFile(
   'dist/sitemap.xml',
   `<?xml version="1.0" encoding="UTF-8"?>

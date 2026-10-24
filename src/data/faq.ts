@@ -40,6 +40,10 @@ export const faq: FaqItem[] = [
     a: 'Desinfioin työpisteen päivän aluksi, jokaisen asiakkaan välillä ja päivän päätteeksi. Välineet puhdistetaan, desinfioidaan ja steriloidaan kuumailmasterilisaattorissa jokaisen asiakkaan välissä. Tarkemmat tiedot löytyvät omavalvontasuunnitelmasta.',
   },
   {
+    q: 'Miten hoidan kynsiä kotona?',
+    a: 'Öljyä kynsinauhat ja kynnet vähintään kerran päivässä, älä käytä kynsiä työkaluina, käytä siivoushanskoja eikä viilaa, leikkaa tai nypi tuotetta itse. Jos kynteen tulee vaurio tai ilmatasku, ota yhteyttä korjausaikaa varten. Täydelliset kotihoito-ohjeet löytyvät omalta sivultaan.',
+  },
+  {
     q: 'Tarvitseeko hiusten värjäykseen ihotesti?',
     a: 'Ihotesti suositellaan aina, kun käytät väriainetta ensimmäistä kertaa. Kysy ohjeet varattaessa.',
   },

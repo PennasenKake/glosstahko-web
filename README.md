@@ -70,7 +70,7 @@ src/
 └── main.tsx         sovelluksen käynnistys (hydrateRoot / createRoot)
 
 scripts/prerender.mjs   buildin jälkivaihe: HTML sisään, JSON-LD, sitemap.xml, robots.txt
-public/                 favicon.svg, og-image.jpg, tietosuoja.html, kayttoehdot.html,
+public/                 favicon.svg, og-image.jpg, tietosuoja.html, kayttoehdot.html, kotihoito.html,
                         404.html (staattisia, noindex 404:ssä), legal.css
 .env                    VITE_SITE_URL = sivuston osoite
 ```
@@ -118,7 +118,7 @@ Testiosoite on alikansiossa, siksi workflow asettaa `VITE_BASE=/glosstahko-web/`
 - [x] Teema valittu: Boho
 - [x] SEO: meta-tagit, JSON-LD, sitemap, robots.txt, esirenderöinti (`npm run build`)
 - [x] Testijulkaisu GitHub Pagesiin (`.github/workflows/pages.yml`)
-- [x] Lakisivut (tietosuoja, käyttöehdot) ja 404-sivu
+- [x] Lakisivut (tietosuoja, käyttöehdot, kotihoito-ohjeet) ja 404-sivu
 - [ ] Julkaisu: Cloudflare Pages + glosstahko.fi, Search Console ja Google Business Profile
 
 ## Ennen julkaisua
