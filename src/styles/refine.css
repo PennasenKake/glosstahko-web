@@ -210,26 +210,6 @@
   }
 }
 
-/* ---------- Instagram-kortit ----------
-   2 saraketta tabletilla, 3 vasta leveällä näytöllä: Instagram-upotus tarvitsee noin
-   326 px, ja 3 saraketta mahtuu sen yli vasta kun sisältö on yli 70 rem leveä. */
-
-@media (min-width: 48rem) {
-  .insta__item {
-    flex-basis: calc((100% - 1rem) / 2);
-  }
-}
-@media (min-width: 64rem) {
-  .insta__item {
-    flex-basis: calc((100% - 1rem) / 2);
-  }
-}
-@media (min-width: 70rem) {
-  .insta__item {
-    flex-basis: calc((100% - 2rem) / 3);
-  }
-}
-
 /* UKK:n alla: linkit kotihoito-ohjeisiin ja ehtoihin */
 .faq__more {
   margin: 2rem 0 0;

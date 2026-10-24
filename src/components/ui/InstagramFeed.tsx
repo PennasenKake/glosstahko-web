@@ -5,6 +5,20 @@ import type { InstagramPost } from '../../data/instagram'
 import leaf from '../../assets/images/leaf.webp'
 
 /**
+ * Valinnaiset omat kuvat nostoille: tiedosto src/assets/instagram/TUNNISTE.jpg (tai webp/png).
+ * Vite paketoi ne mukaan buildissa, ja kuvat tulevat omalta palvelimelta eli Metaan ei tehdä pyyntöjä.
+ */
+const photoFiles = import.meta.glob('../../assets/instagram/*.{jpg,jpeg,png,webp}', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+}) as Record<string, string>
+
+const photos: Record<string, string> = Object.fromEntries(
+  Object.entries(photoFiles).map(([path, url]) => [path.split('/').pop()!.replace(/\.\w+$/, ''), url]),
+)
+
+/**
  * Yksi karusellin kortti. Aluksi näkyy teaser: lehvä kuvapaikalla sekä noston
  * päiväys ja teksti. Instagramiin ei tehdä yhtään pyyntöä ennen kuin kävijä
  * painaa "Näytä julkaisu": silloin kortti vaihtuu Instagramin omaksi upotukseksi
@@ -57,10 +71,17 @@ function PostCard({ post }: { post: InstagramPost }) {
   return (
     <li className="insta__item insta__item--preview">
       <div className="insta__card">
-        {/* Koriste: sama lehvä jokaisen julkaisun kuvapaikalla */}
-        <span className="insta__placeholder" aria-hidden="true">
-          <img src={leaf} alt="" width={640} height={574} loading="lazy" />
-        </span>
+        {photos[post.id] ? (
+          // Noston oma kuva. alt on tyhjä, koska teksti on kortissa heti kuvan alla.
+          <span className="insta__placeholder insta__placeholder--photo" aria-hidden="true">
+            <img src={photos[post.id]} alt="" loading="lazy" decoding="async" />
+          </span>
+        ) : (
+          // Ei omaa kuvaa: koriste, sama lehvä kuvapaikalla
+          <span className="insta__placeholder" aria-hidden="true">
+            <img src={leaf} alt="" width={640} height={574} loading="lazy" />
+          </span>
+        )}
 
         <p className="insta__date">{post.date}</p>
         <p className="insta__text">{post.text}</p>

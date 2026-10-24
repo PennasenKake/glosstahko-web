@@ -169,3 +169,29 @@ describe('kotihoito-ohjeet ja ehtosivut', () => {
     expect((care.match(/<h2>/g) ?? []).length).toBe(6)
   })
 })
+
+describe('Instagram-karuselli', () => {
+  const html = renderToString(<App />)
+
+  it('näyttää jokaisen noston esikatselukorttina ilman Instagram-pyyntöjä', async () => {
+    const { instagramPosts } = await import('./data/instagram')
+    expect(html.match(/insta__item--preview/g)).toHaveLength(instagramPosts.length)
+    expect(html).not.toContain('instagram.com/p/')
+    expect(html).not.toContain('<iframe')
+  })
+
+  it('jokaisella nostolla on uniikki tunniste, päiväys ja teksti', async () => {
+    const { instagramPosts } = await import('./data/instagram')
+    expect(new Set(instagramPosts.map((p) => p.id)).size).toBe(instagramPosts.length)
+    for (const p of instagramPosts) {
+      expect(p.id).toMatch(/^[\w-]{8,}$/)
+      expect(p.date).toMatch(/^\d{1,2}\.\d{1,2}\.\d{4}$/)
+      expect(p.text.length).toBeGreaterThan(5)
+    }
+  })
+
+  it('nuolet ovat piilossa esirenderöinnissä ja lista on näppäimistöllä vieritettävä', () => {
+    expect(html).toMatch(/class="insta__list"[^>]*tabindex="0"/)
+    expect(html.match(/class="insta__arrow[^"]*"[^>]*hidden/g) ?? []).toHaveLength(2)
+  })
+})

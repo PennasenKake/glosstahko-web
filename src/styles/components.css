@@ -240,11 +240,6 @@
   display: none;
 }
 
-.insta__item {
-  flex: 0 0 82%; /* seuraava kortti pilkistää: kertoo, että voi vierittää */
-  scroll-snap-align: start;
-}
-
 .insta__card {
   display: flex;
   flex-direction: column;
@@ -351,6 +346,13 @@
   height: auto;
 }
 
+/* Noston oma kuva täyttää kuvapaikan */
+.insta__placeholder--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* Pieni huomautus upotuksesta */
 .insta__note {
   margin-top: 1rem;
@@ -421,25 +423,35 @@
   justify-content: center;
 }
 
-/* Tabletti: yksi kortti ja pilkahdus seuraavasta */
+/* Kortin leveys: Instagramin upotus tarvitsee vähintään noin 326 px (20,5 rem), joten
+   kapealla ruudulla kortti on vähintään sen levyinen ja seuraava pilkistää reunasta.
+   Tabletti: 2 korttia. Leveä: 3 korttia (upotus mahtuu vasta, kun sisältö on yli 70 rem). */
+.insta__item {
+  flex: 0 0 min(100%, max(82%, 20.5rem));
+  scroll-snap-align: start;
+}
+
 @media (min-width: 40rem) {
   .insta__item {
     flex-basis: 52%;
   }
 }
 
-/* Iso ruutu: kaksi korttia ja puolikas kolmatta. Reunoilla ei tarvita negatiivisia marginaaleja. */
 @media (min-width: 48rem) {
   .insta__list {
     margin-inline: 0;
     padding-inline: 0;
     scroll-padding-inline: 0;
   }
+
+  .insta__item {
+    flex-basis: calc((100% - 1rem) / 2);
+  }
 }
 
-@media (min-width: 64rem) {
+@media (min-width: 70rem) {
   .insta__item {
-    flex-basis: calc((100% - 2rem) / 2.5);
+    flex-basis: calc((100% - 2rem) / 3);
   }
 }
 
@@ -457,6 +469,11 @@
 /* Esikatselukortit venyvät samaan korkeuteen (upotukset saavat oman korkeutensa) */
 .insta__item--preview {
   align-self: stretch;
+}
+
+/* Kun jokin upotus on auki, esikatselukortit eivät veny sen korkuisiksi */
+.insta__list:has(.insta__embed) .insta__item--preview {
+  align-self: flex-start;
 }
 
 
@@ -630,44 +647,3 @@
   }
 }
 
-
-/* Mobiili: yksi + pilkahdus */
-.insta__item {
-  flex: 0 0 82%;
-  scroll-snap-align: start;
-}
-
-@media (min-width: 40rem) {
-  .insta__item {
-    flex-basis: 52%;
-  }
-}
-
-/* Tabletti: kaksi */
-@media (min-width: 48rem) {
-  .insta__list {
-    margin-inline: 0;
-    padding-inline: 0;
-    scroll-padding-inline: 0;
-  }
-
-  .insta__item {
-    flex-basis: calc((100% - 1rem) / 2);
-  }
-}
-
-/* Iso näyttö: kolme korttia vierekkäin */
-@media (min-width: 64rem) {
-  .insta__item {
-    flex-basis: calc((100% - 2rem) / 3);
-  }
-}
-
-@media (min-width: 80rem) {
-  .insta__arrow--prev {
-    left: -1.375rem;
-  }
-  .insta__arrow--next {
-    right: -1.375rem;
-  }
-}

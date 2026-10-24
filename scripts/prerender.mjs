@@ -6,6 +6,7 @@
 // 3. Tämä skripti ajaa palvelinversion, saa valmiin HTML:n ja kirjoittaa sen
 //    dist/index.html:ään. Samalla lisätään JSON-LD sekä sitemap ja robots.txt.
 
+import { createHash } from 'node:crypto'
 import { readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 import { pathToFileURL } from 'node:url'
@@ -75,6 +76,50 @@ await writeFile(
     ? 'User-agent: *\nDisallow: /\n'
     : `User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\n`,
 )
+
+// --- 3b. Turvaotsikot (Cloudflare Pages lukee dist/_headers; GitHub Pages ohittaa tiedoston) ---
+// CSP sallii vain oman sisällön, Instagram- ja OpenStreetMap-upotukset (frame-src) sekä
+// sivujen omat sisäiset skriptit niiden tiivisteellä (sha256), joten 'unsafe-inline' ei tarvita
+// skripteille. Tiivisteet lasketaan valmiista HTML:stä, joten ne pysyvät ajan tasalla.
+const inlineScriptHashes = new Set()
+for (const file of (await readdir('dist')).filter((name) => name.endsWith('.html'))) {
+  const page = await readFile(`dist/${file}`, 'utf-8')
+  for (const match of page.matchAll(/<script(?![^>]*\bsrc=)([^>]*)>([\s\S]*?)<\/script>/g)) {
+    // JSON-LD on dataa, ei suoritettavaa koodia
+    if (/application\/ld\+json/.test(match[1])) continue
+    inlineScriptHashes.add(`'sha256-${createHash('sha256').update(match[2]).digest('base64')}'`)
+  }
+}
+const csp = [
+  "default-src 'self'",
+  `script-src 'self' ${[...inlineScriptHashes].join(' ')}`.trim(),
+  "style-src 'self' 'unsafe-inline'", // React-komponenttien style-attribuutit
+  "img-src 'self' data:",
+  "font-src 'self' data:", // Vite liittää pienimmät fontit CSS:ään data-osoitteina
+  "connect-src 'self'",
+  'frame-src https://www.instagram.com https://www.openstreetmap.org',
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+  'upgrade-insecure-requests',
+].join('; ')
+if (!noindex) {
+  await writeFile(
+    'dist/_headers',
+    `/*
+  Content-Security-Policy: ${csp}
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), interest-cohort=()
+  X-Frame-Options: DENY
+  Cross-Origin-Opener-Policy: same-origin
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+`,
+  )
+}
 
 // --- 4. Siivous: palvelinversiota ei julkaista ---
 await rm('dist-ssr', { recursive: true, force: true })

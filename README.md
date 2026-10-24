@@ -89,9 +89,11 @@ Osoite on `config/site.ts`:ssä (`Pisantie 3, 73300 Nilsiä`). Kartan koordinaat
 
 ## Julkaisu
 
+Täysi vaiheittainen ohje (Cloudflare Pages, Zoner-DNS, sähköposti, tarkistuslista): [`docs/julkaisu.md`](docs/julkaisu.md).
+
 **Demo (GitHub Pages):** workflow ajaa joka `main`-pushilla lintin, testit ja buildin ja julkaisee `dist/`-kansion. Kerran tehtävä asetus: GitHub > Settings > Pages > Source: **GitHub Actions**. Demo on alikansiossa (`VITE_BASE=/glosstahko-web/`) ja `VITE_NOINDEX=1` lisää sivuille `noindex` ja tekee `robots.txt`:stä `Disallow: /`, jotta demo ei kilpaile oikean domainin kanssa.
 
-**Tuotanto (suunnitelma):** Cloudflare Pages (ilmainen, kaupallinen käyttö sallittu), domain glosstahko.fi Zonerilta. Build-komento `npm run build`, output `dist`, ympäristömuuttuja `VITE_SITE_URL=https://glosstahko.fi`, ei `VITE_BASE`- eikä `VITE_NOINDEX`-arvoa. Apex-domain vaatii DNS:n Cloudflareen (poista DNSSEC Zonerilla ensin) tai vaihtoehtoisesti www-osoite canonicalina. Turvaotsikot ja CSP kuuluvat Cloudflaren `_headers`-tiedostoon.
+**Tuotanto (suunnitelma):** Cloudflare Pages (ilmainen, kaupallinen käyttö sallittu), domain glosstahko.fi Zonerilta. Build-komento `npm run build`, output `dist`, ympäristömuuttuja `VITE_SITE_URL=https://glosstahko.fi`, ei `VITE_BASE`- eikä `VITE_NOINDEX`-arvoa. Apex-domain vaatii DNS:n Cloudflareen (poista DNSSEC Zonerilla ensin) tai vaihtoehtoisesti www-osoite canonicalina. Turvaotsikot ja CSP syntyvät buildissa tiedostoon `dist/_headers` (`scripts/prerender.mjs`).
 
 ## Julkaisu (GitHub Pages, vanha ohje)
 
