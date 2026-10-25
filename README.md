@@ -9,7 +9,7 @@ Yhden sivun verkkosivusto nilsiäläiselle kynsi- ja kampaamoyritykselle **Gloss
 - Näkyy Google-haussa (paikallinen SEO: Nilsiä, Tahko)
 - Ei backendia eikä tietojen tallennusta: ajanvaraus ja some ovat ulkoisia linkkejä
 - Ei evästeitä eikä kolmansien osapuolten pyyntöjä (fontit ovat omassa paketissa)
-  - Poikkeukset vaativat kävijän suostumuksen: Instagram-julkaisut (Minusta) ladataan suoraan karusellissa vasta, kun kävijä sallii sen karusellin yläpuolella olevasta kysymyksestä (`utils/consent.ts`, valinta localStorageen, perutaan footerin Evästeasetukset-linkistä) tai avaa yksittäisen julkaisun painikkeella. OpenStreetMap-kartta latautuu vasta painalluksesta. Ennen suostumusta ei lähde pyyntöjä Metalle tai OSM:lle.
+  - Ainoa poikkeus: OpenStreetMap-kartta latautuu vasta, kun kävijä painaa "Näytä kartta".
 - Yhtenäinen **Boho**-tyyli (valittu lopulliseksi teemaksi)
 
 ## Teknologiat
@@ -42,7 +42,7 @@ src/
 │   ├── layout/      Header (tabit), Footer
 │   ├── sections/    Hero, Intro, About, Services, Tahko, Faq, Contact
 │   └── ui/          BookingButton, SectionHeading, PetalDrift (otsikon terälehdet),
-│                    InstagramFeed (suostumus + upotukset), ConsentSettings, VenueCard (kartta)
+│                    VenueCard (kartta)
 ├── config/
 │   ├── site.ts      yrityksen tiedot: yhteystiedot, some, ajanvaraus
 │   └── nav.ts       tabit ja osioiden id:t (Header ja Footer lukevat tästä)
@@ -62,7 +62,7 @@ src/
 │   └── refine.css      hienosäätö: reveal-animaatiot, kartta- ja korttityylit
 ├── seo/             structuredData.ts: JSON-LD (yritys, palvelut ja UKK/FAQPage) Googlelle
 ├── types/           yhteiset TypeScript-tyypit
-├── utils/           hinnan ja keston muotoilu, consent.ts (Instagram-suostumus)
+├── utils/           hinnan ja keston muotoilu
 ├── assets/images/   lehvä ja kukkaoksat (läpinäkyvät webp-kuvat)
 ├── App.tsx          kokoaa sivun osiot
 ├── entry-server.tsx esirenderöinti (ajetaan vain buildissa)
@@ -82,16 +82,6 @@ Sisältö (`data/`, `config/`) on erillään ulkoasusta, jotta hintojen, UKK:n j
 `npm run build` tekee kolme asiaa: selainversio (`dist/`), palvelinversio (`dist-ssr/`) ja `scripts/prerender.mjs`, joka ajaa palvelinversion ja kirjoittaa valmiin HTML:n `dist/index.html`:ään. Google näkee sisällön ilman JavaScriptiä, ja selain "herättää" sivun eloon `hydrateRoot`illa. Skripti lisää myös JSON-LD:n sekä `sitemap.xml`:n ja `robots.txt`:n.
 
 Sivuston osoite on yhdessä paikassa: `.env` (`VITE_SITE_URL`).
-
-## Instagram-nostot
-
-Nostot ovat käsin poimittu lista (`src/data/instagram.ts`), koska automaattinen haku vaatisi palvelimen ja pääsyavaimen. Uuden noston lisäys on yksi komento:
-
-```bash
-npm run ig:add -- https://www.instagram.com/glosstahko/p/TUNNISTE/ --date 20.10.2026 --text "Noston alku"
-```
-
-Lista lajitellaan päiväyksen mukaan (uusin ensin). Noston oma kuva on valinnainen: `src/assets/instagram/TUNNISTE.jpg`. Julkaisu ladataan Instagramista vasta, kun kävijä painaa "Näytä julkaisu".
 
 ## Osoite ja kartta
 

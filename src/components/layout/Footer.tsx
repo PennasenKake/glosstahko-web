@@ -1,7 +1,6 @@
 import { navItems } from '../../config/nav'
 import { site } from '../../config/site'
 import BookingButton from '../ui/BookingButton'
-import ConsentSettings from '../ui/ConsentSettings'
 
 const year = new Date().getFullYear()
 
@@ -64,15 +63,13 @@ export default function Footer() {
         </p>
         <p>
           Hinnat sisältävät arvonlisäveron. Sivusto ei itse aseta evästeitä eikä
-          tallenna tietojasi palvelimelle. Selaimeesi tallennetaan vain Instagram-valintasi.
-          Instagram-julkaisut ja kartta ladataan kolmannelta osapuolelta vasta suostumuksellasi.{' '}
+          tallenna tietojasi palvelimelle. Kartta ladataan kolmannelta osapuolelta
+          (OpenStreetMap) vasta, kun painat Näytä kartta.{' '}
           <a href={`${base}kayttoehdot.html`}>Käyttöehdot</a>
           {' · '}
           <a href={`${base}kotihoito.html`}>Kotihoito-ohjeet</a>
           {' · '}
           <a href={`${base}tietosuoja.html`}>Tietosuoja</a>
-          {' · '}
-          <ConsentSettings />
         </p>
         <a href="#etusivu">Takaisin ylös ↑</a>
       </div>

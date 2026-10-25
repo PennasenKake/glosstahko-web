@@ -93,7 +93,7 @@ await writeFile(
 )
 
 // --- 3b. Turvaotsikot (Cloudflare Pages lukee dist/_headers; GitHub Pages ohittaa tiedoston) ---
-// CSP sallii vain oman sisällön, Instagram- ja OpenStreetMap-upotukset (frame-src) sekä
+// CSP sallii vain oman sisällön, OpenStreetMap-upotuksen (frame-src) sekä
 // sivujen omat sisäiset skriptit niiden tiivisteellä (sha256), joten 'unsafe-inline' ei tarvita
 // skripteille. Tiivisteet lasketaan valmiista HTML:stä, joten ne pysyvät ajan tasalla.
 const inlineScriptHashes = new Set()
@@ -112,7 +112,7 @@ const csp = [
   "img-src 'self' data:",
   "font-src 'self' data:", // Vite liittää pienimmät fontit CSS:ään data-osoitteina
   "connect-src 'self'",
-  'frame-src https://www.instagram.com https://www.openstreetmap.org',
+  'frame-src https://www.openstreetmap.org',
   "object-src 'none'",
   "base-uri 'self'",
   "form-action 'self'",

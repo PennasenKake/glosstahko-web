@@ -174,12 +174,6 @@
   margin-top: 1rem;
 }
 
-/* Instagram-syöte tekstin alla */
-.about__feed {
-  position: relative; /* koristeoksa jää syötteen taakse */
-  margin-top: clamp(2.5rem, 6vw, 3.5rem);
-}
-
 /* ---------- Palvelut ---------- */
 
 .services__intro {

@@ -1,4 +1,3 @@
-import InstagramFeed from '../ui/InstagramFeed'
 import SectionHeading from '../ui/SectionHeading'
 
 export default function About() {
@@ -20,10 +19,6 @@ export default function About() {
           hiusalan yrittäjän tiloissa, ja asiakkaan kanssa katsotaan aina
           yhdessä, mikä sopii juuri hänelle.
         </p>
-      </div>
-
-      <div className="container about__feed" data-reveal>
-        <InstagramFeed />
       </div>
     </section>
   )

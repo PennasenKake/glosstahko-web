@@ -1,7 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { navItems } from '../config/nav'
 import { faq, goodToKnow } from './faq'
-import { instagramPosts } from './instagram'
 import { serviceCategories } from './services'
 
 const unique = (values: string[]) => new Set(values).size === values.length
@@ -55,17 +54,6 @@ describe('UKK (faq.ts)', () => {
       expect(card.title.trim()).not.toBe('')
       expect(card.text.trim()).not.toBe('')
     }
-  })
-})
-
-describe('Instagram-nostot (instagram.ts)', () => {
-  it('tunnisteet ovat uniikkeja ja Instagramin tunnistemuotoa', () => {
-    expect(unique(instagramPosts.map((p) => p.id))).toBe(true)
-    for (const p of instagramPosts) expect(p.id).toMatch(/^[A-Za-z0-9_-]{8,}$/)
-  })
-
-  it('päiväys on muodossa p.k.vvvv', () => {
-    for (const p of instagramPosts) expect(p.date, p.id).toMatch(/^\d{1,2}\.\d{1,2}\.\d{4}$/)
   })
 })
 
