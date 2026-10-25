@@ -1,3 +1,4 @@
+import HeroVines from '../ui/HeroVines'
 import { site } from '../../config/site'
 import BookingButton from '../ui/BookingButton'
 import leaf from '../../assets/images/leaf.webp'
@@ -7,6 +8,7 @@ import SectionHeading from '../ui/SectionHeading'
 export default function Tahko() {
   return (
     <section id="tahko" className="section section--alt" aria-labelledby="tahko-otsikko">
+      <HeroVines variant="d" side="left" className="sidevine sidevine--tahko" watch />
       <img
         className="leaf-deco tahko__leaf"
         src={leaf}

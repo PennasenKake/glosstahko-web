@@ -1,9 +1,11 @@
+import HeroVines from '../ui/HeroVines'
 import InstagramFeed from '../ui/InstagramFeed'
 import SectionHeading from '../ui/SectionHeading'
 
 export default function About() {
   return (
     <section id="minusta" className="section" aria-labelledby="minusta-otsikko">
+      <HeroVines variant="c" side="left" className="sidevine sidevine--about" watch />
       <span className="flora flora--right flora--edge-right flora--soft" aria-hidden="true" />
       <div className="container container--narrow">
         <SectionHeading id="minusta-otsikko" eyebrow="Tekijä" title="Minusta" petals />

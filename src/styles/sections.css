@@ -646,3 +646,54 @@
   font-size: 0.95rem;
   opacity: 0.9;
 }
+/* ---------- Osioiden reunaköynnökset (SectionVine = HeroVines + .sidevine) ----------
+   Täyttävät sisältöalueen ulkopuolisen tyhjän tilan isolla näytöllä. Leveys on marginaalin
+   leveys, joten köynnös ei koskaan mene tekstin päälle. Kasvavat vasta ruudulle tullessaan
+   (HeroVines `watch`). Alle 80 rem leveällä näytöllä piilossa: marginaaleissa ei ole tilaa. */
+.sidevine {
+  display: none;
+}
+
+@media (min-width: 80rem) {
+  .sidevine {
+    --sv-w: clamp(4rem, calc((100vw - var(--content-width)) / 2 - 2rem), 14rem);
+    display: block;
+    position: absolute;
+    z-index: 0;
+    width: var(--sv-w);
+    height: auto;
+    aspect-ratio: 200 / 520;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .sidevine.vine--left {
+    left: 0.5rem;
+  }
+
+  .sidevine.vine--right {
+    right: 0.5rem;
+  }
+
+  .sidevine--about {
+    bottom: 4rem;
+  }
+
+  .sidevine--services-l,
+  .sidevine--services-r {
+    top: 1.5rem;
+  }
+
+  .sidevine--faq {
+    bottom: 6rem;
+  }
+
+  .sidevine--tahko {
+    bottom: 0;
+  }
+}
+
+/* Odottaa ruudulle tuloa: animaatiot pysäytettyinä, kunnes köynnös on näkyvissä */
+html.has-js .vine--watch:not(.vine--seen) :is(.vine__stem, .vine__tendril, .vine__leaf, .vine__fleck, .vine__sway) {
+  animation-play-state: paused;
+}

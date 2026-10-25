@@ -1,3 +1,4 @@
+import HeroVines from '../ui/HeroVines'
 import { nailProducts } from '../../data/products'
 import { serviceCategories } from '../../data/services'
 import type { ServiceGroup } from '../../types'
@@ -16,6 +17,8 @@ const groups: { id: ServiceGroup; title: string }[] = [
 export default function Services() {
   return (
     <section id="palvelut" className="section" aria-labelledby="palvelut-otsikko">
+      <HeroVines variant="a" side="left" className="sidevine sidevine--services-l" watch />
+      <HeroVines variant="b" side="right" className="sidevine sidevine--services-r" watch />
       <div className="container">
         <SectionHeading
           id="palvelut-otsikko"

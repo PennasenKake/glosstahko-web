@@ -17,8 +17,8 @@ export default function Hero() {
   return (
     <section id="etusivu" className="hero" aria-labelledby="hero-otsikko">
       {/* Köynnökset kasvavat heron alareunasta ylös ulkoreunoilla, joilla ei ole tekstiä tai muuta sisältöä */}
-      <HeroVines variant="a" side="left" />
-      <HeroVines variant="b" side="right" />
+      <HeroVines variant="a" side="left" className="hero__vine hero__vine--left" />
+      <HeroVines variant="b" side="right" className="hero__vine hero__vine--right" />
 
       <div className="container hero__grid">
         <div className="hero__text">

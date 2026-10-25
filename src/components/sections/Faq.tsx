@@ -1,3 +1,4 @@
+import HeroVines from '../ui/HeroVines'
 import { faq, goodToKnow } from '../../data/faq'
 import SectionHeading from '../ui/SectionHeading'
 
@@ -8,6 +9,7 @@ import SectionHeading from '../ui/SectionHeading'
 export default function Faq() {
   return (
     <section id="ukk" className="section" aria-labelledby="ukk-otsikko">
+      <HeroVines variant="d" side="right" className="sidevine sidevine--faq" watch />
       <span className="flora flora--left flora--edge-left flora--soft" aria-hidden="true" />
       <div className="container">
         <SectionHeading id="ukk-otsikko" eyebrow="Hyvä tietää" title="Usein kysyttyä" petals />

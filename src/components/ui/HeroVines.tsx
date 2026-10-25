@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 
 /**
  * Köynnökset, jotka kasvavat heron alareunasta ylöspäin.
@@ -76,7 +76,9 @@ function build(curve: Cubic, startT: number, count: number, flip: 1 | -1): VineS
   return { curve, leaves, flecks, tendrils }
 }
 
-const variants: Record<'a' | 'b', VineSpec> = {
+export type VineVariant = 'a' | 'b' | 'c' | 'd'
+
+const variants: Record<VineVariant, VineSpec> = {
   a: build(
     [
       { x: 108, y: H },
@@ -99,21 +101,81 @@ const variants: Record<'a' | 'b', VineSpec> = {
     11,
     -1,
   ),
+  // c ja d: lyhyemmät, hieman toisenlaiset muunnelmat osioiden reunoille
+  c: build(
+    [
+      { x: 90, y: H },
+      { x: 150, y: 440 },
+      { x: 40, y: 350 },
+      { x: 112, y: 150 },
+    ],
+    0.1,
+    9,
+    1,
+  ),
+  d: build(
+    [
+      { x: 110, y: H },
+      { x: 52, y: 440 },
+      { x: 160, y: 340 },
+      { x: 84, y: 120 },
+    ],
+    0.1,
+    10,
+    -1,
+  ),
 }
 
 /** Lehti kärki ylöspäin, tyvi origossa */
 const LEAF = 'M0 0C-7 -7 -8 -21 0 -34C8 -21 7 -7 0 0Z'
 const LEAF_VEIN = 'M0 -2V-27M0 -10L-3.6 -15M0 -10L3.6 -15M0 -18L-3 -22M0 -18L3 -22'
 
-export default function HeroVines({ variant, side }: { variant: 'a' | 'b'; side: 'left' | 'right' }) {
+/**
+ * `watch`: köynnös alkaa kasvaa vasta, kun se tulee ruudulle (osioiden reunakoristeet).
+ * Ilman JavaScriptiä (tai vähennetyllä liikkeellä) se näkyy heti valmiina. Hero-köynnökset
+ * kasvavat heti sivun avautuessa.
+ */
+export default function HeroVines({
+  variant,
+  side,
+  className,
+  watch = false,
+}: {
+  variant: VineVariant
+  side: 'left' | 'right'
+  className?: string
+  watch?: boolean
+}) {
   const id = useId().replace(/:/g, '')
+  const ref = useRef<SVGSVGElement>(null)
+  const [seen, setSeen] = useState(false)
+  useEffect(() => {
+    const el = ref.current
+    if (!watch || !el) return
+    if (typeof IntersectionObserver === 'undefined') {
+      const t = window.setTimeout(() => setSeen(true), 0)
+      return () => window.clearTimeout(t)
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setSeen(true)
+          io.disconnect()
+        }
+      },
+      { threshold: 0.35 },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [watch])
   const spec = variants[variant]
   const [p0, p1, p2, p3] = spec.curve
   const stem = `M${p0.x} ${p0.y}C${p1.x} ${p1.y} ${p2.x} ${p2.y} ${p3.x} ${p3.y}`
 
   return (
     <svg
-      className={`hero__vine hero__vine--${side}`}
+      ref={ref}
+      className={`${className ?? 'hero__vine'} vine--${side}${watch ? ' vine--watch' : ''}${seen ? ' vine--seen' : ''}`}
       viewBox={`0 0 ${W} ${H}`}
       aria-hidden="true"
       focusable="false"
