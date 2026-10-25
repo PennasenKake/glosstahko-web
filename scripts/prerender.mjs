@@ -53,7 +53,7 @@ await writeFile('dist/index.html', html)
 
 // Lakisivut ja kotihoito-ohjeet ovat public/-kansion staattisia sivuja. Jokainen saa canonicalin
 // ja linkin esikatselun (Open Graph) sivuston osoitteen mukaan. Demossa lisätään myös noindex.
-for (const page of ['kayttoehdot.html', 'tietosuoja.html', 'kotihoito.html']) {
+for (const page of ['kayttoehdot.html', 'tietosuoja.html', 'kotihoito.html', 'omavalvonta.html']) {
   const path = `dist/${page}`
   let content = await readFile(path, 'utf-8')
   const title = content.match(/<title>([^<]*)<\/title>/)?.[1] ?? 'GlossTahko'
@@ -76,7 +76,7 @@ for (const page of ['kayttoehdot.html', 'tietosuoja.html', 'kotihoito.html']) {
 // --- 3. Sitemap ja robots.txt ---
 // lastmod jätetään pois tarkoituksella: build-päivä ei kerro sisällön muutoksesta, ja
 // Google ohittaa virheellisen lastmodin. Sivukartta kertoo vain, mitä sivuja on.
-const pages = ['', 'tietosuoja.html', 'kayttoehdot.html', 'kotihoito.html']
+const pages = ['', 'tietosuoja.html', 'kayttoehdot.html', 'kotihoito.html', 'omavalvonta.html']
 await writeFile(
   'dist/sitemap.xml',
   `<?xml version="1.0" encoding="UTF-8"?>

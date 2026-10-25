@@ -56,6 +56,27 @@ export default function Footer() {
             <li>{site.addressLine}</li>
           </ul>
         </div>
+
+        <nav aria-label="Ehdot ja tietosuoja">
+          <p className="site-footer__title">Tietoa ja ehdot</p>
+          <ul className="site-footer__list">
+            <li>
+              <a href={`${base}kayttoehdot.html`}>Käyttöehdot</a>
+            </li>
+            <li>
+              <a href={`${base}tietosuoja.html`}>Tietosuoja</a>
+            </li>
+            <li>
+              <a href={`${base}omavalvonta.html`}>Omavalvonta</a>
+            </li>
+            <li>
+              <a href={`${base}kotihoito.html`}>Kotihoito-ohjeet</a>
+            </li>
+            <li>
+              <ConsentSettings />
+            </li>
+          </ul>
+        </nav>
       </div>
 
       <div className="container site-footer__bottom" data-reveal="fade">
@@ -65,14 +86,7 @@ export default function Footer() {
         <p>
           Hinnat sisältävät arvonlisäveron. Sivusto ei itse aseta evästeitä eikä
           tallenna tietojasi palvelimelle. Selaimeesi tallennetaan vain Instagram-valintasi.
-          Instagram-julkaisut ja kartta ladataan kolmannelta osapuolelta vasta suostumuksellasi.{' '}
-          <a href={`${base}kayttoehdot.html`}>Käyttöehdot</a>
-          {' · '}
-          <a href={`${base}kotihoito.html`}>Kotihoito-ohjeet</a>
-          {' · '}
-          <a href={`${base}tietosuoja.html`}>Tietosuoja</a>
-          {' · '}
-          <ConsentSettings />
+          Instagram-julkaisut ja kartta ladataan kolmannelta osapuolelta vasta suostumuksellasi.
         </p>
         <a href="#etusivu">Takaisin ylös ↑</a>
       </div>

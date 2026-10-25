@@ -220,6 +220,12 @@
 }
 
 /* Alaotsikko (esim. Leikkaukset), kun sarakkeessa on useita kategorioita */
+.price-category__desc {
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
 .price-category__title {
   margin-top: 1.75rem;
   font-family: var(--font-heading);

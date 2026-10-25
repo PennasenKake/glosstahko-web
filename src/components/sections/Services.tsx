@@ -41,6 +41,7 @@ export default function Services() {
                     {categories.length > 1 && (
                       <h4 className="price-category__title">{category.title}</h4>
                     )}
+                    {category.description && <p className="price-category__desc">{category.description}</p>}
 
                     <ul>
                       {category.services.map((service) => {

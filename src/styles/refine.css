@@ -235,8 +235,12 @@
   outline-offset: 3px;
 }
 
-.site-footer__bottom .link-button {
-  display: inline-flex;
-  align-items: center;
-  min-height: 2.75rem;
+.site-footer__list .link-button {
+  display: inline-block;
+  padding-block: 0.5rem; /* sama napautusalue kuin muilla linkeillä */
+  text-decoration: none;
+}
+
+.site-footer__list .link-button:hover {
+  text-decoration: underline;
 }

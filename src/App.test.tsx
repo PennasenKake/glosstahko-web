@@ -171,6 +171,28 @@ describe('kotihoito-ohjeet ja ehtosivut', () => {
   })
 })
 
+describe('footerin ehto- ja lakilinkit', () => {
+  const html = renderToString(<App />)
+
+  it('Käyttöehdot, Tietosuoja, Omavalvonta ja Kotihoito-ohjeet ovat selkeänä listana', () => {
+    const nav = html.match(/<nav aria-label="Ehdot ja tietosuoja">([\s\S]*?)<\/nav>/)?.[1] ?? ''
+    for (const page of ['kayttoehdot', 'tietosuoja', 'omavalvonta', 'kotihoito']) {
+      expect(nav, page).toMatch(new RegExp(`href="[^"]*${page}\\.html"`))
+    }
+    expect(nav).toContain('Evästeasetukset')
+  })
+
+  it('omavalvontasivu on olemassa, eikä siinä ole yksityistä sähköpostia', () => {
+    const pages = import.meta.glob('../public/*.html', { query: '?raw', import: 'default', eager: true }) as Record<string, string>
+    const plan = pages['../public/omavalvonta.html']
+    expect(plan).toContain('<h1>Omavalvontasuunnitelma</h1>')
+    expect((plan.match(/<h2>/g) ?? []).length).toBe(12)
+    expect(plan).toContain('Pisantie 3')
+    expect(plan).not.toMatch(/@hotmail|@gmail/i)
+    expect(pages['../public/kayttoehdot.html']).toContain('href="omavalvonta.html"')
+  })
+})
+
 describe('Instagram-karuselli', () => {
   it('esirenderöity sivu kysyy luvan eikä lataa mitään kolmannelta osapuolelta', () => {
     const html = renderToString(<InstagramFeed feedUrl="https://feeds.behold.so/testi" />)

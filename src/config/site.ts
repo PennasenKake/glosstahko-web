@@ -50,7 +50,7 @@ export const site = {
    * Instagram-karuselli hakee julkaisut. Tyhjä = karuselli näyttää vain linkin profiiliin.
    * Ohje: docs/instagram-syote.md
    */
-  instagramFeedUrl: '',
+  instagramFeedUrl: 'https://feeds.behold.so/pCF6ORiF1zQsJesGUH6B',
 
   // Kaikki "Varaa aika" -painikkeet ohjautuvat tänne (Booksalon verkkoajanvaraus).
   bookingUrl: 'https://booksalon.fi/glosstahko',
