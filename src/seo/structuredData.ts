@@ -35,6 +35,10 @@ export function buildStructuredData() {
     url: `${site.url}/`,
     description: site.description,
     image: `${site.url}/og-image.jpg`,
+    logo: `${site.url}/icon-512.png`,
+    slogan: 'Kauneutta kiireettömästi',
+    currenciesAccepted: 'EUR',
+    knowsLanguage: 'fi',
     telephone: '+358445132714',
     email: site.email,
     address: {

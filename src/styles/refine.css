@@ -31,9 +31,14 @@
 
   /* write: käsinkirjoitettu sana paljastuu vasemmalta oikealle kuin kirjoitettuna.
      Negatiiviset reunat estävät script-kirjainten ylitysten leikkautumisen. */
+  /* Leikkaus on sisemmällä .write-clip-elementillä, ei tarkkailtavalla elementillä itsellään:
+     Chromen IntersectionObserver huomioi kohteen oman clip-pathin, jolloin 100 % leikattu
+     elementti ei koskaan "tulisi ruudulle" eikä paljastuisi (sana jäisi näkymättömiin). */
   html.has-js:not(.rv-off) [data-reveal='write']:not([data-rv]) {
     opacity: 1;
     translate: none;
+  }
+  html.has-js:not(.rv-off) [data-reveal='write']:not([data-rv]) > .write-clip {
     clip-path: inset(-0.45em 100% -0.45em -0.45em);
   }
 
@@ -43,6 +48,8 @@
     html.has-js:not(.rv-off) [data-reveal='write']:not([data-rv]) {
       opacity: 0;
       translate: 0 var(--rv-shift);
+    }
+    html.has-js:not(.rv-off) [data-reveal='write']:not([data-rv]) > .write-clip {
       clip-path: none;
     }
   }
@@ -62,6 +69,9 @@
       translate 1.3s var(--rv-ease) var(--rv-delay, 0ms),
       scale 1.3s var(--rv-ease) var(--rv-delay, 0ms),
       clip-path 1.6s var(--rv-ease-write) var(--rv-delay, 0ms);
+  }
+  html.has-js:not(.rv-off) [data-reveal='write'][data-rv='in'] > .write-clip {
+    transition: clip-path 1.3s var(--rv-ease-write) var(--rv-delay, 0ms);
   }
   html.has-js:not(.rv-off) [data-reveal='fade'][data-rv='in'] {
     transition-duration: 1.6s;
@@ -84,6 +94,9 @@
     opacity: 1 !important;
     translate: none !important;
     scale: none !important;
+    clip-path: none !important;
+  }
+  [data-reveal] > .write-clip {
     clip-path: none !important;
   }
 }
@@ -253,4 +266,8 @@
 
 .site-footer__list .link-button:hover {
   text-decoration: underline;
+}
+
+.write-clip {
+  display: inline-block;
 }

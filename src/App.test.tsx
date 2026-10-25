@@ -88,7 +88,7 @@ describe('paljastusanimaatiot ja toimitila', () => {
   })
 
   it('heron osille on määritelty järjestys', () => {
-    expect(html).toContain('data-reveal="write" data-delay="350"')
+    expect(html).toContain('data-reveal="write" data-delay="200"')
     expect(html).toContain('data-reveal="grow" data-delay="900"')
   })
 

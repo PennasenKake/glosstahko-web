@@ -15,6 +15,17 @@ const { render, structuredData, siteUrl } = await import(
   pathToFileURL(resolve('dist-ssr/entry-server.js')).href
 )
 
+async function inlineStylesheets(source) {
+  const links = [...source.matchAll(/<link rel="stylesheet"[^>]*href="([^"]+\.css)"[^>]*>/g)]
+  let out = source
+  for (const [tag, href] of links) {
+    const file = resolve('dist', href.replace(/^\/?/, '').replace(new RegExp(`^${(process.env.VITE_BASE ?? '/').replace(/^\//, '')}`), ''))
+    const css = (await readFile(file, 'utf-8')).replace(/<\/style/gi, '<\\/style')
+    out = out.replace(tag, () => `<style>${css}</style>`)
+  }
+  return out
+}
+
 // --- 1. Esirenderöity HTML sisään ---
 const placeholder = '<div id="root"></div>'
 let html = await readFile('dist/index.html', 'utf-8')
@@ -38,6 +49,12 @@ const preloads = ['great-vibes-latin-400-normal', 'lora-latin-400-normal', 'corm
   .map((file) => `    <link rel="preload" href="${base}assets/${file}" as="font" type="font/woff2" crossorigin />\n`)
   .join('')
 html = html.replace('</head>', `${preloads}  </head>`)
+
+// --- 2b2. Kriittinen CSS HTML:n sisään: ulkoinen tyylitiedosto estäisi ensimmäisen piirron
+// yhden lisäkierroksen ajan (Lighthouse: render-blocking). Sivusto on pieni, joten koko
+// tyylitiedosto (~55 kt, pakattuna ~10 kt) on järkevämpi sisällyttää kuin jakaa osiin.
+// CSP sallii style-src 'unsafe-inline'. Tiedosto jää dist/assets-kansioon varalle.
+html = await inlineStylesheets(html)
 
 // --- 2c. Testijulkaisu (esim. GitHub Pages -demo): VITE_NOINDEX=1 pyytää hakukoneita
 // olemaan indeksoimatta sivua, jotta demo ei kilpaile oikean domainin kanssa haussa.
@@ -68,6 +85,11 @@ for (const page of ['kayttoehdot.html', 'tietosuoja.html', 'kotihoito.html', 'om
     `    <meta property="og:description" content="${description}" />\n` +
     `    <meta property="og:url" content="${url}" />\n` +
     `    <meta property="og:image" content="${siteUrl}/og-image.jpg" />\n` +
+    `    <meta name="twitter:card" content="summary_large_image" />\n` +
+    `    <meta name="twitter:title" content="${title}" />\n` +
+    `    <meta name="twitter:description" content="${description}" />\n` +
+    `    <meta name="twitter:image" content="${siteUrl}/og-image.jpg" />\n` +
+    `    <link rel="apple-touch-icon" href="apple-touch-icon.png" />\n` +
     (noindex ? robotsMeta : '')
   content = content.replace('</head>', `${head}  </head>`)
   await writeFile(path, content)

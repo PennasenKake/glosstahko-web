@@ -12,7 +12,7 @@ export const site = {
   // Osoite tulee .env-tiedostosta (VITE_SITE_URL), ei lopussa kauttaviivaa
   url: String(import.meta.env.VITE_SITE_URL).replace(/\/$/, ''),
   description:
-    'Kynsi- ja hiuspalvelut Nilsiässä ja liikkuva palvelu Tahkolla: geelilakkaus, rakennekynnet, leikkaukset, värjäykset ja juhlakampaukset.',
+    'Kynsi- ja hiuspalvelut Nilsiässä ja liikkuva palvelu Tahkolla: geelilakkaus, manikyyri, leikkaukset, värjäykset ja juhlakampaukset.',
 
   // Yhteystiedot
   phone: '044\u00A0513\u00A02714', // näytettävä muoto (\u00A0 = ei-katkeava väli)

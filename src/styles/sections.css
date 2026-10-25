@@ -115,17 +115,25 @@
 .hero__leaf {
   position: relative;
   z-index: 1; /* köynnökset jäävät lehvän taakse */
-  width: min(19rem, 72%);
+  /* kapea näyttö: köynnöksille jää tilaa reunoille */
+  width: min(19rem, calc(100% - 2 * (var(--vine-w) - 2rem)));
   height: auto;
 }
 
 /* ---------- Köynnökset (HeroVines): kasvavat heron alareunasta ylös ----------
-   Pysyvät logo-osan sisällä eli tekstin ja painikkeiden alapuolella ja sivuilla. */
+   Asemoidaan heron ulkoreunoille. Puhelimessa ne ovat ruudun reunoilla lehvän vierellä
+   (lehvä on kaventunut, jotta väliä jää). Isolla näytöllä ne kasvavat sisältöalueen
+   ulkopuolisissa marginaaleissa; --vine-w on marginaalin leveys, ja sisältöalue
+   kapenee tarvittaessa niin, ettei köynnös koskaan peitä tekstiä. */
+.hero {
+  --vine-w: clamp(5.5rem, 23vw, 9rem);
+}
+
 .hero__vine {
   position: absolute;
   bottom: 0;
   z-index: 0;
-  width: clamp(6rem, 30vw, 9rem);
+  width: var(--vine-w);
   height: auto;
   aspect-ratio: 200 / 520;
   overflow: visible;
@@ -133,11 +141,11 @@
 }
 
 .hero__vine--left {
-  left: -0.25rem;
+  left: -1.25rem;
 }
 
 .hero__vine--right {
-  right: -0.25rem;
+  right: -1.25rem;
 }
 
 .vine__stem {
@@ -272,6 +280,15 @@
 }
 
 @media (min-width: 56rem) {
+  /* Köynnökset kasvavat sisältöalueen ulkopuolella; sisältöalue kapenee tarvittaessa */
+  .hero {
+    --vine-w: clamp(3.75rem, calc((100vw - var(--content-width)) / 2 + 1rem), 13rem);
+  }
+
+  .hero > .container {
+    width: min(100% - 2 * var(--vine-w), var(--content-width));
+  }
+
   .hero__grid {
     grid-template-columns: 1.1fr 1fr;
     gap: 3rem;
@@ -283,8 +300,14 @@
     padding-bottom: clamp(3rem, 6vw, 5rem);
   }
 
+  /* Sana mahtuu vasempaan sarakkeeseen myös kapeammalla näytöllä */
+  .hero__script {
+    font-size: min(9.5rem, 10.8vw);
+  }
+
   .hero__caps {
     margin-right: 0;
+    font-size: min(2rem, 2.6vw);
   }
 
   .hero__actions {
@@ -304,10 +327,6 @@
     gap: 2.5rem;
   }
 
-  .hero__vine {
-    width: clamp(7rem, 15vw, 11rem);
-  }
-
   .hero__leaf {
     width: min(27rem, 100%);
   }
@@ -316,10 +335,11 @@
 /* Kapea tabletti/vaaka (900–1000 px): kaksi saraketta mahtuu vain pienemmällä sanamerkillä */
 @media (min-width: 56rem) and (max-width: 66rem) {
   .hero__brand-main {
-    font-size: 3.25rem;
+    font-size: 2.75rem;
   }
   .hero__brand-sub {
-    font-size: 1.5rem;
+    margin-top: 0.7rem;
+    font-size: 1.25rem;
   }
 }
 
