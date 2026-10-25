@@ -37,6 +37,16 @@
     clip-path: inset(-0.45em 100% -0.45em -0.45em);
   }
 
+  /* Puhelin: käsinkirjoitettu sana tulee näkyviin pehmeällä häivytyksellä (ei leikkausmaskia),
+     jotta se ei jää piiloon selaimissa, jotka eivät animoi clip-pathia luotettavasti. */
+  @media (max-width: 39.99rem) {
+    html.has-js:not(.rv-off) [data-reveal='write']:not([data-rv]) {
+      opacity: 0;
+      translate: 0 var(--rv-shift);
+      clip-path: none;
+    }
+  }
+
   /* grow: lehvä kasvaa alhaalta ylös */
   html.has-js:not(.rv-off) [data-reveal='grow']:not([data-rv]) {
     translate: 0 2.5rem;

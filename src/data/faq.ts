@@ -15,6 +15,8 @@ export type FaqItem = {
 }
 
 export const faq: FaqItem[] = [
+  // POISTETTU UKK:STA 25.10.2026 (kommentoituna alla): kotihoito, ihotesti, hääkampaus, liikkuva palvelu.
+  // Palauta kysymys poistamalla rivien alusta //.
   {
     q: 'Miten varaan ajan?',
     a: 'Ajan voi varata Booksalonin verkkoajanvarauksessa (Varaa aika -painike) tai Instagram-viestillä. Jos jokin ajanvarauksessa mietityttää, esimerkiksi palveluiden tai lisäpalveluiden osalta, laita viestiä, niin palaan asiaan.',
@@ -39,22 +41,22 @@ export const faq: FaqItem[] = [
     q: 'Miten hygienia hoidetaan?',
     a: 'Desinfioin työpisteen päivän aluksi, jokaisen asiakkaan välillä ja päivän päätteeksi. Välineet puhdistetaan, desinfioidaan ja steriloidaan kuumailmasterilisaattorissa jokaisen asiakkaan välissä. Tarkemmat tiedot löytyvät omavalvontasuunnitelmasta.',
   },
-  {
-    q: 'Miten hoidan kynsiä kotona?',
-    a: 'Öljyä kynsinauhat ja kynnet vähintään kerran päivässä, älä käytä kynsiä työkaluina, käytä siivoushanskoja eikä viilaa, leikkaa tai nypi tuotetta itse. Jos kynteen tulee vaurio tai ilmatasku, ota yhteyttä korjausaikaa varten. Täydelliset kotihoito-ohjeet löytyvät omalta sivultaan.',
-  },
-  {
-    q: 'Tarvitseeko hiusten värjäykseen ihotesti?',
-    a: 'Ihotesti suositellaan aina, kun käytät väriainetta ensimmäistä kertaa. Kysy ohjeet varattaessa.',
-  },
-  {
-    q: 'Mitä hääkampaus sisältää?',
-    a: 'Hääkampauksen hinta alkaen 170 € sisältää suunnittelun ja koekampauksen, joten lopputulos on valmiiksi mietitty ennen suurta päivää.',
-  },
-  {
-    q: 'Tuletko mökille tai hotellille Tahkolla?',
-    a: 'Kyllä, sesonkien aikana tarjolla on liikkuvaa kampaamo- ja kynsipalvelua mökille, majoitukseen ja juhlapaikalle. Ryhmille hinta sovitaan etukäteen.',
-  },
+  // {
+  //   q: 'Miten hoidan kynsiä kotona?',
+  //   a: 'Öljyä kynsinauhat ja kynnet vähintään kerran päivässä, älä käytä kynsiä työkaluina, käytä siivoushanskoja eikä viilaa, leikkaa tai nypi tuotetta itse. Jos kynteen tulee vaurio tai ilmatasku, ota yhteyttä korjausaikaa varten. Täydelliset kotihoito-ohjeet löytyvät omalta sivultaan.',
+  // },
+  // {
+  //   q: 'Tarvitseeko hiusten värjäykseen ihotesti?',
+  //   a: 'Ihotesti suositellaan aina, kun käytät väriainetta ensimmäistä kertaa. Kysy ohjeet varattaessa.',
+  // },
+  // {
+  //   q: 'Mitä hääkampaus sisältää?',
+  //   a: 'Hääkampauksen hinta alkaen 170 € sisältää suunnittelun ja koekampauksen, joten lopputulos on valmiiksi mietitty ennen suurta päivää.',
+  // },
+  // {
+  //   q: 'Tuletko mökille tai hotellille Tahkolla?',
+  //   a: 'Kyllä, sesonkien aikana tarjolla on liikkuvaa kampaamo- ja kynsipalvelua mökille, majoitukseen ja juhlapaikalle. Ryhmille hinta sovitaan etukäteen.',
+  // },
   {
     q: 'Missä palvelu on?',
     a: `Toimitila on osoitteessa ${site.addressLine} (${site.addressNote}). Sesonkien aikana palvelu tulee liikkuvana myös Tahkon alueelle.`,

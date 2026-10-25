@@ -25,7 +25,7 @@ export default function Services() {
         />
         <p className="services__intro" data-reveal>
           Hinnat sisältävät arvonlisäveron. Lopullinen hinta riippuu työn
-          laajuudesta ja hiusten pituudesta.
+          laajuudesta. Pidätämme oikeudet muutoksiin.
         </p>
 
         <div className="price-card" data-reveal>

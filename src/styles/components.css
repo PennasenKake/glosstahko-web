@@ -518,6 +518,20 @@
   stroke-linejoin: round;
 }
 
+.petal__outline {
+  fill-opacity: 0.18;
+  stroke: #c79a3a;
+  stroke-width: 1.15;
+  stroke-linejoin: round;
+}
+
+.petal__outline-vein {
+  fill: none;
+  stroke: #c79a3a;
+  stroke-width: 0.8;
+  stroke-linecap: round;
+}
+
 .petal__stem {
   fill: none;
   stroke: #8d6a25;
@@ -574,25 +588,39 @@
   }
   100% {
     opacity: 0;
-    translate: calc(var(--sway) * -0.5) 2.2rem;
+    translate: calc(var(--sway) * 0.3) 2.2rem;
     rotate: calc(var(--rot) + var(--spin) * 1.7);
   }
 }
 
-/* Kapea näyttö: pienemmät ja vähemmän lehtiä, lähemmäs tekstiä */
+/* Kapea näyttö: pienemmät ja vähemmän lehtiä, lähemmäs tekstiä. Lehdet pysyvät
+   silti otsikon laatikon ulkopuolella eivätkä leikkaudu ruudun reunasta. */
 @media (max-width: 39.99rem) {
   .petal {
-    scale: 0.8;
+    scale: 0.75;
   }
-  .petal:nth-child(2),
-  .petal:nth-child(5) {
+  .petal:nth-child(3),
+  .petal:nth-child(6) {
     display: none;
   }
-  .petal:nth-child(1) {
-    left: -1.4rem !important;
+  .petal--left {
+    left: -1.5rem !important;
   }
-  .petal:nth-child(4) {
-    right: -1.4rem !important;
+  .petal--right {
+    right: -1.5rem !important;
+  }
+  .petal:nth-child(2) {
+    left: -1.1rem !important;
+  }
+  .petal:nth-child(5) {
+    right: -1.1rem !important;
+  }
+}
+
+/* Hyvin kapea näyttö: ei tilaa lehdille tekstin sivuilla */
+@media (max-width: 22.5rem) {
+  .petals {
+    display: none;
   }
 }
 

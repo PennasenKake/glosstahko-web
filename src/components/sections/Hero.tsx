@@ -1,4 +1,5 @@
 import BookingButton from '../ui/BookingButton'
+import HeroVines from '../ui/HeroVines'
 // Kuvat tuodaan importilla: Vite pakkaa ne mukaan, lisää tiedostonimeen tiivisteen
 // (välimuisti) ja antaa oikean polun julkaisussa.
 import leaf from '../../assets/images/leaf.webp'
@@ -7,8 +8,9 @@ import leaf from '../../assets/images/leaf.webp'
  * Etusivun avaus. Sivun ainoa <h1>: Google ja ruudunlukijat
  * käyttävät sitä sivun pääotsikkona.
  *
- * Vasemmalla teksti ja painikkeet, oikealla logon sanamerkki ja lehvä
- * (ruudunlukijalle piilotettu koriste). Mobiilissa sarakkeet pinoutuvat.
+ * Vasemmalla teksti ja painikkeet, oikealla logon sanamerkki, lehvä ja kasvavat köynnökset
+ * (ruudunlukijalle piilotettu koriste). Mobiilissa sarakkeet pinoutuvat ja sanamerkki näkyy
+ * myös puhelimella.
  * Ulkoasu: styles/sections.css (.hero).
  */
 export default function Hero() {
@@ -38,6 +40,9 @@ export default function Hero() {
 
         {/* Logo-osa on koriste: header kertoo jo yrityksen nimen */}
         <div className="hero__logo" aria-hidden="true">
+          {/* Köynnökset kasvavat heron alareunasta ylös logon molemmin puolin */}
+          <HeroVines variant="a" side="left" />
+          <HeroVines variant="b" side="right" />
           <p className="hero__brand" data-reveal="fade" data-delay="600">
             <span className="hero__brand-main">Gloss</span>
             <span className="hero__brand-sub">Tahko</span>

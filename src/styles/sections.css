@@ -74,15 +74,20 @@
 
 /* Logo-osa: GLOSS/TAHKO-sanamerkki ja lehvä. Koriste, joten ruudunlukija ohittaa. */
 .hero__logo {
+  position: relative; /* köynnökset asemoidaan tämän sisällä */
+  isolation: isolate;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
+/* Sanamerkki näkyy myös puhelimella (pienempänä) */
 .hero__brand {
-  display: none; /* mobiilissa headerin logo riittää */
+  position: relative;
+  z-index: 1;
+  display: flex;
   flex-direction: column;
   align-items: center;
   line-height: 1;
@@ -91,35 +96,179 @@
 .hero__brand-main {
   font-family: var(--font-heading);
   font-weight: 600;
-  font-size: clamp(3.5rem, 7.5vw, 5.5rem);
+  font-size: clamp(2.6rem, 13vw, 3.6rem);
   letter-spacing: 0.3em;
   margin-right: -0.3em; /* sama keskityskorjaus kuin yllä */
   text-transform: uppercase;
 }
 
 .hero__brand-sub {
-  margin-top: 1rem;
+  margin-top: 0.7rem;
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: clamp(1.5rem, 3.4vw, 2.4rem);
+  font-size: clamp(1.1rem, 5.2vw, 1.5rem);
   letter-spacing: 0.5em;
   margin-right: -0.5em;
   text-transform: uppercase;
 }
 
-/* Kapea tabletti/vaaka (900–1000 px): kaksi saraketta mahtuu vain pienemmällä sanamerkillä */
-@media (min-width: 56rem) and (max-width: 66rem) {
-  .hero__brand-main {
-    font-size: 3.25rem;
-  }
-  .hero__brand-sub {
-    font-size: 1.5rem;
+.hero__leaf {
+  position: relative;
+  z-index: 1; /* köynnökset jäävät lehvän taakse */
+  width: min(19rem, 72%);
+  height: auto;
+}
+
+/* ---------- Köynnökset (HeroVines): kasvavat heron alareunasta ylös ----------
+   Pysyvät logo-osan sisällä eli tekstin ja painikkeiden alapuolella ja sivuilla. */
+.hero__vine {
+  position: absolute;
+  bottom: 0;
+  z-index: 0;
+  width: clamp(6rem, 30vw, 9rem);
+  height: auto;
+  aspect-ratio: 200 / 520;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.hero__vine--left {
+  left: -0.25rem;
+}
+
+.hero__vine--right {
+  right: -0.25rem;
+}
+
+.vine__stem {
+  fill: none;
+  stroke: #7d8a63;
+  stroke-width: 3.4;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: vine-grow 7s cubic-bezier(0.35, 0.1, 0.25, 1) 0.4s forwards;
+}
+
+.vine__tendril {
+  fill: none;
+  stroke: #7d8a63;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: vine-grow 2.4s ease-out 0.4s forwards;
+}
+
+/* Lehti puhkeaa varren kasvaessa: skaalautuu tyvestä (origo on lehden tyvi) */
+.vine__leaf,
+.vine__fleck {
+  opacity: 0;
+  transform-origin: 0 0;
+  animation: vine-leaf 1.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.4s forwards;
+}
+
+.vine__fleck {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.vine__leaf-sage {
+  fill: #cdc8a6;
+  stroke: #9aa27d;
+  stroke-width: 0.8;
+}
+
+.vine__leaf-sage--dark {
+  fill: #a9b48a;
+}
+
+.vine__leaf-vein {
+  fill: none;
+  stroke: #8a9468;
+  stroke-width: 0.9;
+  stroke-linecap: round;
+  opacity: 0.7;
+}
+
+.vine__leaf-line {
+  fill-opacity: 0.22;
+  stroke: #d8b25a;
+  stroke-width: 1.5;
+  stroke-linejoin: round;
+}
+
+.vine__leaf-line-vein,
+.vine__leaf-gold-vein {
+  fill: none;
+  stroke: #d8b25a;
+  stroke-width: 1;
+  stroke-linecap: round;
+}
+
+.vine__leaf-gold {
+  stroke: #8d6a25;
+  stroke-width: 0.8;
+}
+
+.vine__leaf-gold-vein {
+  stroke: #fff6d6;
+  opacity: 0.6;
+}
+
+/* Valmis köynnös keinuu hitaasti tuulessa (vain transform, ei asettelua) */
+.vine__sway {
+  transform-origin: 50% 100%;
+  transform-box: view-box;
+  animation: vine-sway 11s ease-in-out 8s infinite;
+}
+
+@keyframes vine-grow {
+  to {
+    stroke-dashoffset: 0;
   }
 }
 
-.hero__leaf {
-  width: min(19rem, 72%);
-  height: auto;
+@keyframes vine-leaf {
+  from {
+    opacity: 0;
+    scale: 0;
+    rotate: -12deg;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+    rotate: 0deg;
+  }
+}
+
+@keyframes vine-sway {
+  0%,
+  100% {
+    rotate: -1.2deg;
+  }
+  50% {
+    rotate: 1.4deg;
+  }
+}
+
+/* Vähennetty liike: köynnökset näkyvät valmiina eivätkä liiku */
+@media (prefers-reduced-motion: reduce) {
+  .vine__stem,
+  .vine__tendril {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+
+  .vine__leaf,
+  .vine__fleck {
+    animation: none;
+    opacity: 1;
+  }
+
+  .vine__sway {
+    animation: none;
+  }
 }
 
 @media (min-width: 56rem) {
@@ -142,16 +291,35 @@
     justify-content: flex-start;
   }
 
-  .hero__brand {
-    display: flex;
+  .hero__brand-main {
+    font-size: clamp(3.5rem, 7.5vw, 5.5rem);
+  }
+
+  .hero__brand-sub {
+    margin-top: 1rem;
+    font-size: clamp(1.5rem, 3.4vw, 2.4rem);
   }
 
   .hero__logo {
     gap: 2.5rem;
   }
 
+  .hero__vine {
+    width: clamp(7rem, 15vw, 11rem);
+  }
+
   .hero__leaf {
     width: min(27rem, 100%);
+  }
+}
+
+/* Kapea tabletti/vaaka (900–1000 px): kaksi saraketta mahtuu vain pienemmällä sanamerkillä */
+@media (min-width: 56rem) and (max-width: 66rem) {
+  .hero__brand-main {
+    font-size: 3.25rem;
+  }
+  .hero__brand-sub {
+    font-size: 1.5rem;
   }
 }
 
