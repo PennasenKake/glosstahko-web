@@ -1,8 +1,9 @@
 import { renderToString } from 'react-dom/server'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import App from './App'
 import { navItems } from './config/nav'
 import { site } from './config/site'
+import InstagramFeed from './components/ui/InstagramFeed'
 import { buildFaqData, buildStructuredData } from './seo/structuredData'
 
 /**
@@ -170,11 +171,74 @@ describe('kotihoito-ohjeet ja ehtosivut', () => {
   })
 })
 
-describe('ulkoinen sisältö', () => {
-  it('esirenderöity sivu ei lataa upotuksia eikä sisällä Instagram-karusellia', () => {
-    const html = renderToString(<App />)
+describe('Instagram-karuselli', () => {
+  it('esirenderöity sivu kysyy luvan eikä lataa mitään kolmannelta osapuolelta', () => {
+    const html = renderToString(<InstagramFeed feedUrl="https://feeds.behold.so/testi" />)
+    expect(html).toContain('Salli ja näytä julkaisut')
+    expect(html).toContain('Ei kiitos')
+    expect(html).not.toContain('<img')
     expect(html).not.toContain('<iframe')
-    expect(html).not.toContain('insta__')
-    expect(html).not.toContain('Evästeasetukset')
+    expect(html).not.toContain('behold')
+  })
+
+  it('on Minusta-osiossa tekstin jälkeen ja alatunniste tarjoaa Evästeasetukset', () => {
+    const html = renderToString(<App />)
+    expect(html).toContain('id="instagram"')
+    expect(html.indexOf('id="instagram"')).toBeGreaterThan(html.indexOf('id="minusta-otsikko"'))
+    expect(html.indexOf('id="instagram"')).toBeLessThan(html.indexOf('id="palvelut'))
+    expect(html).toContain('Evästeasetukset')
+    expect(html).not.toContain('<iframe')
+  })
+
+  it('ilman syötteen osoitetta näytetään vain profiililinkki', () => {
+    const html = renderToString(<InstagramFeed feedUrl="" />)
+    expect(html).toContain(`href="${site.instagramUrl}"`)
+    expect(html).not.toContain('Salli ja näytä')
+  })
+})
+
+describe('Instagram-suostumus', () => {
+  function stubStorage(throwing = false) {
+    const store = new Map<string, string>()
+    const events: string[] = []
+    const fail = () => {
+      throw new Error('estetty')
+    }
+    vi.stubGlobal('window', {
+      localStorage: throwing
+        ? { getItem: fail, setItem: fail, removeItem: fail }
+        : {
+            getItem: (k: string) => store.get(k) ?? null,
+            setItem: (k: string, v: string) => void store.set(k, v),
+            removeItem: (k: string) => void store.delete(k),
+          },
+      dispatchEvent: (e: Event) => void events.push(e.type),
+    })
+    return { store, events }
+  }
+
+  it('valinta tallentuu ja luetaan takaisin, ja nollaus tyhjentää sen', async () => {
+    const { store, events } = stubStorage()
+    const { readConsent, writeConsent, CONSENT_KEY } = await import('./utils/consent')
+    expect(readConsent()).toBeNull()
+    writeConsent('granted')
+    expect(store.get(CONSENT_KEY)).toBe('granted')
+    expect(readConsent()).toBe('granted')
+    writeConsent('denied')
+    expect(readConsent()).toBe('denied')
+    writeConsent(null)
+    expect(store.has(CONSENT_KEY)).toBe(false)
+    expect(readConsent()).toBeNull()
+    expect(events).toHaveLength(3)
+    vi.unstubAllGlobals()
+  })
+
+  it('toimii, vaikka selain estää tallennuksen (muistivaraus)', async () => {
+    stubStorage(true)
+    const { readConsent, writeConsent } = await import('./utils/consent')
+    writeConsent('granted')
+    expect(readConsent()).toBe('granted')
+    writeConsent(null)
+    vi.unstubAllGlobals()
   })
 })

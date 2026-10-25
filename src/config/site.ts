@@ -45,6 +45,12 @@ export const site = {
   // Some
   instagramUrl: 'https://www.instagram.com/glosstahko/',
   instagramHandle: '@glosstahko',
+  /**
+   * Behold-syötteen osoite (https://feeds.behold.so/TUNNISTE), josta Minusta-osion
+   * Instagram-karuselli hakee julkaisut. Tyhjä = karuselli näyttää vain linkin profiiliin.
+   * Ohje: docs/instagram-syote.md
+   */
+  instagramFeedUrl: '',
 
   // Kaikki "Varaa aika" -painikkeet ohjautuvat tänne (Booksalon verkkoajanvaraus).
   bookingUrl: 'https://booksalon.fi/glosstahko',

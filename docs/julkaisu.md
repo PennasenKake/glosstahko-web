@@ -84,7 +84,7 @@ Jatkossa jokainen `git push` `main`-haaraan julkaisee uuden version automaattise
 
 ## 6. Turvaotsikot
 
-Build luo tiedoston `dist/_headers` (scripts/prerender.mjs), jonka Cloudflare Pages lukee automaattisesti. Siinä ovat CSP (sallii vain oman sisällön ja OpenStreetMap-upotuksen), `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options` ja pitkä välimuisti `/assets/*`-tiedostoille. CSP on testattu paikallisesti kaikilla sivuilla.
+Build luo tiedoston `dist/_headers` (scripts/prerender.mjs), jonka Cloudflare Pages lukee automaattisesti. Siinä ovat CSP (sallii vain oman sisällön, Behold-syötteen (Instagram) ja OpenStreetMap-upotuksen), `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options` ja pitkä välimuisti `/assets/*`-tiedostoille. CSP on testattu paikallisesti kaikilla sivuilla.
 
 Jos lisäät sivulle uuden ulkoisen palvelun (analytiikka, kartta, fontti, lomake), lisää sen osoite CSP:hen tiedostossa `scripts/prerender.mjs`, muuten selain estää sen. Konsolissa lukee silloin "Refused to ...".
 
@@ -96,6 +96,7 @@ Jos lisäät sivulle uuden ulkoisen palvelun (analytiikka, kartta, fontti, lomak
 - [ ] Sivun lähdekoodissa **ei** ole `noindex`-merkintää (`<meta name="robots">`)
 - [ ] `https://glosstahko.fi/jokin-vaara-osoite` näyttää oman 404-sivun
 - [ ] Varaa aika -painike avaa https://booksalon.fi/glosstahko
+- [ ] Instagram: syötteen osoite on `site.ts`:ssä (docs/instagram-syote.md), "Salli ja näytä julkaisut" näyttää karusellin, nuolet toimivat, Evästeasetukset (footer) nollaa valinnan
 - [ ] Kartan avaus (Näytä kartta) toimii eikä konsolissa ole "Refused to ..." -virheitä (CSP ei estä)
 - [ ] Lighthouse (Chrome DevTools) mobiilissa: Performance > 90, muut 100
 - [ ] Rich Results Test (search.google.com/test/rich-results): LocalBusiness ja FAQPage ilman virheitä

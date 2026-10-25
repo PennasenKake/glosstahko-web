@@ -216,3 +216,27 @@
   text-align: center;
   color: var(--color-muted, inherit);
 }
+
+/* Tekstilinkin näköinen painike (Evästeasetukset) */
+.link-button {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+
+.link-button:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+.site-footer__bottom .link-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}

@@ -203,6 +203,241 @@
   }
 }
 
+/* ---------- Instagram-karuselli (InstagramFeed) ---------- */
+
+.insta {
+  text-align: center;
+}
+
+.insta__title {
+  margin-bottom: 1.25rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-brand-dark);
+}
+
+.insta__title a {
+  text-underline-offset: 0.25em;
+}
+
+/* Suostumus-, lataus- ja virhetilat samassa kortissa */
+.insta__panel {
+  max-width: 36rem;
+  margin-inline: auto;
+  padding: 1.5rem 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: 1.25rem;
+}
+
+.insta__panel p + p {
+  margin-top: 0.75rem;
+}
+
+.insta__panel p {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.insta__panel .insta__panel-title {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.insta__status {
+  padding: 2rem 0;
+  color: var(--color-muted);
+}
+
+.insta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+/* Viewport: nuolet asemoidaan tämän sisään, kortit vierivät listassa */
+.insta__viewport {
+  position: relative;
+}
+
+/* Karuselli: sivusuuntainen vieritys, kortit "tarttuvat" paikalleen (scroll-snap).
+   Toimii pyyhkäisyllä, nuolinäppäimillä (tarkennettuna) ja nuolipainikkeilla. */
+.insta__list {
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0.25rem 0 0.5rem;
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+
+.insta__list::-webkit-scrollbar {
+  display: none;
+}
+
+.insta__list:focus-visible {
+  outline: 2px solid var(--color-brand-dark);
+  outline-offset: 2px;
+  border-radius: 1.25rem;
+}
+
+/* Kapea ruutu: yksi kortti ja seuraava pilkistää reunasta. Tabletti: 2. Leveä: 3. */
+.insta__item {
+  flex: 0 0 78%;
+  scroll-snap-align: start;
+  text-align: left;
+}
+
+@media (min-width: 40rem) {
+  .insta__item {
+    flex-basis: calc((100% - 1rem) / 2);
+  }
+}
+
+@media (min-width: 62rem) {
+  .insta__item {
+    flex-basis: calc((100% - 2rem) / 3);
+  }
+}
+
+.insta__tile {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.insta__tile:focus-visible {
+  outline: 3px solid var(--color-brand-dark);
+  outline-offset: 3px;
+  border-radius: 1rem;
+}
+
+.insta__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 1; /* Instagramin ruudukon neliö */
+  overflow: hidden;
+  background: var(--color-bg-alt);
+  border: 1px solid var(--color-line);
+  border-radius: 1rem;
+}
+
+.insta__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.insta__tile:hover .insta__media img {
+  transform: scale(1.04);
+}
+
+.insta__badge {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: rgb(18 15 13 / 0.6);
+  color: #fff;
+  font-size: 0.75rem;
+}
+
+.insta__caption {
+  display: block;
+  margin-top: 0.6rem;
+}
+
+.insta__date {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--color-muted);
+}
+
+.insta__text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 0.15rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.insta__arrow {
+  position: absolute;
+  top: 35%; /* kuvan kohdalle, ei koko kortin keskelle */
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 1px solid var(--color-line-strong);
+  border-radius: 50%;
+  background: var(--color-surface);
+  box-shadow: 0 4px 14px rgb(43 43 41 / 0.18);
+  color: var(--color-ink-deep);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background-color 0.2s, color 0.2s, opacity 0.2s;
+}
+
+.insta__arrow--prev {
+  left: 0.5rem;
+}
+
+.insta__arrow--next {
+  right: 0.5rem;
+}
+
+.insta__arrow:hover:not(:disabled) {
+  background: var(--color-ink-deep);
+  color: var(--color-surface);
+}
+
+.insta__arrow:focus-visible {
+  outline: 3px solid var(--color-brand-dark);
+  outline-offset: 2px;
+}
+
+/* Päässä ei voi enää vierittää: piilossa ja klikkaamaton */
+.insta__arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.insta__arrow[hidden] {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .insta__media img,
+  .insta__arrow {
+    transition: none;
+  }
+
+  .insta__tile:hover .insta__media img {
+    transform: none;
+  }
+}
+
 /* ---------- Scroll reveal ---------- */
 
 .reveal {

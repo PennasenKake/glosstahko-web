@@ -93,7 +93,7 @@ await writeFile(
 )
 
 // --- 3b. Turvaotsikot (Cloudflare Pages lukee dist/_headers; GitHub Pages ohittaa tiedoston) ---
-// CSP sallii vain oman sisällön, OpenStreetMap-upotuksen (frame-src) sekä
+// CSP sallii vain oman sisällön, Beholdin Instagram-syötteen (connect-src), sen kuvat (img-src *.behold.pictures), OpenStreetMap-upotuksen (frame-src) sekä
 // sivujen omat sisäiset skriptit niiden tiivisteellä (sha256), joten 'unsafe-inline' ei tarvita
 // skripteille. Tiivisteet lasketaan valmiista HTML:stä, joten ne pysyvät ajan tasalla.
 const inlineScriptHashes = new Set()
@@ -109,9 +109,9 @@ const csp = [
   "default-src 'self'",
   `script-src 'self' ${[...inlineScriptHashes].join(' ')}`.trim(),
   "style-src 'self' 'unsafe-inline'", // React-komponenttien style-attribuutit
-  "img-src 'self' data:",
+  "img-src 'self' data: https://*.behold.pictures", // Instagram-kuvat tulevat Beholdin kuvapalvelimelta (haetaan vasta luvalla)
   "font-src 'self' data:", // Vite liittää pienimmät fontit CSS:ään data-osoitteina
-  "connect-src 'self'",
+  "connect-src 'self' https://feeds.behold.so",
   'frame-src https://www.openstreetmap.org',
   "object-src 'none'",
   "base-uri 'self'",
