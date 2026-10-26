@@ -147,6 +147,14 @@ describe('ajanvaraus (Booksalon)', () => {
     expect(html).toContain('Booksalonin verkkoajanvarauksessa')
   })
 
+  it('Minusta-osio kertoo kanavat: kynnet verkossa, kampaamoajat Instagramissa tai puhelimitse', () => {
+    expect(html).toContain('Ajanvaraus ja asiointi')
+    expect(html).toContain('Kampaamopalvelut')
+    expect(html).toMatch(/href="https:\/\/www\.instagram\.com\/glosstahko\/"[^>]*>Viesti Instagramissa/)
+    expect(html).toContain('korttimaksu kulkee')
+    expect(html).toContain('Miten voin maksaa?')
+  })
+
   it('toimitilan lisätieto (kerros ja kampaamo) näkyy', () => {
     expect(html).toContain(site.addressNote)
   })

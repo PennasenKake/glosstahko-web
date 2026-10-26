@@ -79,6 +79,7 @@ export const serviceCategories: ServiceCategory[] = [
     id: 'leikkaukset',
     group: 'hiukset',
     title: 'Leikkaukset',
+    description: 'Kampaamoaikoja on rajoitetusti. Ajat varataan Instagram-viestillä tai puhelimitse.',
     services: [
       // priceMax = hintahaarukka (34–36 €)
       { id: 'leikkaus-30', name: 'Hiustenleikkaus', minutes: 30, price: 34, priceMax: 36 },

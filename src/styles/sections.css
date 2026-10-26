@@ -362,6 +362,81 @@
   margin-top: 1rem;
 }
 
+/* Ajanvaraus ja asiointi (Minusta-osion alaosa) */
+.about__booking {
+  margin-top: clamp(2rem, 5vw, 3rem);
+}
+
+.about__subtitle {
+  margin-bottom: 0.25rem;
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-brand-dark);
+}
+
+/* Kaksi kanavaa rinnakkain: kynnet verkossa, kampaamo viestillä tai puhelimitse */
+.about__channels {
+  display: grid;
+  gap: 1rem;
+  margin: 1.75rem 0 0.5rem;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+@media (min-width: 40rem) {
+  .about__channels {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.about__channel {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+  padding: 1.5rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-card);
+}
+
+.about__channel p {
+  margin: 0;
+  font-size: 0.97rem;
+}
+
+/* Painike jää kortin alareunaan, vaikka tekstit ovat eri pituisia */
+.about__channel .btn {
+  margin-top: auto;
+}
+
+.about__channel-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-brand-dark);
+}
+
+.about__phone {
+  font-size: 0.92rem;
+}
+
+/* Lopetuslause käsinkirjoitettuna */
+.about__closing {
+  margin-top: 1.75rem;
+  font-family: var(--font-script);
+  font-size: clamp(1.7rem, 5vw, 2.3rem);
+  line-height: 1.25;
+  text-align: center;
+}
+
 /* Instagram-karuselli tekstin alla */
 .about__feed {
   position: relative; /* koristeoksa jää karusellin taakse */

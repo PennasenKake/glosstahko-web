@@ -17,11 +17,12 @@ export default function Contact() {
         <SectionHeading id="yhteys-otsikko" eyebrow="Ota yhteyttä" title="Yhteystiedot" />
 
         <p className="contact__text" data-reveal>
-          Avaamme pian Nilsiässä. Varaa aika verkossa tai laita viestiä Instagramissa, niin palaan asiaan.
+          Kynsipalveluiden ajat varataan verkossa. Kampaamoaikoja varten laita viestiä
+          Instagramissa tai soita, niin sovitaan sinulle sopiva hetki.
         </p>
 
         <div className="contact__cta" data-reveal>
-          <BookingButton label="Varaa aika verkossa" variant="light" />
+          <BookingButton label="Varaa kynsiaika verkossa" variant="light" />
         </div>
 
         <ul className="contact__list" data-reveal>

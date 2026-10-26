@@ -10,7 +10,7 @@ type BookingButtonProps = {
   variant?: 'primary' | 'light' | 'ghost'
   /** Pienempi koko, esim. headeriin. */
   small?: boolean
-  /** Oletus on ajanvaraus (site.bookingUrl). Muuhun kohteeseen, esim. Instagram-viestiin, annetaan oma osoite. */
+  /** Oletus on kynsipalveluiden ajanvaraus (site.bookingUrl, Booksalon). Kampaamoajat varataan Instagram-viestillä tai puhelimitse. Muuhun kohteeseen, esim. Instagram-viestiin, annetaan oma osoite. */
   href?: string
 }
 
@@ -24,7 +24,7 @@ type BookingButtonProps = {
  *   <BookingButton small />
  */
 export default function BookingButton({
-  label = 'Varaa aika',
+  label = 'Varaa kynsiaika',
   variant = 'primary',
   small = false,
   href = site.bookingUrl,

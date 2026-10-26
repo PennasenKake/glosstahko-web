@@ -38,6 +38,7 @@ export function buildStructuredData() {
     logo: `${site.url}/icon-512.png`,
     slogan: 'Kauneutta kiireettömästi',
     currenciesAccepted: 'EUR',
+    paymentAccepted: 'Credit Card, Debit Card',
     knowsLanguage: 'fi',
     telephone: '+358445132714',
     email: site.email,

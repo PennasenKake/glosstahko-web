@@ -4,8 +4,8 @@ import { site } from '../config/site'
  * Usein kysytyt kysymykset. Uuden kysymyksen lisäys on yksi rivi tähän.
  * Faq-komponentti piirtää ne haitarina.
  *
- * Maksutapoja ei mainita tarkoituksella: korttimaksu tulee käyttöön
- * vasta, kun maksupääte on hankittu.
+ * Maksutavoista kerrotaan vain korttimaksu (Siirin oma maksupääte, 26.10.2026). Muita
+ * maksutapoja ei mainita ennen kuin ne on vahvistettu.
  * Tekstit perustuvat Siirin omiin sanamuotoihin (24.10.2026). Peruutusehdot ja takuu:
  * public/kayttoehdot.html.
  */
@@ -19,7 +19,11 @@ export const faq: FaqItem[] = [
   // Palauta kysymys poistamalla rivien alusta //.
   {
     q: 'Miten varaan ajan?',
-    a: 'Ajan voi varata Booksalonin verkkoajanvarauksessa (Varaa aika -painike) tai Instagram-viestillä. Jos jokin ajanvarauksessa mietityttää, esimerkiksi palveluiden tai lisäpalveluiden osalta, laita viestiä, niin palaan asiaan.',
+    a: 'Kynsipalvelut (geelilakkaukset ja vahvistukset) varataan netissä Booksalonin verkkoajanvarauksessa ympäri vuorokauden. Kampaamopuolen aikoja (värit, leikkaukset, hoidot ja kampaukset) on toistaiseksi tarjolla rajoitetusti, ja tuplabuukkauksien välttämiseksi ne varataan Instagram-viestillä tai puhelimitse. Jos jokin ajanvarauksessa mietityttää, laita viestiä, niin palaan asiaan.',
+  },
+  {
+    q: 'Miten voin maksaa?',
+    a: 'Maksaminen onnistuu korttimaksulla. Maksupääte kulkee mukanani, joten korttimaksu onnistuu myös liikkuvassa palvelussa.',
   },
   {
     q: 'Voinko yhdistää palveluita samalle käynnille?',
