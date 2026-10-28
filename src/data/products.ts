@@ -16,7 +16,7 @@ export const nailProducts: ProductLine = {
   label: 'Kynsituotteet',
   brand: 'Inveray',
   description:
-    'Kynsissä käytän Inveray-ammattilaissarjaa. Tuotteet ovat EU:n kosmetiikka-asetuksen mukaisia, ja geelit kovetetaan LED-valolla.',
+    'Kynsissä käytän Inveray-ammattilaissarjaa. Tuotteet ovat EU:n kosmetiikka-asetuksen mukaisia, ja geelit kovetetaan UV/LED-valolla.',
   items: [
     'Luxury Collection -geelilakat',
     'Builder in a Bottle (BIAB)',

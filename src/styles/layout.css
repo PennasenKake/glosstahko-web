@@ -154,6 +154,21 @@
   }
 }
 
+/* Kapea työpöytä (896–1152 px): tiiviimpi tabit, jotta pidempi "Varaa kynsiaika" -painike mahtuu */
+@media (min-width: 56rem) and (max-width: 72rem) {
+  .tabs__list {
+    gap: 1.1rem;
+  }
+
+  .tabs__link {
+    letter-spacing: 0.1em;
+  }
+
+  .site-header__inner {
+    column-gap: 0.75rem;
+  }
+}
+
 /* ---------- Footer ---------- */
 
 .site-footer {

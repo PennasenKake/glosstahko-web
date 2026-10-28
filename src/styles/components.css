@@ -60,6 +60,7 @@
 
 /* Pienempi versio headeriin */
 .btn--small {
+  white-space: nowrap;
   min-height: 2.75rem; /* kosketusalue vähintään 44 px */
   padding: 0.4rem 1.1rem;
   font-size: 0.72rem;

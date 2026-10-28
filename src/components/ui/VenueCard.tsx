@@ -50,7 +50,7 @@ export default function VenueCard() {
         </address>
         <p className="venue__note">{site.addressNote}</p>
         <p className="venue__note">
-          Sesonkien aikana palvelu tulee myös mökille, majoitukseen tai juhlapaikalle Tahkolla.
+          Liikkuva palvelu tulee myös luoksesi Nilsiässä, Tahkolla ja lähialueilla (ajat puhelimitse tai sähköpostilla).
         </p>
         <div className="venue__actions">
           <a

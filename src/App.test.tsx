@@ -138,8 +138,11 @@ describe('ajanvaraus (Booksalon)', () => {
     expect(count).toBeGreaterThanOrEqual(4)
   })
 
-  it('liikkuvan palvelun kysely ohjaa Instagram-viestiin, ei ajanvaraukseen', () => {
-    expect(html).toMatch(/href="https:\/\/www\.instagram\.com\/glosstahko\/"[^>]*>Kysy liikkuvasta palvelusta/)
+  it('liikkuvan palvelun ajat varataan puhelimitse tai sähköpostilla, ei Booksalonissa', () => {
+    expect(html).toContain('Booksalonissa. Matkakulukorvaus')
+    expect(html).toContain(`href="${site.phoneHref}"`)
+    expect(html).toContain(`href="mailto:${site.email}"`)
+    expect(html).not.toMatch(/Sesonkien aikana/)
   })
 
   it('UKK ei enää väitä ajanvarauksen olevan vain Instagramissa', () => {

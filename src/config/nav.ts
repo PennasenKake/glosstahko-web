@@ -10,7 +10,7 @@ export const navItems = [
   { id: 'etusivu', label: 'Etusivu' },
   { id: 'minusta', label: 'Minusta' },
   { id: 'palvelut', label: 'Palvelut' },
-  { id: 'tahko', label: 'Tahko' },
+  { id: 'tahko', label: 'Luoksesi' },
   { id: 'ukk', label: 'UKK' },
   { id: 'yhteys', label: 'Yhteys' },
 ] as const

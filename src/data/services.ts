@@ -28,7 +28,7 @@ export const serviceCategories: ServiceCategory[] = [
         id: 'geelilakkaus-huolto',
         name: 'Geelilakkaus, huolto',
         minutes: 120,
-        price: 50,
+        price: 65,
         priceFrom: true,
         note: 'Sis. vanhan geelilakkauksen poiston tai huollon, manikyyrin, uuden geelilakkauksen ja kynsinauhaöljyn. Koristelu lisäpalveluna.',
       },

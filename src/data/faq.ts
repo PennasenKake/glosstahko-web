@@ -39,7 +39,7 @@ export const faq: FaqItem[] = [
   },
   {
     q: 'Mitä tuotteita käytät?',
-    a: 'Käytän vain ammattikäyttöön sopivia, EU-standardien mukaisia tuotteita ja laitteita. Kynsissä käytän Inveray-ammattilaissarjaa ja LED-kovetusta. Kerron mielelläni tuotteista lisää!',
+    a: 'Käytän vain ammattikäyttöön sopivia, EU-standardien mukaisia tuotteita ja laitteita. Kynsissä käytän Inveray-ammattilaissarjaa, ja geelit kovetetaan UV/LED-valolla. Kerron mielelläni tuotteista lisää!',
   },
   {
     q: 'Miten hygienia hoidetaan?',
@@ -62,8 +62,12 @@ export const faq: FaqItem[] = [
   //   a: 'Kyllä, sesonkien aikana tarjolla on liikkuvaa kampaamo- ja kynsipalvelua mökille, majoitukseen ja juhlapaikalle. Ryhmille hinta sovitaan etukäteen.',
   // },
   {
+    q: 'Tuletko kotiin, mökille tai tapahtumaan?',
+    a: 'Kyllä. Liikkuva kynsi- ja kampaamopalvelu tulee luoksesi Nilsiässä, Tahkolla ja lähialueilla sopimuksen mukaan: yksityiskäynnille, ystävysten iltaan, pikkujouluihin tai hääseurueen laittamiseen. Ajat varataan puhelimitse tai sähköpostilla, ei Booksalonissa. Matkakulukorvaus sovitaan tapauskohtaisesti.',
+  },
+  {
     q: 'Missä palvelu on?',
-    a: `Toimitila on osoitteessa ${site.addressLine} (${site.addressNote}). Sesonkien aikana palvelu tulee liikkuvana myös Tahkon alueelle.`,
+    a: `Toimitila on osoitteessa ${site.addressLine} (${site.addressNote}). Liikkuva palvelu tulee myös luoksesi Nilsiässä, Tahkolla ja lähialueilla.`,
   },
   {
     q: 'Entä jos en pääse paikalle?',
@@ -73,8 +77,8 @@ export const faq: FaqItem[] = [
 
 /** "Hyvä tietää" -kortit UKK:n yläpuolella: lyhyet lupaukset ilman kysymystä. */
 export const goodToKnow = [
-  { title: 'Kiireetön', text: 'Aikaa on varattu niin, ettei kiireen tunnetta tule. Suunnitellaan yhdessä, mikä sopii sinulle.' },
-  { title: 'Turvallisuus', text: 'Ammattilaissarjat, ammattitaito ja huolellinen hygienia joka kerta.' },
+  { title: 'Kiireetön', text: 'Palveluni on suunniteltu pysähtymistä ja omaa aikaa varten. Suunnitellaan yhdessä, mikä sopii sinulle.' },
+  { title: 'Turvallisuus', text: 'Ammattilaistuotteet, ammattitaito ja huolellinen hygienia ja palvelu pohjana kaikelle.' },
   { title: 'Yhdellä käynnillä', text: 'Palvelut voi yhdistää samalle käynnille joustavasti toimipisteellä Nilsiässä tai tarvittaessa liikkuvana palveluna.' },
-  { title: 'Peruutus 24 h', text: 'Kerro peruutuksesta viimeistään vuorokautta ennen, niin aika vapautuu toiselle.' },
+  { title: 'Peruutus', text: 'Tutustuthan varaus- ja peruutusehtoihin ajanvarauksen yhteydessä.' },
 ] as const

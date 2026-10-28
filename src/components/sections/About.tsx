@@ -49,8 +49,9 @@ export default function About() {
         <p className="about__text" data-reveal>
           Haluan tehdä hemmotteluhetkestäsi mahdollisimman sujuvan alusta
           loppuun. Löydät mun toimipisteen aivan Nilsiän keskustasta, mutta
-          GlossTahko tarjoaa myös joustavaa, liikkuvaa palvelua suoraan mm.
-          Tahkon alueen lomamökeille, hotelleihin ja juhlapaikoille.
+          GlossTahko tarjoaa myös joustavaa, liikkuvaa palvelua suoraan
+          luoksesi, esimerkiksi kotiin, mökille tai tapahtumaan Nilsiässä,
+          Tahkolla ja lähialueilla.
         </p>
 
         <ul className="about__channels" data-reveal>
