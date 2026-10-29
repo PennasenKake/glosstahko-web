@@ -167,8 +167,8 @@ describe('kotihoito-ohjeet ja ehtosivut', () => {
   const html = renderToString(<App />)
 
   it('footer ja UKK linkittävät kotihoito-ohjeisiin ja käyttöehtoihin', () => {
-    expect(html.match(/href="[^"]*kotihoito\.html"/g)?.length).toBeGreaterThanOrEqual(2)
-    expect(html).toMatch(/href="[^"]*kayttoehdot\.html"/)
+    expect(html.match(/href="[^"]*kotihoito"/g)?.length).toBeGreaterThanOrEqual(2)
+    expect(html).toMatch(/href="[^"]*kayttoehdot"/)
   })
 
   it('staattiset sivut ovat olemassa ja takuu viittaa kotihoito-ohjeisiin', () => {
@@ -176,7 +176,7 @@ describe('kotihoito-ohjeet ja ehtosivut', () => {
     const terms = pages['../public/kayttoehdot.html']
     const care = pages['../public/kotihoito.html']
     expect(terms).toContain('id="takuu"')
-    expect(terms).toContain('href="kotihoito.html"')
+    expect(terms).toContain('href="kotihoito"')
     expect(care).toContain('<h1>Kotihoito-ohjeet</h1>')
     expect((care.match(/<h2>/g) ?? []).length).toBe(6)
   })
@@ -188,7 +188,7 @@ describe('footerin ehto- ja lakilinkit', () => {
   it('Käyttöehdot, Tietosuoja, Omavalvonta ja Kotihoito-ohjeet ovat selkeänä listana', () => {
     const nav = html.match(/<nav aria-label="Ehdot ja tietosuoja">([\s\S]*?)<\/nav>/)?.[1] ?? ''
     for (const page of ['kayttoehdot', 'tietosuoja', 'omavalvonta', 'kotihoito']) {
-      expect(nav, page).toMatch(new RegExp(`href="[^"]*${page}\\.html"`))
+      expect(nav, page).toMatch(new RegExp(`href="[^"]*${page}"`))
     }
     expect(nav).toContain('Evästeasetukset')
   })
@@ -200,7 +200,7 @@ describe('footerin ehto- ja lakilinkit', () => {
     expect((plan.match(/<h2>/g) ?? []).length).toBe(12)
     expect(plan).toContain('Pisantie 3')
     expect(plan).not.toMatch(/@hotmail|@gmail/i)
-    expect(pages['../public/kayttoehdot.html']).toContain('href="omavalvonta.html"')
+    expect(pages['../public/kayttoehdot.html']).toContain('href="omavalvonta"')
   })
 })
 

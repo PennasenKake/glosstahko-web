@@ -61,16 +61,16 @@ export default function Footer() {
           <p className="site-footer__title">Tietoa ja ehdot</p>
           <ul className="site-footer__list">
             <li>
-              <a href={`${base}kayttoehdot.html`}>Käyttöehdot</a>
+              <a href={`${base}kayttoehdot`}>Käyttöehdot</a>
             </li>
             <li>
-              <a href={`${base}tietosuoja.html`}>Tietosuoja</a>
+              <a href={`${base}tietosuoja`}>Tietosuoja</a>
             </li>
             <li>
-              <a href={`${base}omavalvonta.html`}>Omavalvonta</a>
+              <a href={`${base}omavalvonta`}>Omavalvonta</a>
             </li>
             <li>
-              <a href={`${base}kotihoito.html`}>Kotihoito-ohjeet</a>
+              <a href={`${base}kotihoito`}>Kotihoito-ohjeet</a>
             </li>
             <li>
               <ConsentSettings />

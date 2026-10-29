@@ -75,7 +75,7 @@ for (const page of ['kayttoehdot.html', 'tietosuoja.html', 'kotihoito.html', 'om
   let content = await readFile(path, 'utf-8')
   const title = content.match(/<title>([^<]*)<\/title>/)?.[1] ?? 'GlossTahko'
   const description = content.match(/<meta name="description" content="([^"]*)"/)?.[1] ?? ''
-  const url = `${siteUrl}/${page}`
+  const url = `${siteUrl}/${page.replace(/\.html$/, '')}`
   const head =
     `    <link rel="canonical" href="${url}" />\n` +
     `    <meta property="og:type" content="website" />\n` +
@@ -103,7 +103,7 @@ await writeFile(
   'dist/sitemap.xml',
   `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages.map((page) => `  <url>\n    <loc>${siteUrl}/${page}</loc>\n  </url>`).join('\n')}
+${pages.map((page) => `  <url>\n    <loc>${siteUrl}/${page.replace(/\.html$/, '')}</loc>\n  </url>`).join('\n')}
 </urlset>
 `,
 )

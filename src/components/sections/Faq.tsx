@@ -41,8 +41,8 @@ export default function Faq() {
         </div>
 
         <p className="faq__more" data-reveal>
-          Lue myös <a href={`${import.meta.env.BASE_URL}kotihoito.html`}>kotihoito-ohjeet</a> ja{' '}
-          <a href={`${import.meta.env.BASE_URL}kayttoehdot.html`}>varaus- ja peruutusehdot</a>.
+          Lue myös <a href={`${import.meta.env.BASE_URL}kotihoito`}>kotihoito-ohjeet</a> ja{' '}
+          <a href={`${import.meta.env.BASE_URL}kayttoehdot`}>varaus- ja peruutusehdot</a>.
         </p>
       </div>
     </section>
