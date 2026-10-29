@@ -43,7 +43,7 @@ function isRecord(value: unknown): value is Raw {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
-/** Kuva otetaan Beholdin optimoiduista koista (sizes), jotka tulevat *.behold.pictures-palvelimelta. */
+/** Kuva otetaan Beholdin optimoiduista koista (sizes), jotka tulevat behold.pictures-palvelimelta (CSP sallii päädomainin ja alidomainit). */
 function pickImage(post: Raw): string | null {
   const sizes = isRecord(post.sizes) ? post.sizes : {}
   for (const key of ['medium', 'large', 'small', 'full']) {
