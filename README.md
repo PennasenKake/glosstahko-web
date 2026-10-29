@@ -93,17 +93,19 @@ Osoite on `config/site.ts`:ssä (`Pisantie 3, 73300 Nilsiä`). Kartan koordinaat
 
 ## Julkaisu
 
-Täysi vaiheittainen ohje (Cloudflare Pages, Zoner-DNS, sähköposti, tarkistuslista): [`docs/julkaisu.md`](docs/julkaisu.md).
+Sivusto on livenä osoitteessa **https://glosstahko.fi** ja julkaistaan **Cloudflare Workersilla** (staattiset tiedostot). Jokainen `git push` `main`-haaraan käynnistää Cloudflaressa buildin (`npm run lint && npm test && npm run build`, eli virheellinen koodi ei mene tuotantoon) ja julkaisun (`npx wrangler deploy`). Wrangler on lukittu tarkkaan versioon ja Node-versio on tiedostossa `.node-version`. Julkaisun asetukset ovat tiedostossa [`wrangler.jsonc`](wrangler.jsonc): julkaistava kansio on `dist`, ja tuntematon osoite näyttää `404.html`-sivun. Ilman tätä tiedostoa wrangler muokkaa projektia automaattisesti ja esirenderöinti kaatuu.
 
-**Demo (GitHub Pages):** workflow ajaa joka `main`-pushilla lintin, testit ja buildin ja julkaisee `dist/`-kansion. Kerran tehtävä asetus: GitHub > Settings > Pages > Source: **GitHub Actions**. Demo on alikansiossa (`VITE_BASE=/glosstahko-web/`) ja `VITE_NOINDEX=1` lisää sivuille `noindex` ja tekee `robots.txt`:stä `Disallow: /`, jotta demo ei kilpaile oikean domainin kanssa.
+Täysi vaiheittainen ohje (Cloudflare Workers, Zoner-DNS, sähköposti, www-uudelleenohjaus, tarkistuslista, vianmääritys): [`docs/julkaisu.md`](docs/julkaisu.md).
 
-**Tuotanto (suunnitelma):** Cloudflare Pages (ilmainen, kaupallinen käyttö sallittu), domain glosstahko.fi Zonerilta. Build-komento `npm run build`, output `dist`, ympäristömuuttuja `VITE_SITE_URL=https://glosstahko.fi`, ei `VITE_BASE`- eikä `VITE_NOINDEX`-arvoa. Apex-domain vaatii DNS:n Cloudflareen (poista DNSSEC Zonerilla ensin) tai vaihtoehtoisesti www-osoite canonicalina. Turvaotsikot ja CSP syntyvät buildissa tiedostoon `dist/_headers` (`scripts/prerender.mjs`).
+**Ympäristömuuttujat:**
+- `VITE_SITE_URL` tulee `.env`-tiedostosta (`https://glosstahko.fi`, ei salainen).
+- `VITE_BASE` ja `VITE_NOINDEX` asetetaan vain GitHub Pages -demossa. Älä aseta niitä Cloudflaressa.
 
-## Julkaisu (GitHub Pages, vanha ohje)
+**Osoitteet:** Workers ohjaa `.html`-päätteiset osoitteet päätteettömiin (`/kayttoehdot`), joten linkit, canonicalit ja sitemap käyttävät päätteettömiä osoitteita. Tiedostot ovat `public/`-kansiossa `.html`-nimisinä.
 
-Workflow ajaa joka `main`-pushilla lintin, testit ja buildin ja julkaisee `dist/`-kansion. Kerran tehtävä asetus: GitHub > Settings > Pages > Source: **GitHub Actions** (ei "Deploy from a branch", koska se tarjoaisi lähdekoodin, ei buildia).
+**Turvaotsikot ja CSP** syntyvät buildissa tiedostoon `dist/_headers` (`scripts/prerender.mjs`). Kun lisäät ulkoisen palvelun, lisää sen osoite CSP:hen. Huomaa, että `*.behold.pictures` ei kata päädomainia `behold.pictures`.
 
-Testiosoite on alikansiossa, siksi workflow asettaa `VITE_BASE=/glosstahko-web/`. Oman domainin kanssa `VITE_BASE` jätetään pois ja `VITE_SITE_URL` vaihdetaan domainiin.
+**Demo (GitHub Pages):** `.github/workflows/pages.yml` ajaa joka `main`-pushilla lintin, testit ja buildin ja julkaisee `dist/`-kansion osoitteeseen pennasenkake.github.io/glosstahko-web. Demo on alikansiossa (`VITE_BASE=/glosstahko-web/`) ja `VITE_NOINDEX=1` lisää sivuille `noindex` ja tekee `robots.txt`:stä `Disallow: /`, jotta demo ei kilpaile oikean domainin kanssa. Kerran tehtävä asetus: GitHub > Settings > Pages > Source: **GitHub Actions**. Demo ohittaa `_headers`-tiedoston, joten testaa CSP-muutokset aina tuotantodomainissa.
 
 ## Tyyli
 
@@ -125,12 +127,12 @@ Testiosoite on alikansiossa, siksi workflow asettaa `VITE_BASE=/glosstahko-web/`
 - [x] SEO: meta-tagit, JSON-LD, sitemap, robots.txt, esirenderöinti (`npm run build`)
 - [x] Testijulkaisu GitHub Pagesiin (`.github/workflows/pages.yml`)
 - [x] Lakisivut (tietosuoja, käyttöehdot, omavalvonta, kotihoito-ohjeet) ja 404-sivu
-- [ ] Julkaisu: Cloudflare Pages + glosstahko.fi, Search Console ja Google Business Profile
+- [x] Julkaisu: Cloudflare Workers + glosstahko.fi (29.10.2026), Search Console (domain, sitemap, indeksointipyyntö)
+- [ ] Google Business Profile, Beholdin whitelist, HSTS ja DMARC (ks. `docs/julkaisu.md`, kohta 7)
 
-## Ennen julkaisua
+## Avoimet asiat julkaisun jälkeen
 
-- Vaihda `.env`:n `VITE_SITE_URL` oikeaan domainiin ja aja `npm run build` uudelleen (canonical, sitemap, JSON-LD ja og-kuvan osoite päivittyvät)
-- Päivitä `public/og-image.jpg`, kun oikeat kuvat ovat mukana. Lisää sivu Google Search Consoleen ja lähetä sitemap
+- Päivitä `public/og-image.jpg`, kun oikeat kuvat ovat mukana
 - Vaihda `bookingUrl` (`config/site.ts`) ajanvarausjärjestelmän linkkiin, kun se on käytössä, ja päivitä UKK:n vastaus "Miten varaan ajan?"
 - Tarkista hinnat (`data/services.ts`), UKK (`data/faq.ts`) ja tuotetiedot (`data/products.ts`) yrittäjän kanssa
 - Täytä tarvittaessa `coords` (kartta) ja lisää maksutavat sekä Booksalon verkkoajanvaraus vasta, kun ne ovat käytössä. Päivitä silloin myös `public/tietosuoja.html` ja `public/kayttoehdot.html` (TODO-kommentit)
