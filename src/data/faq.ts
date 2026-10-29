@@ -67,7 +67,7 @@ export const faq: FaqItem[] = [
   },
   {
     q: 'Missä palvelu on?',
-    a: `Toimitila on osoitteessa ${site.addressLine} (${site.addressNote}). Liikkuva palvelu tulee myös luoksesi Nilsiässä, Tahkolla ja lähialueilla.`,
+    a: `Toimitila on osoitteessa ${site.addressLine}. Liikkuva palvelu tulee myös luoksesi Nilsiässä, Tahkolla ja lähialueilla.`,
   },
   {
     q: 'Entä jos en pääse paikalle?',

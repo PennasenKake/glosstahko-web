@@ -48,7 +48,6 @@ export default function VenueCard() {
             {site.postalCode} {site.city}
           </span>
         </address>
-        <p className="venue__note">{site.addressNote}</p>
         <p className="venue__note">
           Liikkuva palvelu tulee myös luoksesi Nilsiässä, Tahkolla ja lähialueilla (ajat puhelimitse tai sähköpostilla).
         </p>

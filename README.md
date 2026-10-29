@@ -89,7 +89,7 @@ Minusta-osion tekstin alla oleva karuselli hakee julkaisut suoraan @glosstahko-t
 
 ## Osoite ja kartta
 
-Osoite on `config/site.ts`:ssä (`Pisantie 3, 73300 Nilsiä`). Kartan koordinaatit (`coords`) ovat tyhjät: silloin kortti näyttää "Avaa kartta" -linkin OpenStreetMapiin osoitehaulla. Kun haluat upotetun kartan, hae oikea paikka openstreetmap.org:sta (oikea hiiren painike > Näytä osoite / Keskitä kartta tähän) ja täytä `coords: { lat, lng }`. Kortti vaihtuu silloin "Näytä kartta" -painikkeeksi (iframe ladataan vasta painalluksesta). Älä arvaa koordinaatteja, väärä nasta on huonompi kuin ei nastaa.
+Osoite on `config/site.ts`:ssä (`Laitilantie 27, 73300 Nilsiä`). Kartan koordinaatit (`coords`) ovat tyhjät: silloin kortti näyttää "Avaa kartta" -linkin OpenStreetMapiin osoitehaulla. Kun haluat upotetun kartan, hae oikea paikka openstreetmap.org:sta (oikea hiiren painike > Näytä osoite / Keskitä kartta tähän) ja täytä `coords: { lat, lng }`. Kortti vaihtuu silloin "Näytä kartta" -painikkeeksi (iframe ladataan vasta painalluksesta). Älä arvaa koordinaatteja, väärä nasta on huonompi kuin ei nastaa.
 
 ## Julkaisu
 

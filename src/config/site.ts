@@ -21,12 +21,10 @@ export const site = {
   city: 'Nilsiä',
 
   // Toimitila
-  address: 'Pisantie 3',
+  address: 'Laitilantie 27',
   postalCode: '73300',
   /** Näytettävä riviosoite */
-  // Löytäminen perillä: kerros ja naapuri
-  addressNote: '2. kerros, kampaamo Tuulikutrin yhteydessä',
-  addressLine: 'Pisantie 3, 73300 Nilsiä',
+  addressLine: 'Laitilantie 27, 73300 Nilsiä',
   /**
    * Toimitilan koordinaatit (valinnainen). Kun ne annetaan, "Näytä kartta" lataa
    * OpenStreetMap-kartan merkillä ja rakenteiseen dataan tulee sijainti.
@@ -36,10 +34,10 @@ export const site = {
    */
   coords: null as { lat: number; lng: number } | null,
   /** Avaa OpenStreetMapin osoitehaun (ei upotusta) */
-  mapUrl: 'https://www.openstreetmap.org/search?query=Pisantie%203%2C%2073300%20Nilsi%C3%A4',
+  mapUrl: 'https://www.openstreetmap.org/search?query=Laitilantie%2027%2C%2073300%20Nilsi%C3%A4',
   /** Reittiohjeet nykyisestä sijainnista (puhelimessa avautuu karttasovellus) */
   directionsUrl:
-    'https://www.google.com/maps/dir/?api=1&destination=Pisantie%203%2C%2073300%20Nilsi%C3%A4',
+    'https://www.google.com/maps/dir/?api=1&destination=Laitilantie%2027%2C%2073300%20Nilsi%C3%A4',
   businessId: '3658530-3',
 
   // Some

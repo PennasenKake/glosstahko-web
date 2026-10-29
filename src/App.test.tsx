@@ -102,8 +102,8 @@ describe('paljastusanimaatiot ja toimitila', () => {
     expect(html).not.toContain('<iframe') // ei kolmansien osapuolten pyyntöjä itsestään
   })
 
-  it('toimitilan osoite on Pisantie 3 ja se näkyy sivulla kerran riviosoitteena', () => {
-    expect(site.addressLine).toBe('Pisantie 3, 73300 Nilsiä')
+  it('toimitilan osoite on Laitilantie 27 ja se näkyy sivulla kerran riviosoitteena', () => {
+    expect(site.addressLine).toBe('Laitilantie 27, 73300 Nilsiä')
     expect(html).toContain(site.addressLine)
   })
 
@@ -158,8 +158,8 @@ describe('ajanvaraus (Booksalon)', () => {
     expect(html).toContain('Miten voin maksaa?')
   })
 
-  it('toimitilan lisätieto (kerros ja kampaamo) näkyy', () => {
-    expect(html).toContain(site.addressNote)
+  it('vanhaa toimitilan osoitetta ei enää esiinny sivulla', () => {
+    expect(html).not.toMatch(/Pisantie|Tuulikutri/)
   })
 })
 
@@ -198,7 +198,7 @@ describe('footerin ehto- ja lakilinkit', () => {
     const plan = pages['../public/omavalvonta.html']
     expect(plan).toContain('<h1>Omavalvontasuunnitelma</h1>')
     expect((plan.match(/<h2>/g) ?? []).length).toBe(12)
-    expect(plan).toContain('Pisantie 3')
+    expect(plan).toContain('Laitilantie 27')
     expect(plan).not.toMatch(/@hotmail|@gmail/i)
     expect(pages['../public/kayttoehdot.html']).toContain('href="omavalvonta"')
   })
